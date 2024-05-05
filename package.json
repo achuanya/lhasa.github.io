@@ -1,12 +1,12 @@
 {
-  "name": "fooleap",
+  "name": "achuan",
   "version": "1.0.0",
   "main": "/src/main.js",
   "dependencies": {
     "aplayer": "^1.10.1",
     "coordtransform": "^2.1.2",
     "davidshimjs-qrcodejs": "0.0.2",
-    "disqus-php-api": "fooleap/disqus-php-api",
+    "disqus-php-api": "git+https://github.com/achuanya/disqus-php-api.git",
     "flowchart.js": "^1.11.3",
     "typocss": "^1.4.0",
     "webpack-raphael": "^2.1.4",
@@ -35,17 +35,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fooleap/fooleap.github.io.git"
+    "url": "git+https://github.com/achuanya/lhasa.github.io.git"
   },
-  "author": "fooleap",
+  "author": "achuanya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fooleap/fooleap.github.io/issues"
+    "url": "https://github.com/achuanya/lhasa.github.io/issues"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
   ],
-  "homepage": "https://github.com/fooleap/fooleap.github.io#readme",
+  "homepage": "https://github.com/achuanya/lhasa.github.io#readme",
   "description": ""
 }
