@@ -23,8 +23,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "haibao1027@gmail.com"
+          git config --global user.name "achuanya"
           git add .
           git commit -m "Update latest articles"
           git push
