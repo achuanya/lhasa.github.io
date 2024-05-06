@@ -1,0 +1,30 @@
+name: Fetch Frontend Articles
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+
+jobs:
+  fetch-articles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install RSS Parser
+        run: sudo apt-get install -y rss-glx
+
+      - name: Fetch Articles
+        run: |
+          for rss_url in $(cat _data/front_end_sources.yml | grep url | awk '{print $2}'); do
+            rss-feed-parser "$rss_url" > _data/latest_articles.yml
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "haibao1027@gmail.com"
+          git config --global user.name "achuanya"
+          git add .
+          git commit -m "Update latest articles"
+          git push
