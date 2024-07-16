@@ -26,10 +26,9 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background-image: url({{ site.COS_API }}/assets/images/avatar.jpg);
+      background-image: url(https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/assets/images/avatar.jpg);
       background-size: cover;
     }
-    
   }
   .navigation-mask {
     position: fixed;
