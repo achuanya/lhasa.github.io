@@ -33,8 +33,8 @@ tags: [wilier, Cento, 骑行, 公路车]
 
 ![骑行照][p5]
 
-[p1]: https://cos.lhasa.icu/assets/article/20240712214848.jpg
-[p2]: https://cos.lhasa.icu/assets/article/20240712214849.jpg
-[p3]: https://cos.lhasa.icu/assets/article/202407122148491.jpg
-[p4]: https://cos.lhasa.icu/assets/article/20240712215100.jpg
-[p5]: https://cos.lhasa.icu/assets/article/20240712214833.jpg
+[p1]: {{ site.COS_API }}/assets/article/20240712214848.jpg
+[p2]: {{ site.COS_API }}/assets/article/20240712214849.jpg
+[p3]: {{ site.COS_API }}/assets/article/202407122148491.jpg
+[p4]: {{ site.COS_API }}/assets/article/20240712215100.jpg
+[p5]: {{ site.COS_API }}/assets/article/20240712214833.jpg

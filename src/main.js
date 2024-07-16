@@ -1,17 +1,26 @@
 var iDisqus = require('disqus-php-api');
 var coordtransform = require('coordtransform');
 import './sass/main.scss';
-var _hmt = _hmt || [];
+
+// 百度统计代码
+// var _hmt = _hmt || [];
 
 Date.prototype.Format = function (fmt) {
   var o = {
-    "M+": this.getMonth() + 1, //月份 
-    "d+": this.getDate(), //日 
-    "h+": this.getHours(), //小时 
-    "m+": this.getMinutes(), //分 
-    "s+": this.getSeconds(), //秒 
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-    "S": this.getMilliseconds() //毫秒 
+    // 月份
+    "M+": this.getMonth() + 1,
+    // 日
+    "d+": this.getDate(),
+    // 小时
+    "h+": this.getHours(),
+    // 分
+    "m+": this.getMinutes(),
+    // 秒
+    "s+": this.getSeconds(),
+    // 季度
+    "q+": Math.floor((this.getMonth() + 3) / 3),
+    // 毫秒
+    "S": this.getMilliseconds() 
   };
   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
   for (var k in o)
@@ -20,6 +29,7 @@ Date.prototype.Format = function (fmt) {
 }
 
 // TimeAgo https://coderwall.com/p/uub3pw/javascript-timeago-func-e-g-8-hours-ago
+// 时间格式化函数
 function timeAgo(selector) {
   var templates = {
     prefix: "",
@@ -43,10 +53,12 @@ function timeAgo(selector) {
 
   var timer = function (time) {
     if (!time) return;
-    time = time.replace(/\.\d+/, ""); // remove milliseconds
+    // 移除毫秒
+    time = time.replace(/\.\d+/, "");
     time = time.replace(/-/, "/").replace(/-/, "/");
     time = time.replace(/T/, " ").replace(/Z/, " UTC");
-    time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2"); // -04:00 -> -0400
+    // -04:00 -> -0400
+    time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2");
     time = new Date(time * 1000 || time);
 
     var now = new Date();
@@ -67,7 +79,7 @@ function timeAgo(selector) {
       $this.innerHTML = timer($this.getAttribute('datetime'));
     }
   }
-  // update time every minute
+  // 每分钟更新一次时间
   setTimeout(timeAgo, 60000);
 }
 
@@ -105,6 +117,7 @@ function timeAgo(selector) {
   }
 })(window.Element.prototype);
 
+// 获取URL查询参数
 function getQuery(variable) {
   var query = window.location.search.substring(1);
   var vars = query.split("&");
@@ -115,6 +128,7 @@ function getQuery(variable) {
   return (false);
 }
 
+// 页面关闭时取消菜单选中状态
 window.addEventListener('beforeunload', function (event) {
   document.getElementById('menu').checked = false;
 });
@@ -138,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   disq.count();
   timeAgo();
 
+  // 年度进度条
   var curYear = new Date().getFullYear();
   var startYear = Date.parse('01 Jan '+curYear+' 00:00:00');
   var endYear = Date.parse('31 Dec '+curYear+' 23:59:59');
@@ -149,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   styles[styles.length-1].insertRule('.page-header .page-title:after{content:"' + parseInt(yearProgress) + '%"}',0);
 
 
-  // 目录
+  // 目录显示与隐藏
   var toc = document.querySelector('.post-toc');
   var subTitles = document.querySelectorAll('.page-content h2,.page-content h3');
   var clientHeight = document.documentElement.clientHeight;
@@ -190,16 +205,20 @@ document.addEventListener('DOMContentLoaded', function (event) {
     tocShow();
   }
 
-
-  // 参考资料、站外链接
+  // 检查是否存在 "参考资料" 标题，并在其后插入一个有序列表
   if (document.querySelectorAll('h2')[document.querySelectorAll('h2').length - 1].innerHTML === '参考资料') {
     document.querySelectorAll('h2')[document.querySelectorAll('h2').length - 1].insertAdjacentHTML('afterend', '<ol id="refs"></ol>');
   }
+  // 获取所有链接标签
   var links = document.getElementsByTagName('a');
   var noteArr = [];
+
+  // 遍历所有链接
   for (var i = 0; i < links.length; i++) {
+    // 检查链接是否为外部链接且不是 JavaScript 链接
     if (links[i].hostname != location.hostname && /^javascript/.test(links[i].href) === false) {
       var numText = links[i].innerHTML;
+      // 检查链接文本是否为编号形式
       if (/\[[0-9]*\]/.test(numText)) {
         var num = parseInt(numText.slice(1, -1));
         noteArr.push({
@@ -215,13 +234,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
       }
     }
   }
+  // 对参考资料数组进行排序
   noteArr = noteArr.sort(function (a, b) {
     return +(a.num > b.num) || +(a.num === b.num) - 1;
   })
+  // 将参考资料插入到有序列表中
   for (var i = 0; i < noteArr.length; i++) {
     document.getElementById('refs').insertAdjacentHTML('beforeend', '<li id="note-' + noteArr[i].num + '" class="note"><a href="#ref-' + noteArr[i].num + '">^</a> <a href="' + noteArr[i].href + '" title="' + noteArr[i].title + '" class="exf-text" target="_blank">' + noteArr[i].title + '</a></li>');
   }
-
+  // 检查是否为文章页面
   if (page.layout == 'post') {
     var imageArr = document.querySelectorAll('.post-content img[data-src]:not([class="emoji"])')
     // console.log(imageArr);
@@ -232,15 +253,18 @@ document.addEventListener('DOMContentLoaded', function (event) {
       title: [],
       coord: []
     };
+    // 收集图片的相关信息
     for (var i = 0; i < imageArr.length; i++) {
       image.thumb[i] = imageArr[i].src;
       image.src[i] = imageArr[i].dataset.src;
       image.url[i] = imageArr[i].dataset.url;
       //new RegExp(site.img,'i').test(imageArr[i].src) ? imageArr[i].src.split(/_|\?/)[0] : imageArr[i].src;
     }
+    // 过滤出 jpg 图片
     image.jpg = image.src.filter(function (item) {
       return item.indexOf('.jpg') > -1 && new RegExp(site.img, 'i').test(item);
     });
+    // 为每张图片添加标题和相关事件
     [].forEach.call(imageArr, function (item, i) {
       image.title[i] = item.title || item.parentElement.textContent.trim() || item.alt;
       item.title = image.title[i];
@@ -269,12 +293,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
         }
         previewImage.insertAdjacentHTML('afterend', previewImageTitle);
 
+        // 为预览添加点击事件，关闭预览
         preview.addEventListener('click', function() {
           this.style.display = 'none';
         });
       })
     })
 
+    // 获取图片的 EXIF 信息
     var getExif = function (index) {
       if (index < image.jpg.length) {
         var item = image.jpg[index];
@@ -346,10 +372,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
       }
     }
 
+    // 如果存在 jpg 图片，则获取其 EXIF 信息
     if (image.jpg.length > 0) {
       getExif(0);
     }
 
+    // 页面加载后为锚链接设置目标属性
     window.addEventListener('load', function () {
       var linkArr = document.querySelectorAll('.flow a');
       [].forEach.call(linkArr, function (link) {
@@ -359,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
       })
     });
 
-    // 相关文章
+    // 获取相关文章数据并显示随机相关文章
     var postData;
     var xhrPosts = new XMLHttpRequest();
     xhrPosts.open('GET', '/posts.json', true);
@@ -407,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
 
+  // 处理 archive.html 页面搜索功能
   if (page.url == '/archive.html') {
     document.querySelector('.page-search-input').addEventListener('keyup', function (e) {
       var archive = document.getElementsByClassName('archive-item-link');
@@ -423,6 +452,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     })
   }
 
+  // 处理 search.html 页面搜索功能
   if (page.url == '/search.html') {
     var keyword = getQuery('keyword');
     var searchData;
@@ -449,18 +479,31 @@ document.addEventListener('DOMContentLoaded', function (event) {
     })
 
     function search(keyword) {
+      // 清空搜索结果区域
       result.innerHTML = '';
+      // 设置页面标题
       var title = '搜索：' + keyword + ' | ' + site.title;
+      // 构建搜索结果的URL
       var url = '/search.html?keyword=' + keyword;
+      // 获取搜索结果的总数
       var total = result.length;
+      // 初始化HTML字符串
       var html = '';
+
+      // 遍历搜索数据
       searchData.forEach(function (item) {
+        // 拼接内容
         var postContent = item.title + item.tags.join('') + item.content;
+        // 检查关键字是否出现在内容中（不区分大小写）
         if (postContent.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+          // 获取关键字在内容中的索引
           var index = item.content.toLowerCase().indexOf(keyword.toLowerCase());
+          // 获取实际关键字
           var realKeyword = item.content.substr(index, keyword.length);
+          // 确定内容片段的起始和结束位置
           var first = index > 75 ? index - 75 : 0;
           var last = first + 150;
+          // 构建搜索结果的HTML
           html += '<div class="search-result-item">' +
             '      <i class="search-result-thumb" data-src="' + item.thumb + '" style="background-image:url(' + item.thumb + ')"></i>' +
             '      <div class="search-result-content">' +
@@ -473,18 +516,24 @@ document.addEventListener('DOMContentLoaded', function (event) {
             '    </div>';
         }
       })
+      // 更新搜索结果区域的HTML内容
       result.innerHTML = html;
+      // 更新页面标题
       document.title = title;
+      // 使用History API更新浏览器历史记录
       history.replaceState({
         "title": title,
         "url": url
       }, title, url);
-      if (site.home === location.origin && window.parent == window) {
-        _hmt.push(['_trackPageview', url]);
-      }
+
+      // 如果当前页面是主页且没有嵌入在iframe中，推送页面视图到统计工具
+      // if (site.home === location.origin && window.parent == window) {
+      //   _hmt.push(['_trackPageview', url]);
+      // }
     }
   }
 
+  // 处理 tags.html 页面标签搜索功能
   if (page.url == '/tags.html') {
     var keyword = getQuery('keyword');
     var tagsData;
@@ -519,9 +568,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
         "title": title,
         "url": url
       }, title, url);
-      if (site.home === location.origin && window.parent == window) {
-        _hmt.push(['_trackPageview', url]);
-      }
+      // if (site.home === location.origin && window.parent == window) {
+      //   _hmt.push(['_trackPageview', url]);
+      // }
     }
     var tagLinks = document.getElementsByClassName('post-tags-item');
     var tagCount = tagLinks.length;
@@ -545,29 +594,38 @@ document.addEventListener('DOMContentLoaded', function (event) {
     return num
   }
 
+  // 处理 tech.html, life.html, album.html 页面分页功能
   if (page.url == '/tech.html' || page.url == '/life.html' || page.url == '/album.html') {
+    // 获取当前页面的页码，如果没有则默认为第一页
     var pageNum = !!getQuery('page') ? parseInt(getQuery('page')) : 1;
     var postData, posts = [];
     var xhrPosts = new XMLHttpRequest();
+    // 根据页面的 URL 来确定分类
     var category = page.url.slice(1, -5);
     xhrPosts.open('GET', '/posts.json', true);
     xhrPosts.onreadystatechange = function () {
+      // 当数据加载完成且成功时
       if (xhrPosts.readyState == 4 && xhrPosts.status == 200) {
+        // 解析获取到的文章数据
         postData = JSON.parse(xhrPosts.responseText);
+        // 根据分类筛选出符合条件的文章
         postData.forEach(function (item) {
           if (item.category == category) {
             posts.push(item);
           }
         })
+        // 根据当前页码显示对应页的文章列表
         turn(pageNum);
       }
     }
     xhrPosts.send(null);
 
+    // 定义函数 turn，用于生成对应页的文章列表和分页控件
     function turn(pageNum) {
       var cat = '';
       var postClass = '';
       var pageSize = 10;
+      // 根据不同的页面 URL 设置分类名称和文章列表样式类
       switch (page.url) {
         case '/tech.html':
           cat = '技术';
@@ -575,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
           break;
         case '/life.html':
           cat = '生活';
+          // 生活页面每页显示 12 篇文章
           pageSize = 12;
           postClass = 'post-life';
           break;
@@ -583,13 +642,16 @@ document.addEventListener('DOMContentLoaded', function (event) {
           postClass = 'post-album';
           break;
       }
+      // 根据当前页码计算文章起始和结束位置
       var title = pageNum == 1 ? cat + ' | ' + site.title : cat + '：第' + pageNum + '页 | ' + site.title;
       var url = pageNum == 1 ? page.url : page.url + '?page=' + pageNum;
       var html = '';
       var total = posts.length;
       var first = (pageNum - 1) * pageSize;
       var last = total > pageNum * pageSize ? pageNum * pageSize : total;
+      // 根据不同页面的文章列表格式生成 HTML
       if (page.url == '/life.html') {
+        // 生活页面特定格式
         for (var i = first; i < last; i++) {
           var item = posts[i];
           html += '<article class="post-item">' +
@@ -601,6 +663,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
             '</article>';
         }
       } else {
+        // 其他页面的通用格式
         for (var i = first; i < last; i++) {
           var item = posts[i];
           html += '<article class="post-item">' +
@@ -614,6 +677,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
         }
       }
 
+      // 计算总页数，并生成分页控件的 HTML
       var totalPage = Math.ceil(total / pageSize);
       var prev = pageNum > 1 ? pageNum - 1 : 0;
       var next = pageNum < totalPage ? pageNum + 1 : 0;
@@ -625,11 +689,18 @@ document.addEventListener('DOMContentLoaded', function (event) {
         '<li class="pagination-item">' + prevLink + '</li>' +
         '</ul>';
 
+      // 将生成的文章列表和分页控件插入到页面中
+      // 添加文章列表的样式类
       document.querySelector('.post-list').classList.add(postClass);
+      // 插入文章列表的 HTML 内容
       document.querySelector('.post-list').innerHTML = html;
+      // 插入分页控件的 HTML 内容
       document.querySelector('.pagination').innerHTML = pagination;
+      // 更新文章列表中的时间显示
       timeAgo();
+      // 更新文章列表中评论数量的显示
       disq.count();
+      // 给分页链接添加点击事件，点击时切换到对应页码的文章列表
       var link = document.getElementsByClassName('pagination-item-link');
       for (var i = 0; i < link.length; i++) {
         link[i].addEventListener('click', function (e) {
@@ -638,14 +709,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
           e.preventDefault();
         })
       }
+      // 更新页面标题和浏览器历史记录，用于页面切换时的状态保持
       document.title = title;
       history.replaceState({
         "title": title,
         "url": url
       }, title, url);
-      if (site.home === location.origin && window.parent == window) {
-        _hmt.push(['_trackPageview', url]);
-      }
+      // if (site.home === location.origin && window.parent == window) {
+      //   _hmt.push(['_trackPageview', url]);
+      // }
     }
   }
 })

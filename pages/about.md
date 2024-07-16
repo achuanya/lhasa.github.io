@@ -20,7 +20,7 @@ tags: [关于, 博客, 游钓四方, blog]
 
 ## 博主
 
-![游钓四方的骑行照](https://cos.lhasa.icu/assets/images/my-photo.jpg_640 "游钓四方的骑行照")
+![游钓四方的骑行照]({{ site.COS_API }}/assets/images/my-photo.jpg_640 "游钓四方的骑行照")
 
 千禧年小屁孩，代码、计算机纯属个人爱好，怀旧着，记录着 正在的发生美好往昔
 
@@ -30,7 +30,7 @@ tags: [关于, 博客, 游钓四方, blog]
 - Github：[achuanya][2]
 - 微信公众号：游钓四方的博客
 
-![游钓四方的微信公众号](https://cos.lhasa.icu/assets/images/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
+![游钓四方的微信公众号]({{ site.COS_API }}/assets/images/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
 
 ## 博客进程
 
