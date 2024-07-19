@@ -3,7 +3,7 @@ var coordtransform = require('coordtransform');
 import './sass/main.scss';
 
 // 百度统计代码
-// var _hmt = _hmt || [];
+var _hmt = _hmt || [];
 
 Date.prototype.Format = function (fmt) {
   var o = {
@@ -527,9 +527,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
       }, title, url);
 
       // 如果当前页面是主页且没有嵌入在iframe中，推送页面视图到统计工具
-      // if (site.home === location.origin && window.parent == window) {
-      //   _hmt.push(['_trackPageview', url]);
-      // }
+      if (site.home === location.origin && window.parent == window) {
+        _hmt.push(['_trackPageview', url]);
+      }
     }
   }
 
@@ -568,9 +568,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
         "title": title,
         "url": url
       }, title, url);
-      // if (site.home === location.origin && window.parent == window) {
-      //   _hmt.push(['_trackPageview', url]);
-      // }
+      if (site.home === location.origin && window.parent == window) {
+        _hmt.push(['_trackPageview', url]);
+      }
     }
     var tagLinks = document.getElementsByClassName('post-tags-item');
     var tagCount = tagLinks.length;
@@ -715,9 +715,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
         "title": title,
         "url": url
       }, title, url);
-      // if (site.home === location.origin && window.parent == window) {
-      //   _hmt.push(['_trackPageview', url]);
-      // }
+      if (site.home === location.origin && window.parent == window) {
+        _hmt.push(['_trackPageview', url]);
+      }
     }
   }
 })
