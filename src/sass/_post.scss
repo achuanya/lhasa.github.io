@@ -5,7 +5,17 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'TsangerJinKai01 W04';
+  /* IE 10+ */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
 }
+
+/* Chrome Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
 a{
   text-decoration: none;
 }
