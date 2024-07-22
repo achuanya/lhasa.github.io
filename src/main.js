@@ -1,32 +1,13 @@
 var iDisqus = require('disqus-php-api');
-var coordtransform = require('coordtransform');
 import './sass/main.scss';
 
-// 百度统计代码
-var _hmt = _hmt || [];
+// Img-previewer https://github.com/yue1123/img-previewer
+import ImgPreviewer from'img-previewer'
+import 'img-previewer/dist/index.css'
+let timer;
 
-Date.prototype.Format = function (fmt) {
-  var o = {
-    // 月份
-    "M+": this.getMonth() + 1,
-    // 日
-    "d+": this.getDate(),
-    // 小时
-    "h+": this.getHours(),
-    // 分
-    "m+": this.getMinutes(),
-    // 秒
-    "s+": this.getSeconds(),
-    // 季度
-    "q+": Math.floor((this.getMonth() + 3) / 3),
-    // 毫秒
-    "S": this.getMilliseconds() 
-  };
-  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-  return fmt;
-}
+// 百度统计
+var _hmt = _hmt || [];
 
 // TimeAgo https://coderwall.com/p/uub3pw/javascript-timeago-func-e-g-8-hours-ago
 // 时间格式化函数
@@ -83,40 +64,6 @@ function timeAgo(selector) {
   setTimeout(timeAgo, 60000);
 }
 
-
-// matches & closest polyfill https://github.com/jonathantneal/closest
-(function (ElementProto) {
-  if (typeof ElementProto.matches !== 'function') {
-    ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector || function matches(selector) {
-      var element = this;
-      var elements = (element.document || element.ownerDocument).querySelectorAll(selector);
-      var index = 0;
-
-      while (elements[index] && elements[index] !== element) {
-        ++index;
-      }
-
-      return Boolean(elements[index]);
-    };
-  }
-
-  if (typeof ElementProto.closest !== 'function') {
-    ElementProto.closest = function closest(selector) {
-      var element = this;
-
-      while (element && element.nodeType === 1) {
-        if (element.matches(selector)) {
-          return element;
-        }
-
-        element = element.parentNode;
-      }
-
-      return null;
-    };
-  }
-})(window.Element.prototype);
-
 // 获取URL查询参数
 function getQuery(variable) {
   var query = window.location.search.substring(1);
@@ -134,6 +81,24 @@ window.addEventListener('beforeunload', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', function (event) {
+
+  // Img-previewer
+  const a = new ImgPreviewer('.post-content', {
+    scrollbar: true,
+    ratio: 0.7,
+    imageZoom: {
+      step: 1
+    },
+    style: {
+      modalOpacity: 0.8
+    },
+    bubblingLevel: 1,
+    onHide() {
+      clearInterval(timer)
+    }
+  })
+
+  // Disqus
   var disq = new iDisqus('comment', {
     forum: site.forum,
     site: site.home,
@@ -152,96 +117,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   disq.count();
   timeAgo();
 
-  // 年度进度条
-  var curYear = new Date().getFullYear();
-  var startYear = Date.parse('01 Jan '+curYear+' 00:00:00');
-  var endYear = Date.parse('31 Dec '+curYear+' 23:59:59');
-  var yearProgress = (Date.now() - startYear) / (endYear - startYear) * 100;
-  var widthProgress = yearProgress.toFixed(2) + '%'
-  var styles = document.styleSheets;
-  styles[styles.length-1].insertRule('.page-header .page-title:before{width:'+widthProgress+'}',0);
-  styles[styles.length-1].insertRule('.page-header .page-title:after{left:'+widthProgress+'}',0);
-  styles[styles.length-1].insertRule('.page-header .page-title:after{content:"' + parseInt(yearProgress) + '%"}',0);
-
-
-  // 目录显示与隐藏
-  var toc = document.querySelector('.post-toc');
-  var subTitles = document.querySelectorAll('.page-content h2,.page-content h3');
-  var clientHeight = document.documentElement.clientHeight;
-  function tocShow() {
-    var clientWidth = document.documentElement.clientWidth;
-    var tocFixed = clientWidth / 2 - 410 - toc.offsetWidth;
-    if (tocFixed < 15) {
-      toc.style.visibility = 'hidden';
-    } else {
-      toc.style.visibility = 'visible';
-      toc.style.left = tocFixed + 'px';
-    }
-  }
-  function tocScroll() {
-    var sectionIds = [];
-    var sections = [];
-    for (var i = 0; i < subTitles.length; i++) {
-      sectionIds.push(subTitles[i].id);
-      sections.push(subTitles[i].offsetTop);
-    }
-    var pos = document.documentElement.scrollTop || document.body.scrollTop;
-    var lob = document.body.offsetHeight - subTitles[subTitles.length - 1].offsetTop;
-    for (var i = 0; i < sections.length; i++) {
-      if (i === subTitles.length - 1 && clientHeight > lob) {
-        pos = pos + (clientHeight - lob);
-      }
-      if (sections[i] <= pos && sections[i] < pos + clientHeight) {
-        if (document.querySelector('.active')) {
-          document.querySelector('.active').classList.remove('active');
-        }
-        document.querySelector('[href="#' + sectionIds[i] + '"]').classList.add('active');
-      }
-    }
-  }
-  if (!!toc) {
-    document.addEventListener('scroll', tocScroll, false);
-    window.addEventListener('resize', tocShow, false);
-    tocShow();
-  }
-
-  // 检查是否存在 "参考资料" 标题，并在其后插入一个有序列表
-  if (document.querySelectorAll('h2')[document.querySelectorAll('h2').length - 1].innerHTML === '参考资料') {
-    document.querySelectorAll('h2')[document.querySelectorAll('h2').length - 1].insertAdjacentHTML('afterend', '<ol id="refs"></ol>');
-  }
-  // 获取所有链接标签
-  var links = document.getElementsByTagName('a');
-  var noteArr = [];
-
-  // 遍历所有链接
-  for (var i = 0; i < links.length; i++) {
-    // 检查链接是否为外部链接且不是 JavaScript 链接
-    if (links[i].hostname != location.hostname && /^javascript/.test(links[i].href) === false) {
-      var numText = links[i].innerHTML;
-      // 检查链接文本是否为编号形式
-      if (/\[[0-9]*\]/.test(numText)) {
-        var num = parseInt(numText.slice(1, -1));
-        noteArr.push({
-          num: num,
-          title: links[i].title,
-          href: links[i].href
-        });
-        links[i].classList.add('ref');
-        links[i].href = '#note-' + num;
-        links[i].id = 'ref-' + num;
-      } else {
-        links[i].target = '_blank';
-      }
-    }
-  }
-  // 对参考资料数组进行排序
-  noteArr = noteArr.sort(function (a, b) {
-    return +(a.num > b.num) || +(a.num === b.num) - 1;
-  })
-  // 将参考资料插入到有序列表中
-  for (var i = 0; i < noteArr.length; i++) {
-    document.getElementById('refs').insertAdjacentHTML('beforeend', '<li id="note-' + noteArr[i].num + '" class="note"><a href="#ref-' + noteArr[i].num + '">^</a> <a href="' + noteArr[i].href + '" title="' + noteArr[i].title + '" class="exf-text" target="_blank">' + noteArr[i].title + '</a></li>');
-  }
   // 检查是否为文章页面
   if (page.layout == 'post') {
     var imageArr = document.querySelectorAll('.post-content img[data-src]:not([class="emoji"])')
@@ -269,35 +144,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
       image.title[i] = item.title || item.parentElement.textContent.trim() || item.alt;
       item.title = image.title[i];
       item.classList.add('post-image');
-      item.parentElement.outerHTML = item.parentElement.outerHTML.replace('<p>', '<figure class="post-figure" data-index=' + i + '>').replace('</p>', '</figure>').replace(item.parentElement.textContent, '');
-      var imgdom = document.querySelector('.post-image[data-src="' + image.src[i] + '"]');;
+      item.setAttribute('data-index', i);
+      item.parentElement.outerHTML = item.parentElement.outerHTML
+      .replace('<p>', '<figure class="post-figure" data-index=' + i + '>')
+      .replace('<p>', '<figure class="post-figure" data-index=' + i + '>')
+      .replace('</p>', '</figure>')
+      .replace(item.parentElement.textContent, '');
+      
+      var imgdom = document.querySelector('.post-image[data-src="' + image.src[i] + '"]');
       if (new RegExp(site.img, 'i').test(image.src[i])) {
         imgdom.insertAdjacentHTML('afterend', '<figcaption class="post-figcaption">&#9650; ' + image.title[i] + '</figcaption>');
       }
 
-      // 照片预览
-      imgdom.addEventListener('click', function () {
-        var preview = document.getElementById('preview');
-        var previewImage = document.getElementById('previewImage');
+      // imgdom.addEventListener('click', function () {
 
-        // 处理掉腾讯云的图片样式分隔符
-        image.url[i] = image.url[i].replace(/\.(jpg|jpeg|png|gif)[^/]*$/, '.$1');
+      // });
 
-        var previewImageTitle = '<figcaption class="previewImageTitle">&#9650; ' + image.title[i] + '</figcaption>';
-        previewImage.setAttribute('src', image.url[i]);
-        preview.style.display = 'flex';
-
-        var previousPreviewImageTitle = document.querySelector('.previewImageTitle');
-        if (previousPreviewImageTitle) {
-          previousPreviewImageTitle.parentNode.removeChild(previousPreviewImageTitle);
-        }
-        previewImage.insertAdjacentHTML('afterend', previewImageTitle);
-
-        // 为预览添加点击事件，关闭预览
-        preview.addEventListener('click', function() {
-          this.style.display = 'none';
-        });
-      })
     })
 
     // 获取图片的 EXIF 信息
@@ -582,20 +444,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
 
-  var appendZero = function (num) {
-    if (!num) {
-      return '00'
-    }
-
-    if (num < 10) {
-      return '0' + num
-    }
-
-    return num
-  }
-
-  // 处理 tech.html, life.html, album.html 页面分页功能
-  if (page.url == '/tech.html' || page.url == '/life.html' || page.url == '/album.html') {
+  // 处理 tech.html, life.html 页面分页功能
+  if (page.url == '/tech.html' || page.url == '/life.html') {
     // 获取当前页面的页码，如果没有则默认为第一页
     var pageNum = !!getQuery('page') ? parseInt(getQuery('page')) : 1;
     var postData, posts = [];
@@ -636,10 +486,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
           // 生活页面每页显示 12 篇文章
           pageSize = 12;
           postClass = 'post-life';
-          break;
-        case '/album.html':
-          cat = '相册';
-          postClass = 'post-album';
           break;
       }
       // 根据当前页码计算文章起始和结束位置

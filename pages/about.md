@@ -14,7 +14,7 @@ tags: [关于, 博客, 游钓四方, blog]
 
 自 2018 年 8 月 31 日起，本站已运行 <span id="days"></span> 天，截至到今天，共写了博文 {{ site.posts.size }} 篇，计 {% assign count = 0 %}{% for post in site.posts %}{% assign single_count = post.content | strip_html | strip_newlines | remove: ' ' | size %}{% assign count = count | plus: single_count %}{% endfor %}{% if count > 10000 %}{{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}{% else %}{{ count }}{% endif %} 字。
 
-本博客所有文章采用：[署名-非商业性使用-禁止演绎 4.0 国际][1]，转载请务必注明出处，谢谢。
+鄙人博客采用：[CC BY-NC-ND 4.0][1]，转载请务必注明出处，谢谢。
 
 内容系本人学习、研究和总结，如有雷同，实属荣幸！
 
@@ -24,7 +24,7 @@ tags: [关于, 博客, 游钓四方, blog]
 
 千禧年小屁孩，代码、计算机纯属个人爱好，怀旧着，记录着 正在的发生美好往昔
 
-长途骑行小学生、野钓路亚、振出并继、提琴、萨克斯、古典乐、茶叶爱好者
+长途骑行小学生、野钓路亚、振出并继、古典乐、茶叶爱好者
 
 - Email: <haibao1027@gmail.com>
 - Github：[achuanya][2]
