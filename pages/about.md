@@ -14,7 +14,7 @@ tags: [关于, 博客, 游钓四方, blog]
 
 自 2018 年 8 月 31 日起，本站已运行 <span id="days"></span> 天，截至到今天，共写了博文 {{ site.posts.size }} 篇，计 {% assign count = 0 %}{% for post in site.posts %}{% assign single_count = post.content | strip_html | strip_newlines | remove: ' ' | size %}{% assign count = count | plus: single_count %}{% endfor %}{% if count > 10000 %}{{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}{% else %}{{ count }}{% endif %} 字。
 
-鄙人博客采用：[CC BY-NC-ND 4.0][1]，转载请务必注明出处，谢谢。
+鄙人博客采用:[CC BY-NC-ND 4.0][1]，转载请务必注明出处，谢谢。
 
 内容系本人学习、研究和总结，如有雷同，实属荣幸！
 
