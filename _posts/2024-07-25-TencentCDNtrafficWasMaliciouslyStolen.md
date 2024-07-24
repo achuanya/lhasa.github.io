@@ -2,7 +2,7 @@
 layout: post
 title: Tencent CDN 流量被恶意盗刷
 date: 2024-07-25 00:44:01 +0800
-category: life
+category: tech
 thumb: IMG_PATH/1721836926102.jpg
 tags: [CDN, 安全, 流量]
 ---
