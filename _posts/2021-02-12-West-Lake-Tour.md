@@ -19,7 +19,7 @@ tags: [西湖]
 
 ![西湖]({{ site.IMG_PATH }}/xihu.jpeg "西湖")
 
-![西湖]({{ site.IMG_PATH }}/xihu2.JPG "西湖")
+![西湖]({{ site.IMG_PATH }}/gjcnm.JPG "西湖")
 
 在杭州我最喜欢的就是杭州的绿化，清晨或傍晚走在南山路散步，那感觉真是令人心旷神怡
 
