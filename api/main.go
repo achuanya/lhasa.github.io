@@ -348,6 +348,11 @@ func readFeedsFromGitHub(config Config) ([]string, error) {
 }
 
 func main() {
+
+	githubToken := os.Getenv("TOKEN")
+	fmt.Printf("GitHub Token: %s\n", githubToken)
+	// 其他代码
+
 	config := initConfig()
 
 	// 从 GitHub 仓库中读取 RSS
