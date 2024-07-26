@@ -37,9 +37,3 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
       run: ./main
       working-directory: ./api
-
-    - name: Upload JSON file
-      uses: actions/upload-artifact@v3
-      with:
-        name: rss_data
-        path: ./api/rss_data.json
