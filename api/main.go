@@ -265,7 +265,7 @@ func saveToGitHub(config Config, data []Article) error {
 
 	// fmt.Printf("Saving data to GitHub: %s\n", string(jsonData))
 
-	filePath := "api/rss_data.json"
+	filePath := "_data/rss_data.json"
 	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
 	if err != nil && resp.StatusCode == http.StatusNotFound {
 
