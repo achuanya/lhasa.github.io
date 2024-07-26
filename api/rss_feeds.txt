@@ -1,6 +1,6 @@
 https://blog.fooleap.org/atom.xml
 https://lingxiankong.github.io/pages/rss.xml
-https://lhasa.icu/atom.xml
+https://lhasa.icu
 https://armstrong.viyf.org/feed
 https://www.laruence.com/feed
 https://oba.by/feed
