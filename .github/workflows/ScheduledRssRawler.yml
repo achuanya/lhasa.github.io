@@ -26,12 +26,6 @@ jobs:
       run: go build -o main
       working-directory: ./api
 
-    - name: List files in api directory
-      run: ls -la ./api
-
-    - name: Print environment variables
-      run: env
-
     - name: Run Go program
       env:
         TOKEN: ${{ secrets.TOKEN }}
