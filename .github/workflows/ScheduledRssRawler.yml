@@ -2,9 +2,7 @@ name: ScheduledRssRawler
 
 on:
   schedule:
-    # 每小时执行一次
     - cron: '0 * * * *'
-  # 支持手动触发
   workflow_dispatch:
 
 jobs:
@@ -28,6 +26,20 @@ jobs:
       run: go build -o main
       working-directory: ./api
 
+    - name: List files in api directory
+      run: ls -la ./api
+
+    - name: Print environment variables
+      run: env
+
     - name: Run Go program
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: ./main
       working-directory: ./api
+
+    - name: Upload JSON file
+      uses: actions/upload-artifact@v3
+      with:
+        name: rss_data
+        path: ./api/rss_data.json
