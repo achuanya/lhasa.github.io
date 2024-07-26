@@ -13,3 +13,5 @@
 
 [Sat Jul 27 02:58:2024] [Get RSS error] https://armstrong.viyf.org/feed: Get "https://armstrong.viyf.org/feed": read tcp 192.168.1.4:9140->202.144.195.26:443: wsarecv: An existing connection was forcibly closed by the remote host.
 
+[Sat Jul 27 02:58:2024] [Read RSS feeds error] error opening file: open rss_feeds.txt: The system cannot find the file specified.
+
