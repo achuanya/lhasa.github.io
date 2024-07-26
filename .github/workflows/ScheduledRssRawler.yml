@@ -31,12 +31,3 @@ jobs:
     - name: Run Go program
       run: ./main
       working-directory: ./api
-
-    - name: Check for generated file
-      run: |
-        if [ -f "./api/data/filename.json" ]; then
-          echo "Generated file exists."
-          cat ./api/data/filename.json
-        else
-          echo "Generated file not found."
-        fi
