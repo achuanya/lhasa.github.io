@@ -1,0 +1,33 @@
+name: ScheduledRssRawler
+
+on:
+  schedule:
+    # 每天的 02:00、10:00 和 16:00 运行
+    - cron: '0 2,10,16 * * *'
+  # 支持手动触发
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.20'
+
+    - name: Install dependencies
+      run: go mod tidy
+      working-directory: ./api/Modules
+
+    - name: Build
+      run: go build -o main
+      working-directory: ./api
+
+    - name: Run Go program
+      run: ./main
+      working-directory: ./api
