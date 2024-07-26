@@ -234,7 +234,7 @@ func readFeedsFromFile(filePath string) ([]string, error) {
 func main() {
 	config := initConfig()
 	// 从 rss_feeds.txt 文件中读取 RSS 源，如果报错，则记录到日志
-	rssFeeds, err := readFeedsFromFile("data/rss_feeds.txt")
+	rssFeeds, err := readFeedsFromFile("rss_feeds.txt")
 	if err != nil {
 		logError(config, fmt.Sprintf("[%s] [Read RSS feeds error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
 		fmt.Printf("Error reading RSS feeds from file: %v\n", err)
