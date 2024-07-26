@@ -34,7 +34,7 @@ jobs:
 
     - name: Run Go program
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TOKEN: ${{ secrets.TOKEN }}
       run: ./main
       working-directory: ./api
 
