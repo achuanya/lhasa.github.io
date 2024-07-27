@@ -17,7 +17,3 @@ title: 链接
   {% endfor %}
 </div>
 
-<div class="comment-guestbook">
-  <div id="comment"></div>
-</div>
-
