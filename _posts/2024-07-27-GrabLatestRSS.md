@@ -503,7 +503,7 @@ jobs:
 
     - name: Run Go program
       env:
-        TOKEN: ${{ secrets.TOKEN }}
+        TOKEN: ${{ secrets.KEY }}
       run: ./main
       working-directory: ./api
 
