@@ -506,7 +506,7 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
       run: ./main
       working-directory: ./api
-	  
+
 ```
 
 腾讯 COS 也写了一份，Github 有延迟问题就没用，也能用，逻辑上和 Go 是没啥区别
@@ -515,4 +515,4 @@ jobs:
 
 <a href="https://cloud.tencent.com/document/product/436/31215" target="_blank">COS Go SDK：https://cloud.tencent.com/document/product/436/31215</a>
 
-[效果页：https://lhasa.icu/links.html][https://lhasa.icu/links.html]
+[效果页：https://lhasa.icu/links.html](https://lhasa.icu/links.html)
