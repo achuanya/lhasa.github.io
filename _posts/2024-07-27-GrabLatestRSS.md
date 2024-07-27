@@ -4,7 +4,7 @@ title: 利用 Go + Github Actions 写个定时 RSS 爬虫
 date: 2024-07-27 09:50:01 +0800
 category: tech
 thumb: IMG_PATH/1722043714404.jpg
-tags: [Go, Github Actions, COC, 爬虫]
+tags: [Go, Github Actions, COS, 爬虫]
 ---
 
 说起这事，还是受一位博友的启发<a href="https://1900.live/links" target="_blank">“1900”</a>他的左邻右舍页面很棒，决定模仿一下。我平时也用 Inoreader，但我还是喜欢直接打开博客的感觉，心血来潮，搞。
