@@ -503,7 +503,7 @@ jobs:
 
     - name: Run Go program
       env:
-        TOKEN: ${{ secrets.KEY }}
+        TOKEN: ${{ secrets.Github敏感词不让发 }}
       run: ./main
       working-directory: ./api
 
