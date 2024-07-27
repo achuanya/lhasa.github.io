@@ -9,7 +9,7 @@ title: 链接
   {% for post in rss_data %}
   <div class="card">
       <h1>
-          <a href="https://lhasa.icu" target="_blank">{{ post.name }}</a>
+          <a href="{{ post.domainName }}" target="_blank">{{ post.name }}</a>
       </h1>
       <time>{{ post.date | date: "%B %d, %Y" }}</time>
       <a href="{{ post.link }}" target="_blank">{{ post.title }}</a>
