@@ -8,7 +8,10 @@ description: '钓五湖四海，交八方朋友'
 timezone: Asia/Shanghai
 
 exclude: [webpack.config.js, package.json, Gemfile, Gemfile.lock, src, node_modules]
-plugins: [jekyll-paginate, jemoji]
+plugins:
+  - jekyll-paginate
+  - jemoji
+  - jekyll-sitemap
 
 permalink: /:title.html
 highlighter: rouge

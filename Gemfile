@@ -13,3 +13,7 @@ gem 'faraday', '< 2.0.0'
 gem 'faraday-net_http', '< 3.0.0'
 
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+
+gem 'jekyll', '~> 3.9.3'
+
+gem 'jekyll-sitemap', '~> 1.2'
