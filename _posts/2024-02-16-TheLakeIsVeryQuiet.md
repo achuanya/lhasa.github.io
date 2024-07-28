@@ -3,7 +3,7 @@ layout: post
 title: 湖畔幽悠
 date: 2024-02-16 00:45:01 +0800
 category: life
-thumb: ARTICLEPICTURES_PATH/TheLakeIsVeryQuiet.jpg
+thumb: site.ARTICLEPICTURES_PATH/TheLakeIsVeryQuiet.jpg
 tags: [湖畔幽悠, 诗, 淮阳, 龙湖]
 ---
 <div style="text-align: center;">

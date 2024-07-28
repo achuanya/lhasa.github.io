@@ -2,7 +2,7 @@
 layout: post
 title: 我的第一部单反相机
 category: life
-thumb: ARTICLEPICTURES_PATH/canon.jpg
+thumb: site.ARTICLEPICTURES_PATH/canon.jpg
 tags: [摄影, 单反]
 ---
 

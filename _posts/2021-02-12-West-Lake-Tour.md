@@ -2,7 +2,7 @@
 layout: post
 title: 大年初一，徒步西湖
 category: life
-thumb: ARTICLEPICTURES_PATH/xihu.jpg
+thumb: site.ARTICLEPICTURES_PATH/xihu.jpg
 tags: [西湖]
 ---
 

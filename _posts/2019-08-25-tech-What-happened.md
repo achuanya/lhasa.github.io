@@ -2,7 +2,7 @@
 layout: post
 title: 说说消失这二十多天发生的事情
 category: life
-thumb: ARTICLEPICTURES_PATH/xiaoshi.jpg
+thumb: site.ARTICLEPICTURES_PATH/xiaoshi.jpg
 tags: [经历]
 ---
 

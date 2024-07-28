@@ -3,7 +3,7 @@ layout: post
 title: 第一次校招复试总结
 date: 2019-03-04 20:10:05 +0800
 category: tech
-thumb: ARTICLEPICTURES_PATH/zongjie.jpg
+thumb: site.ARTICLEPICTURES_PATH/zongjie.jpg
 tags: [校招, 面试, 总结]
 ---
 

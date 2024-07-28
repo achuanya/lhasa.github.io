@@ -2,7 +2,7 @@
 layout: post
 title: (转)论胡编乱造的写作技巧
 category: life
-thumb: ARTICLEPICTURES_PATH/xiezuo.jpg
+thumb: site.ARTICLEPICTURES_PATH/xiezuo.jpg
 tags: [写作技巧]
 ---
 

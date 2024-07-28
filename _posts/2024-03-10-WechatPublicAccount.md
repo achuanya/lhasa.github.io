@@ -3,7 +3,7 @@ layout: post
 title: 搞个公众号
 date: 2024-03-10 15:51:01 +0800
 category: tech
-thumb: ARTICLEPICTURES_PATH/WechatPublicAccount.png
+thumb: site.ARTICLEPICTURES_PATH/WechatPublicAccount.png
 tags: [公众号, 游钓四方的博客]
 ---
 

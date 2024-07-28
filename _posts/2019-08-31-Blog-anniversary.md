@@ -2,7 +2,7 @@
 layout: post
 title: 阿川的个人博客"创建一周年啦!"
 category: life
-thumb: ARTICLEPICTURES_PATH/1.jpg
+thumb: site.ARTICLEPICTURES_PATH/1.jpg
 tags: [一周年]
 ---
 

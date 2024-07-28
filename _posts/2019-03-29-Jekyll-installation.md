@@ -3,7 +3,7 @@ layout: post
 title: Jekyll环境搭建(Windows 10)
 description: Jekyll环境搭建(Windows 10)
 category: tech
-thumb: ARTICLEPICTURES_PATH/jekyll.png
+thumb: site.ARTICLEPICTURES_PATH/jekyll.png
 tags: [jekyll, windows]
 ---
 

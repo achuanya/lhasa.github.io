@@ -3,7 +3,7 @@ layout: post
 title: 晒晒年中时的骑行
 date: 2024-02-02 5:24:06 +0800
 category: life
-thumb: ARTICLEPICTURES_PATH/zhuangbei1.jpg
+thumb: site.ARTICLEPICTURES_PATH/zhuangbei1.jpg
 tags: [骑行, 公路车, TCR, 四明山]
 ---
 

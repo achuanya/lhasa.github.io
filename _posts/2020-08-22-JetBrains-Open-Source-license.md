@@ -3,7 +3,7 @@ layout: post
 title: 使用开源项目免费申请JetBrains开源许可证
 description: 使用开源项目免费申请JetBrains开源许可证
 category: tech
-thumb: ARTICLEPICTURES_PATH/openSource.jpg
+thumb: site.ARTICLEPICTURES_PATH/openSource.jpg
 tags: [jetbrains, 开源]
 ---
 
