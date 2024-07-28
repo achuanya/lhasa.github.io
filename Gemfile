@@ -11,3 +11,5 @@ gem 'tzinfo-data', '>= 1.2021a'
 gem 'faraday', '< 2.0.0'
 
 gem 'faraday-net_http', '< 3.0.0'
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?

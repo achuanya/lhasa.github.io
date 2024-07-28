@@ -31,8 +31,13 @@ nickname: 游钓四方_
 home: https://lhasa.icu
 api: https://api.lhasa.icu
 disqus_api: https://disqus.lhasa.icu
-COS_API: https://cos.lhasa.icu
-IMG_PATH: https://cos.lhasa.icu/assets/article
+
+ARTICLEPICTURES_PATH: https://cos.lhasa.icu/ArticlePictures
+STYLEPICTURES_PATH: https://cos.lhasa.icu/StylePictures
+ASSETS_PATH: https://cos.lhasa.icu/assets
+FONT_PATH: https://cos.lhasa.icu/font
+SVG_PATH: https://cos.lhasa.icu/svg
+
 tongji: '2f325d81a4b600b2b4be3c277d6fa88a'
 analytics: ''
 clarity: 'kv84gdjved'

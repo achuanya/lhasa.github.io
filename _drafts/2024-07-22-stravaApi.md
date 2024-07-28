@@ -19,8 +19,8 @@ Strava API：https://developers.strava.com/
 
 
 
-[p1]: {{ site.COS_API }}/assets/article/20240718143947.jpg
-[p2]: {{ site.COS_API }}/assets/article/cc9a297937f92440c3d0eec0ce93932.jpg
-[p3]: {{ site.COS_API }}/assets/article/202407181439481.jpg
-[p4]: {{ site.COS_API }}/assets/article/202407181439482.jpg
-[p5]: {{ site.COS_API }}/assets/article/20240718143949.jpg
+[p1]: {{ site.ARTICLEPICTURES_PATH}}/20240718143947.jpg
+[p2]: {{ site.ARTICLEPICTURES_PATH}}/cc9a297937f92440c3d0eec0ce93932.jpg
+[p3]: {{ site.ARTICLEPICTURES_PATH}}/202407181439481.jpg
+[p4]: {{ site.ARTICLEPICTURES_PATH}}/202407181439482.jpg
+[p5]: {{ site.ARTICLEPICTURES_PATH}}/20240718143949.jpg

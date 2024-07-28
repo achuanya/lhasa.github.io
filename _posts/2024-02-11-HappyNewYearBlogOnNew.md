@@ -78,5 +78,5 @@ image.url[i] = image.url[i].replace(/\.(jpg|jpeg|png|gif)[^/]*$/, '.$1');
 ```
 
 
-[p1]: {{ site.COS_API }}/assets/article/MountTaranaki-NewZealand.jpg
-[p2]: {{ site.COS_API }}/assets/article/cn-font-splitfenbao.png
+[p1]: {{ site.ARTICLEPICTURES_PATH}}/MountTaranaki-NewZealand.jpg
+[p2]: {{ site.ARTICLEPICTURES_PATH}}/cn-font-splitfenbao.png

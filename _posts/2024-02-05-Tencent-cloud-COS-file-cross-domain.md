@@ -35,8 +35,8 @@ tags: [COS, 跨域, 取子集]
 ![取子集压缩后的效果][5]{:.small}
 
 
-[1]: {{ site.COS_API }}/assets/article/Tencent%20cloud%20cos%20cross-domain%20configuration.jpg
-[2]: {{ site.COS_API }}/assets/article/Textloading.jpg
+[1]: {{ site.ARTICLEPICTURES_PATH}}/Tencent%20cloud%20cos%20cross-domain%20configuration.jpg
+[2]: {{ site.ARTICLEPICTURES_PATH}}/Textloading.jpg
 [3]: https://fontsmaller.github.io/
 [4]: https://lhasa.icu/assets/%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E5%B8%B8%E7%94%A83500%E6%B1%89%E5%AD%97.txt
-[5]: {{ site.COS_API }}/assets/article/Textloading2.png
+[5]: {{ site.ARTICLEPICTURES_PATH}}/Textloading2.png

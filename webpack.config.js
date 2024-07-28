@@ -1,13 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
-const autoprefixer = require('autoprefixer'); 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-    entry: __dirname + '/src/main.js',
+    mode: 'production',
+    entry: path.resolve(__dirname, 'src/main.js'),
     output: {
-        path: __dirname + '/assets',
+        path: path.resolve(__dirname, 'assets'),
         filename: 'main.min.js'
     },
     stats: {
@@ -21,12 +21,23 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    {loader: 'postcss-loader', options: { plugins: () => [ require('autoprefixer') ] }},
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    require('autoprefixer'),
+                                    require('postcss-discard-comments')
+                                ]
+                            }
+                        }
+                    },
                     'sass-loader'
                 ]
-            },{
+            },
+            {
                 test: /\.html$/,
-                use: [ 'file-loader?name=[path][name].[ext]!extract-loader!html-loader' ]
+                use: ['html-loader']
             }
         ],
     },
@@ -41,17 +52,12 @@ module.exports = {
         })
     ],
     optimization: {
-        /*minimizer: [
-            new UglifyJSPlugin({
-                uglifyOptions: { 
-                    warnings: false,
-                    output: {
-                        comments: false,
-                        beautify: false,
-                    },
-                    ie8: false
-                }
-            })
-        ]*/
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+            }),
+            new CssMinimizerPlugin()
+        ],
     }
 };

@@ -56,14 +56,14 @@ tags: [公路车, 管胎, 补胎]
 ![测试][p11]{:.small}
 
 
-[p1]: {{ site.COS_API }}/assets/article/20240718143947.jpg
-[p2]: {{ site.COS_API }}/assets/article/cc9a297937f92440c3d0eec0ce93932.jpg
-[p3]: {{ site.COS_API }}/assets/article/202407181439481.jpg
-[p4]: {{ site.COS_API }}/assets/article/202407181439482.jpg
-[p5]: {{ site.COS_API }}/assets/article/20240718143949.jpg
-[p6]: {{ site.COS_API }}/assets/article/202407181439491.jpg
-[p7]: {{ site.COS_API }}/assets/article/202407181439492.jpg
-[p8]: {{ site.COS_API }}/assets/article/202407181439493.jpg
-[p9]: {{ site.COS_API }}/assets/article/20240718143950.jpg
-[p10]: {{ site.COS_API }}/assets/article/20240718143919.jpg
-[p11]: {{ site.COS_API }}/assets/article/21957e908521d8e718c6661e9b79a51.jpg
+[p1]: {{ site.ARTICLEPICTURES_PATH}}/20240718143947.jpg
+[p2]: {{ site.ARTICLEPICTURES_PATH}}/cc9a297937f92440c3d0eec0ce93932.jpg
+[p3]: {{ site.ARTICLEPICTURES_PATH}}/202407181439481.jpg
+[p4]: {{ site.ARTICLEPICTURES_PATH}}/202407181439482.jpg
+[p5]: {{ site.ARTICLEPICTURES_PATH}}/20240718143949.jpg
+[p6]: {{ site.ARTICLEPICTURES_PATH}}/202407181439491.jpg
+[p7]: {{ site.ARTICLEPICTURES_PATH}}/202407181439492.jpg
+[p8]: {{ site.ARTICLEPICTURES_PATH}}/202407181439493.jpg
+[p9]: {{ site.ARTICLEPICTURES_PATH}}/20240718143950.jpg
+[p10]: {{ site.ARTICLEPICTURES_PATH}}/20240718143919.jpg
+[p11]: {{ site.ARTICLEPICTURES_PATH}}/21957e908521d8e718c6661e9b79a51.jpg
