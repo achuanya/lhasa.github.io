@@ -3,7 +3,6 @@ layout: page
 permalink: /links.html
 title: 链接
 ---
-<p class="center-text">小小页面，虚拟世界。虽未曾谋面，已心生敬仰</p>
 <div class="container">
   {% assign rss_data = site.data.rss_data %}
   {% for post in rss_data %}

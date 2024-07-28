@@ -7,13 +7,13 @@ layout: default
         {% for image in page.images %}
         <li class="photo-item">
         {% if forloop.index < 10 %}
-            {% assign url = site.IMG_PATH 
+            {% assign url = site.ARTICLEPICTURES_PATH 
             | append: page.id 
             | append: "-0" 
             | append: forloop.index 
             | append: ".jpg" %}
         {% else %}
-            {% assign url = site.IMG_PATH 
+            {% assign url = site.ARTICLEPICTURES_PATH 
             | append: page.id 
             | append: "-" 
             | append: forloop.index 

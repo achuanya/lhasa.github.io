@@ -6,11 +6,11 @@ permalink: /posts.json
     {% assign images = post.content | split:'<img src="' %}
     {% assign imageSize = images | size | minus: 1 %}
     {% if post.thumb %}
-        {% assign thumbnail = post.thumb | replace:'IMG_PATH', site.IMG_PATH %}
+        {% assign thumbnail = post.thumb | replace:'ARTICLEPICTURES_PATH', site.ARTICLEPICTURES_PATH %}
     {% else %}
-        {% if post.content contains site.IMG_PATH %}
+        {% if post.content contains site.ARTICLEPICTURES_PATH %}
             {% for image in images %}
-                {% if image contains site.IMG_PATH %}
+                {% if image contains site.ARTICLEPICTURES_PATH %}
                     {% if image contains 'imageView'%}
                         {% assign thumbnail = image | split:"?imageView" | first %}
                     {% else %}
@@ -20,7 +20,7 @@ permalink: /posts.json
                 {% endif %}
             {% endfor %}
         {% else %}
-            {% assign thumbnail = site.IMG_PATH | append: "/avatar.jpg" %}
+            {% assign thumbnail = site.ARTICLEPICTURES_PATH | append: "/avatar.jpg" %}
         {% endif %}
     {% endif %}
     {% if thumbnail contains "svg" %}
