@@ -40,7 +40,7 @@ main()
 
 由于用 Go 搬砖，所有的包、类型和方法均可在 GitHub API 客户端库的第 39 版文档查询
 
-关于 Github API 有一点需要注意，配置好环境变量后，Token 操作仓库需要有一定的权限，务必启用 Read and write permissions 读取和写入权限，进行相应的操作
+关于 Github API 有一点需要注意，配置好环境变量后，Token 操作仓库需要有一定的权限，务必启用 Read and write permissions 读取和写入权限
 
 
 ```go
