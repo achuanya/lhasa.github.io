@@ -1,16 +1,15 @@
 ---
 layout: default
 ---
-
 <article class="post-content">
-  {% if content contains site.IMG_PATH %}
+  {% if content contains site.ARTICLEPICTURES_PATH %}
     {% assign images = content | split:'<img src="' %}
     {% for image in images %}
-      {% if image contains site.IMG_PATH %}
+      {% if image contains site.ARTICLEPICTURES_PATH %}
         {% assign thumbSrc = image | split: '" ' | first %}
         {% assign imageSrc = thumbSrc | split: '?imageView' | first | remove: "_640v" | remove: "_640" %}
         {% assign newImage = thumbSrc | prepend: '" data-url="' | prepend: thumbSrc | append: '" data-src="' | append: imageSrc %}
-        {% if thumbSrc contains site.IMG_PATH and newImage contains site.IMG_PATH %}
+        {% if thumbSrc contains site.ARTICLEPICTURES_PATH and newImage contains site.ARTICLEPICTURES_PATH %}
             {% assign content = content | replace: thumbSrc, newImage %}
         {% endif %}
       {% endif %}
@@ -19,12 +18,9 @@ layout: default
   {% assign content = content | replace_first:'id="markdown-toc"','class="post-toc"' %}
   {{ content }}
 </article>
-
 <div class="wechat">
     <img src="{{ site.STYLEPICTURES_PATH}}/WechatPublicAccount.png" title="生活中从不缺少美，而是缺少发现美的眼睛" alt="游钓四方的微信公众号">
 </div>
-
 {% include  extend.html %}
-
 {% include info.html %}
 <div id="comment"></div>

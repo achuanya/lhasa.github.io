@@ -25,9 +25,7 @@ layout: default
     {% else %}
         <li class="pagination-item"></li>
     {% endif %}
-
         <li class="pagination-item">{{ paginator.page}} / {{ paginator.total_pages}}</li>
-
     {% if paginator.previous_page %}
         {% if paginator.previous_page == 1 %}
         <li class="pagination-item"><a class="pagination-item-link" href="/">较新文章 &raquo;</a></li>
