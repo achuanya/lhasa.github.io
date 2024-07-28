@@ -3,7 +3,7 @@ layout: post
 title: _initialize()和__construct()的区别
 description: _initialize()和__construct()的区别
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/php.jpg
+thumb: ARTICLEPICTURES_PATH/php.jpg
 tags: [initialize, construct, php, 面向对象]
 ---
 

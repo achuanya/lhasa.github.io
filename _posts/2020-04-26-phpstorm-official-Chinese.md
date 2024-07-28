@@ -3,7 +3,7 @@ layout: post
 title: JetBrains官方推中文简体包了！
 description: JetBrains官方推中文简体包了！
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/JetBrains.jpg
+thumb: ARTICLEPICTURES_PATH/JetBrains.jpg
 tags: [jetbrains, php]
 ---
 
@@ -27,7 +27,7 @@ Cheers, Sergey.
 
 
 
-![消息]({{ {{ site.ARTICLEPICTURES_PATH }} }}/Style.png "示例")
+![消息]({{ ARTICLEPICTURES_PATH }}/Style.png "示例")
 
 
 

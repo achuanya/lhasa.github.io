@@ -3,7 +3,7 @@ layout: post
 title: (转)谈 Linux，Windows 和 Mac
 description: (转)谈 Linux，Windows 和 Mac
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/linux.jpg
+thumb: ARTICLEPICTURES_PATH/linux.jpg
 tags: [linux, windows, mac, 王垠]
 ---
 

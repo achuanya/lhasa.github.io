@@ -2,7 +2,7 @@
 layout: post
 title: (转)论胡编乱造的写作技巧
 category: life
-thumb: {{ site.ARTICLEPICTURES_PATH }}/xiezuo.jpg
+thumb: ARTICLEPICTURES_PATH/xiezuo.jpg
 tags: [写作技巧]
 ---
 
@@ -10,7 +10,7 @@ tags: [写作技巧]
 
 ---
 
-![编，我看你编......]({{ {{ site.ARTICLEPICTURES_PATH }} }}/theory-of-maens.jpeg){:.none}
+![编，我看你编......]({{ ARTICLEPICTURES_PATH }}/theory-of-maens.jpeg){:.none}
 
 今天给正在上小学二年级的女儿听写语文课文的词语时，发现有一篇课文讲的是爱迪生救妈妈的故事，大意就是爱迪生7岁那年，妈妈得了阑尾炎，医生在他家里准备给妈妈做手术，因为油灯的灯光太暗做不了，于是爱迪生想出了一个好办法：他找来很多镜子，把光聚在一起，让医生顺利地进行了手术。  
 

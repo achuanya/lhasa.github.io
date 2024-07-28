@@ -2,7 +2,7 @@
 layout: post
 title: 我回来了
 category: life
-thumb: {{ site.ARTICLEPICTURES_PATH }}/huilai.jpg
+thumb: ARTICLEPICTURES_PATH/huilai.jpg
 tags: []
 ---
 

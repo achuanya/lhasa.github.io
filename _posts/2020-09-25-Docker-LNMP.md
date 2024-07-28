@@ -3,7 +3,7 @@ layout: post
 title: Docker Compose快速构建LNMP笔记
 description: Docker Compose快速构建LNMP笔记
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/docker.jpg
+thumb: ARTICLEPICTURES_PATH/docker.jpg
 tags: [dockerc, compose, lnmp, linux]
 ---
 

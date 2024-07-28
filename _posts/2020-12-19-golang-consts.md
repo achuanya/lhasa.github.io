@@ -3,7 +3,7 @@ layout: post
 title: 爱上Go语言：常量与枚举
 description: 爱上Go语言：常量与枚举
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/golang.jpg
+thumb: ARTICLEPICTURES_PATH/golang.jpg
 tags: [golang, 常亮, 枚举]
 ---
 

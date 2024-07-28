@@ -3,7 +3,7 @@ layout: post
 title: 腾讯云COS文件跨域
 date: 2024-02-05 17:33:06 +0800
 category: tech
-thumb: {{ site.ARTICLEPICTURES_PATH }}/Tencent-cloud-COS-file-cross-domains.png
+thumb: ARTICLEPICTURES_PATH/Tencent-cloud-COS-file-cross-domains.png
 tags: [COS, 跨域, 取子集]
 ---
 
@@ -35,8 +35,8 @@ tags: [COS, 跨域, 取子集]
 ![取子集压缩后的效果][5]{:.small}
 
 
-[1]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/Tencent%20cloud%20cos%20cross-domain%20configuration.jpg
-[2]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/Textloading.jpg
+[1]: {{ ARTICLEPICTURES_PATH}}/Tencent%20cloud%20cos%20cross-domain%20configuration.jpg
+[2]: {{ ARTICLEPICTURES_PATH}}/Textloading.jpg
 [3]: https://fontsmaller.github.io/
 [4]: https://lhasa.icu/assets/%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E5%B8%B8%E7%94%A83500%E6%B1%89%E5%AD%97.txt
-[5]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/Textloading2.png
+[5]: {{ ARTICLEPICTURES_PATH}}/Textloading2.png
