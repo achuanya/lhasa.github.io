@@ -32,3 +32,5 @@
 
 [Sat Jul 27 22:09:2024] [Parse RSS error] https://lhasa.icu: Failed to detect feed type
 
+[Sun Jul 28 21:10:2024] [Get RSS error] https://www.shephe.com/feed/: Get "https://www.shephe.com/feed/": net/http: TLS handshake timeout
+
