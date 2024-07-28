@@ -3,7 +3,7 @@ layout: post
 title: (转)如何学习开源项目
 date: 2018-08-31 18:20:01 +0800
 category: tech
-thumb: 'IMG_PATH/openSource.jpg'
+thumb: 'ARTICLEPICTURES_PATH/openSource.jpg'
 tags: [开源, github]
 ---
 

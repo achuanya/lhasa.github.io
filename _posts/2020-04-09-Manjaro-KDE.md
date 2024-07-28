@@ -3,7 +3,7 @@ layout: post
 title: Manjaro KDE 调教日记
 description: Manjaro KDE 调教日记
 category: tech
-thumb: IMG_PATH/manjaro.jpg
+thumb: ARTICLEPICTURES_PATH/manjaro.jpg
 tags: [linux, manjaro, kde]
 ---
 
@@ -887,7 +887,7 @@ $ annie -f 80 -p https://www.bilibili.com/video/BV1FV411d7u7
 
 最后再来一张图啊哈哈哈～
 
-![我的桌面]({{ site.IMG_PATH }}/My desktop.png "我的桌面")
+![我的桌面]({{ site.ARTICLEPICTURES_PATH }}/My desktop.png "我的桌面")
 
 
 ## 后续报错

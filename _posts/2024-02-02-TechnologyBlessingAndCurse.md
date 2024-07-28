@@ -3,7 +3,7 @@ layout: post
 title: 技术亦福亦是祸
 date: 2024-02-02 15:50:06 +0800
 category: life
-thumb: IMG_PATH/TechnologyBlessingAndCurse.jpg
+thumb: ARTICLEPICTURES_PATH/TechnologyBlessingAndCurse.jpg
 tags: [资本, 技术, 思考]
 ---
 

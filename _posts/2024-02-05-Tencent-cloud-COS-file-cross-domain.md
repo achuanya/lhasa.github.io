@@ -3,7 +3,7 @@ layout: post
 title: 腾讯云COS文件跨域
 date: 2024-02-05 17:33:06 +0800
 category: tech
-thumb: IMG_PATH/Tencent-cloud-COS-file-cross-domains.png
+thumb: ARTICLEPICTURES_PATH/Tencent-cloud-COS-file-cross-domains.png
 tags: [COS, 跨域, 取子集]
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: linux命令笔记(长期更新)
 description: linux命令笔记(长期更新)
 category: tech
-thumb: 'IMG_PATH/linux.jpg'
+thumb: 'ARTICLEPICTURES_PATH/linux.jpg'
 tags: [Linux, manjaro]
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: Ubuntu调教日记之Sublime Text3
 description: "Ubuntu18.04下安装 Sublime Text3 并解决它的一些“疑难杂症"
 category: tech
-thumb: 'IMG_PATH/sublime.jpg'
+thumb: 'ARTICLEPICTURES_PATH/sublime.jpg'
 tags: [ubuntu, sublime Text3, Linux]
 ---
 
@@ -283,4 +283,4 @@ Shift+F11
 如有写的不足之处，还请您多多指教！  
 最后再秀一下我的 Sublime 感觉字体很棒，看着很舒服 嘿嘿
 
-![抱拳]({{ site.IMG_PATH }}/sublime.png){:.none}
+![抱拳]({{ site.ARTICLEPICTURES_PATH }}/sublime.png){:.none}

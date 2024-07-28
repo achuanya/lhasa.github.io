@@ -3,7 +3,7 @@ layout: post
 title: Manjaro Linux 自动禁用触摸板
 description: Manjaro Linux 自动禁用触摸板
 category: tech
-thumb: IMG_PATH/manjaro.jpg
+thumb: ARTICLEPICTURES_PATH/manjaro.jpg
 tags: [linux, manjaro, 触摸板, 驱动]
 ---
 

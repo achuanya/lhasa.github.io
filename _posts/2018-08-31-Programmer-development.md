@@ -2,7 +2,7 @@
 layout: post
 title: (转)为什么你写不好一个快速排序? 谈程序员的职业发展
 category: life
-thumb: 'IMG_PATH/fazhan.jpg'
+thumb: 'ARTICLEPICTURES_PATH/fazhan.jpg'
 tags: [思考, 发展]
 ---
 

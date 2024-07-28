@@ -3,7 +3,7 @@ layout: post
 title: 利用 Go + Github Actions 写个定时 RSS 爬虫
 date: 2024-07-27 09:50:01 +0800
 category: tech
-thumb: IMG_PATH/1722043714404.jpg
+thumb: ARTICLEPICTURES_PATH/1722043714404.jpg
 tags: [Go, Github Actions, COS, 爬虫]
 ---
 

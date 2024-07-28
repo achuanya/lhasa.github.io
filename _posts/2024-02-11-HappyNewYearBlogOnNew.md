@@ -3,7 +3,7 @@ layout: post
 title: 初一大吉，博客上上新
 date: 2024-02-11 5:35:06 +0800
 category: tech
-thumb: IMG_PATH/update.jpg
+thumb: ARTICLEPICTURES_PATH/update.jpg
 tags: [webpack, js, 分包, update]
 ---
 

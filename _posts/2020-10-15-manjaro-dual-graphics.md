@@ -3,7 +3,7 @@ layout: post
 title: Manjaro Linux 双显卡切换解决方案
 description: Manjaro Linux 双显卡切换解决方案
 category: tech
-thumb: IMG_PATH/manjaro.jpg
+thumb: ARTICLEPICTURES_PATH/manjaro.jpg
 tags: [linux, manjaro, 显卡, bug]
 ---
 

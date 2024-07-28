@@ -3,7 +3,7 @@ layout: post
 title: 快速定位Apache错误
 description: 快速定位Apache错误
 category: tech
-thumb: IMG_PATH/apache.jpg
+thumb: ARTICLEPICTURES_PATH/apache.jpg
 tags: [apache, linux, bug]
 ---
 
