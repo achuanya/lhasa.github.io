@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 利用 Go + Github Actions 写个定时 RSS 爬虫
+title: 利用Go+Github Actions写个定时RSS爬虫
 date: 2024-07-27 09:50:01 +0800
 category: tech
 thumb: ARTICLEPICTURES_PATH/1722043714404.jpg
