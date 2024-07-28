@@ -46,8 +46,8 @@ tags: [CDN, 安全, 流量]
 目前，GitHub上已经有相关项目 [ban-pcdn-ip][1] 用于收集这些恶意IP段。
 
 
-[p1]: {{ ARTICLEPICTURES_PATH }}/1721837126591.jpg
-[p2]: {{ ARTICLEPICTURES_PATH }}/1721836262452.jpg
-[p3]: {{ ARTICLEPICTURES_PATH }}/1721836283806.jpg
-[p4]: {{ ARTICLEPICTURES_PATH }}/1721836308939.jpg
+[p1]: {{ site.ARTICLEPICTURES_PATH }}/1721837126591.jpg
+[p2]: {{ site.ARTICLEPICTURES_PATH }}/1721836262452.jpg
+[p3]: {{ site.ARTICLEPICTURES_PATH }}/1721836283806.jpg
+[p4]: {{ site.ARTICLEPICTURES_PATH }}/1721836308939.jpg
 [1]: https://github.com/unclemcz/ban-pcdn-ip?tab=readme-ov-file

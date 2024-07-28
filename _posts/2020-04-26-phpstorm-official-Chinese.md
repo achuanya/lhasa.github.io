@@ -27,7 +27,7 @@ Cheers, Sergey.
 
 
 
-![消息]({{ ARTICLEPICTURES_PATH }}/Style.png "示例")
+![消息]({{ site.ARTICLEPICTURES_PATH }}/Style.png "示例")
 
 
 

@@ -887,7 +887,7 @@ $ annie -f 80 -p https://www.bilibili.com/video/BV1FV411d7u7
 
 最后再来一张图啊哈哈哈～
 
-![我的桌面]({{ ARTICLEPICTURES_PATH }}/My desktop.png "我的桌面")
+![我的桌面]({{ site.ARTICLEPICTURES_PATH }}/My desktop.png "我的桌面")
 
 
 ## 后续报错

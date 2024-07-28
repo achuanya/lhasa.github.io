@@ -51,5 +51,5 @@ tags: [饮食, 胡辣汤]
 虽然现在的经济形势也很差，但比以前是好多了，人的嘴都吃叼了。我想南北饮食的差异化也会随着小康社会的推动逐渐减少。
 
 
-[p1]: {{ ARTICLEPICTURES_PATH }}/hulatang1.jpg_640 "胡辣汤、肉包子、茶叶蛋、鸡蛋饼"
-[p2]: {{ ARTICLEPICTURES_PATH }}/bnanbeigdp.jpg_640 "2019年中国各省GDP总量及增速情况"
+[p1]: {{ site.ARTICLEPICTURES_PATH }}/hulatang1.jpg_640 "胡辣汤、肉包子、茶叶蛋、鸡蛋饼"
+[p2]: {{ site.ARTICLEPICTURES_PATH }}/bnanbeigdp.jpg_640 "2019年中国各省GDP总量及增速情况"
