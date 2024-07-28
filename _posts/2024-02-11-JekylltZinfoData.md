@@ -3,7 +3,7 @@ layout: post
 title: 解决Jekyll时区数据源
 date: 2024-02-11 23:07:20 +0800
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/JekylltZinfoData.png
+thumb: {{ site.ARTICLEPICTURES_PATH }}/JekylltZinfoData.png
 tags: [jekyll, tzinfo-data]
 ---
 

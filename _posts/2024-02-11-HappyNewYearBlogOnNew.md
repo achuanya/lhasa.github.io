@@ -3,7 +3,7 @@ layout: post
 title: 初一大吉，博客上上新
 date: 2024-02-11 5:35:06 +0800
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/update.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/update.jpg
 tags: [webpack, js, 分包, update]
 ---
 
@@ -78,5 +78,5 @@ image.url[i] = image.url[i].replace(/\.(jpg|jpeg|png|gif)[^/]*$/, '.$1');
 ```
 
 
-[p1]: {{ site.ARTICLEPICTURES_PATH}}/MountTaranaki-NewZealand.jpg
-[p2]: {{ site.ARTICLEPICTURES_PATH}}/cn-font-splitfenbao.png
+[p1]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/MountTaranaki-NewZealand.jpg
+[p2]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/cn-font-splitfenbao.png

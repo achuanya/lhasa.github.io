@@ -3,14 +3,14 @@ layout: post
 title: 解决ubuntu：E：无法获得锁(11：资源暂时不可用)
 description: 解决ubuntu：E：无法获得锁(11：资源暂时不可用)
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/ubuntu.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/ubuntu.jpg
 tags: [ubuntu, bug]
 ---
 
 
 最近学习用到了[php手册][1]，平常我都是在网页查看，图个方便于是就下载了[KchmViewer][2]（开源的CHM 阅读器）不过效果不太理想，今天想卸载了它，结果出段小插曲......  
 
-![Alt text]({{ site.ARTICLEPICTURES_PATH }}/ubuntu-lock1.png){:.none}
+![Alt text]({{ {{ site.ARTICLEPICTURES_PATH }} }}/ubuntu-lock1.png){:.none}
 
 what the?  
 好吧，遇到问题解决问题  
@@ -39,7 +39,7 @@ $ sudo rm /var/lib/dpkg/lock-frontend
 $ apt-get remove kchmviewer 
 ```
 
-![Alt text]({{ site.ARTICLEPICTURES_PATH }}/ubuntu-lock2.png "删除成功！") 
+![Alt text]({{ {{ site.ARTICLEPICTURES_PATH }} }}/ubuntu-lock2.png "删除成功！") 
 
 dpkg 查一下 kchmviewer 是否存在
 
@@ -47,7 +47,7 @@ dpkg 查一下 kchmviewer 是否存在
 $ dpkg -s kchmviewer
 ```
 
-![Alt text]({{ site.ARTICLEPICTURES_PATH }}/ubuntu-lock3.png){:.none}
+![Alt text]({{ {{ site.ARTICLEPICTURES_PATH }} }}/ubuntu-lock3.png){:.none}
 
 
 [1]: https://php.net

@@ -3,7 +3,7 @@ layout: post
 title: 在CentOS下实现MySQL数据库定时自动备份
 description: 在CentOS下实现MySQL数据库定时自动备份
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/centOS.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/centOS.jpg
 tags: [mysql, shell, backup, linux]
 ---
 

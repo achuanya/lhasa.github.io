@@ -3,7 +3,7 @@ layout: post
 title: (转)一个关于if else容易迷惑的问题
 description: (转)一个关于if else容易迷惑的问题
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/php.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/php.jpg
 tags: [if, else, php]
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: 喜提新车 Wilier Cento 10SL
 date: 2024-07-12 22:33:01 +0800
 category: life
-thumb: site.ARTICLEPICTURES_PATH/20240712214833.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/20240712214833.jpg
 tags: [wilier, Cento, 骑行, 公路车]
 ---
 
@@ -33,8 +33,8 @@ tags: [wilier, Cento, 骑行, 公路车]
 
 ![骑行照][p5]
 
-[p1]: {{ site.ARTICLEPICTURES_PATH}}/20240712214848.jpg
-[p2]: {{ site.ARTICLEPICTURES_PATH}}/20240712214849.jpg
-[p3]: {{ site.ARTICLEPICTURES_PATH}}/202407122148491.jpg
-[p4]: {{ site.ARTICLEPICTURES_PATH}}/20240712215100.jpg
-[p5]: {{ site.ARTICLEPICTURES_PATH}}/20240712214833.jpg
+[p1]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/20240712214848.jpg
+[p2]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/20240712214849.jpg
+[p3]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/202407122148491.jpg
+[p4]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/20240712215100.jpg
+[p5]: {{ {{ site.ARTICLEPICTURES_PATH }}}}/20240712214833.jpg

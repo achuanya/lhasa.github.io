@@ -3,7 +3,7 @@ layout: post
 title: (转)一个程序员眼中的价值
 description: (转)一个程序员眼中的价值
 category: tech
-thumb: site.ARTICLEPICTURES_PATH/jiazhi.jpg
+thumb: {{ site.ARTICLEPICTURES_PATH }}/jiazhi.jpg
 tags: [程序员, 价值]
 ---
 
