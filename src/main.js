@@ -83,20 +83,24 @@ window.addEventListener('beforeunload', function (event) {
 document.addEventListener('DOMContentLoaded', function (event) {
 
   // Img-previewer
-  const a = new ImgPreviewer('.post-content', {
-    scrollbar: true,
-    ratio: 0.7,
-    imageZoom: {
-      step: 1
-    },
-    style: {
-      modalOpacity: 0.8
-    },
-    bubblingLevel: 1,
-    onHide() {
-      clearInterval(timer)
-    }
-  })
+  if (document.querySelector('.post-content')) {
+    const a = new ImgPreviewer('.post-content', {
+      scrollbar: true,
+      ratio: 0.7,
+      imageZoom: {
+        step: 1
+      },
+      style: {
+        modalOpacity: 0.8
+      },
+      bubblingLevel: 1,
+      onHide() {
+        clearInterval(timer);
+      }
+    });
+  } else {
+    console.log('No .post-content element found on this page.');
+  }
 
   // Disqus
   var disq = new iDisqus('comment', {

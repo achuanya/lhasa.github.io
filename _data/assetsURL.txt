@@ -1,0 +1,11 @@
+https://cos.lhasa.icu/assets/main.min.js
+https://cos.lhasa.icu/assets/main.min.css
+https://cos.lhasa.icu/assets/img-previewer.min.js
+https://cos.lhasa.icu/font/highlight/highlight.min.js
+https://cos.lhasa.icu/font/TsangerJinKai01-W04/result.css
+https://cos.lhasa.icu/font/JetBrainsMono/result.css
+https://cos.lhasa.icu/font/highlight/a11y-light.min.css
+https://cos.lhasa.icu/assets/APlayer/APlayer.min.js
+https://cos.lhasa.icu/assets/APlayer/Meting2.min.js
+https://cos.lhasa.icu/assets/APlayer/music.js
+https://cos.lhasa.icu/assets/APlayer/APlayer.min.css
