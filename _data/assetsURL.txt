@@ -9,3 +9,4 @@ https://cos.lhasa.icu/assets/APlayer/APlayer.min.js
 https://cos.lhasa.icu/assets/APlayer/Meting2.min.js
 https://cos.lhasa.icu/assets/APlayer/music.js
 https://cos.lhasa.icu/assets/APlayer/APlayer.min.css
+https://cos.lhasa.icu//StylePictures/avatar.jpg
