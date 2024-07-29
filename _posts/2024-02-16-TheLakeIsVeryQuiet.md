@@ -13,4 +13,4 @@ tags: [湖畔幽悠, 诗, 淮阳, 龙湖]
 
 ![湖畔幽悠][p1]
 
-[p1]: {{ ARTICLEPICTURES_PATH}}/TheLakeIsVeryQuiet.jpg
+[p1]: {{ site.ARTICLEPICTURES_PATH }}/TheLakeIsVeryQuiet.jpg
