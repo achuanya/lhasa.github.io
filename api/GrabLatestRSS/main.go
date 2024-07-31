@@ -264,14 +264,14 @@ func saveToGitHub(config Config, data []Article) error {
 			Name:       "十年之约",
 			Title:      "穿梭虫洞-随机访问十年之约友链博客",
 			Link:       "https://foreverblog.cn/go.html",
-			Date:       "August 14, 2020",
+			Date:       "January 01, 2000",
 		},
 		{
 			DomainName: "https://www.travellings.cn",
 			Name:       "开往",
 			Title:      "开往-友链接力",
 			Link:       "https://www.travellings.cn/go.html",
-			Date:       "August 13, 2020",
+			Date:       "January 01, 2000",
 		},
 	}
 
