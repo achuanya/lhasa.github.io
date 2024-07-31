@@ -13,7 +13,7 @@ permalink: /atom.xml
   <author>
     <name>{{ site.author.name }}</name>
     <email>{{ site.author.email }}</email>
-  </author>
+  </author>#
   {% for post in site.posts %}
     <entry>
       <title>{{ post.title }}</title>
