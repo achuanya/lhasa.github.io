@@ -4,7 +4,7 @@ permalink: /atom.xml
 ---
 
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <id>https://example.com/feed</id>
   <title>{{ site.title }}</title>
   <link href="{{ site.home }}/atom.xml" rel="self" />
@@ -21,6 +21,9 @@ permalink: /atom.xml
       <id>{{ site.home }}{{ post.url }}</id>
       <updated>{{ post.date | date_to_xmlschema }}</updated>
       <summary type="text">{% if post.description %}{{ post.description | xml_escape }}{% else %}{{ post.content | split: '</p>' | first | strip_html | xml_escape }}{% endif %}</summary>
+      {% if post.thumb %}
+      <media:content url="{{ post.thumb | replace: 'ARTICLEPICTURES_PATH', site.ARTICLEPICTURES_PATH }}" medium="image"/>
+      {% endif %}
     </entry>
   {% endfor %}
 </feed>
