@@ -260,7 +260,7 @@ func saveToGitHub(config Config, data []Article) error {
 	// 固定数据
 	manualArticles := []Article{
 		{
-			DomainName: "https://www.travellings.cn",
+			DomainName: "https://foreverblog.cn",
 			Name:       "十年之约",
 			Title:      "穿梭虫洞-随机访问十年之约友链博客",
 			Link:       "https://foreverblog.cn/go.html",

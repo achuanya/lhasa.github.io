@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /guestbook.html
-title: 留言本
+title: 留言
 tags: [留言]
 ---
 
