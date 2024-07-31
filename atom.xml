@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>https://example.com/feed</id>
+  <title>游钓四方的博客</title>
+  <link href="https://lhasa.icu/atom.xml" rel="self" />
+  <link href="https://lhasa.icu/"/>
+  <updated>2024-08-01T01:46:15+08:00</updated>
+  <author>
+    <name>游钓四方的博客</name>
+    <email>haibao1027@gmail.com</email>
+  </author>
+  
+    <entry>
+      <title>七月最后一天骑行，有氧100公里</title>
+      <link href="https://lhasa.icu/RidingOnThelastDayOfJuly.html" />
+      <id>https://lhasa.icu/RidingOnThelastDayOfJuly.html</id>
+      <updated>2024-08-01T01:37:01+08:00</updated>
+      <summary type="text">今天是七月的最后一天，晚上必须来一次有氧小长途骑行，目标暂且定为100公里</summary>
+    </entry>
+  
+    <entry>
+      <title>利用Go+Github Actions写个定时RSS爬虫</title>
+      <link href="https://lhasa.icu/GrabLatestRSS.html" />
+      <id>https://lhasa.icu/GrabLatestRSS.html</id>
+      <updated>2024-07-27T09:50:01+08:00</updated>
+      <summary type="text">说起这事，还是受一位博友的启发“1900”他的左邻右舍页面很棒，决定模仿一下。我平时也用 Inoreader，但我还是喜欢直接打开博客的感觉，心血来潮，搞。</summary>
+    </entry>
+  
+    <entry>
+      <title>Tencent CDN 流量被恶意盗刷</title>
+      <link href="https://lhasa.icu/TencentCDNtrafficWasMaliciouslyStolen.html" />
+      <id>https://lhasa.icu/TencentCDNtrafficWasMaliciouslyStolen.html</id>
+      <updated>2024-07-25T00:44:01+08:00</updated>
+      <summary type="text"></summary>
+    </entry>
+  
+    <entry>
+      <title>公路车管胎被扎，怎么补胎</title>
+      <link href="https://lhasa.icu/TubularTireRepair.html" />
+      <id>https://lhasa.icu/TubularTireRepair.html</id>
+      <updated>2024-07-19T14:38:01+08:00</updated>
+      <summary type="text">管胎被扎了，还是后轮，我心如刀绞啊，太贵了，换不起，外面技师都不修管胎的</summary>
+    </entry>
+  
+    <entry>
+      <title>喜提新车 Wilier Cento 10SL</title>
+      <link href="https://lhasa.icu/WilierCento10SL.html" />
+      <id>https://lhasa.icu/WilierCento10SL.html</id>
+      <updated>2024-07-12T22:33:01+08:00</updated>
+      <summary type="text">得这辆车纯属缘分，前段时间在网上认识一个宁波的好大哥，没想到去年我们一起参加过同一个比赛，大哥是在宁波鄞州区开自行车店的，聊了许久大哥给我推荐一辆神车Wilier Cento 10SL！这是他朋友的爱车，财富自由润加拿大了，一些不方便带走的东西就卖掉了，这辆车刚到店里第一天，机缘巧合我就赶上了！</summary>
+    </entry>
+  
+    <entry>
+      <title>搞个公众号</title>
+      <link href="https://lhasa.icu/WechatPublicAccount.html" />
+      <id>https://lhasa.icu/WechatPublicAccount.html</id>
+      <updated>2024-03-10T15:51:01+08:00</updated>
+      <summary type="text">改名记录：</summary>
+    </entry>
+  
+    <entry>
+      <title>湖畔幽悠</title>
+      <link href="https://lhasa.icu/TheLakeIsVeryQuiet.html" />
+      <id>https://lhasa.icu/TheLakeIsVeryQuiet.html</id>
+      <updated>2024-02-16T00:45:01+08:00</updated>
+      <summary type="text">
+    湖畔独坐烟雾缭绕，古典旋律婉转悠扬</summary>
+    </entry>
+  
+    <entry>
+      <title>年味越来越淡，没有感觉</title>
+      <link href="https://lhasa.icu/22211Records.html" />
+      <id>https://lhasa.icu/22211Records.html</id>
+      <updated>2024-02-12T00:35:01+08:00</updated>
+      <summary type="text">出去转了转，拍点照片记录一下</summary>
+    </entry>
+  
+    <entry>
+      <title>解决Jekyll时区数据源</title>
+      <link href="https://lhasa.icu/JekylltZinfoData.html" />
+      <id>https://lhasa.icu/JekylltZinfoData.html</id>
+      <updated>2024-02-11T23:07:20+08:00</updated>
+      <summary type="text">由于Jekyll默认使用UTC时区，导致博客更新时间不准确。这里需要写入上海时间：timezone: Asia/Shanghai，但是我在本地调试时需要在配置内注释掉，不然就会报错</summary>
+    </entry>
+  
+    <entry>
+      <title>初一大吉，博客上上新</title>
+      <link href="https://lhasa.icu/HappyNewYearBlogOnNew.html" />
+      <id>https://lhasa.icu/HappyNewYearBlogOnNew.html</id>
+      <updated>2024-02-11T05:35:06+08:00</updated>
+      <summary type="text">图片预览
+
+`</summary>
+    </entry>
+  
+    <entry>
+      <title>腾讯云COS文件跨域</title>
+      <link href="https://lhasa.icu/Tencent-cloud-COS-file-cross-domain.html" />
+      <id>https://lhasa.icu/Tencent-cloud-COS-file-cross-domain.html</id>
+      <updated>2024-02-05T17:33:06+08:00</updated>
+      <summary type="text">今天换博客主要文字了，”仓耳今楷”,字体更美观更适合阅读。但是过程中遇到点问题</summary>
+    </entry>
+  
+    <entry>
+      <title>技术亦福亦是祸</title>
+      <link href="https://lhasa.icu/TechnologyBlessingAndCurse.html" />
+      <id>https://lhasa.icu/TechnologyBlessingAndCurse.html</id>
+      <updated>2024-02-02T15:50:06+08:00</updated>
+      <summary type="text">今天一个偶然接触到了Clarity Session Recording，当我看到它在我调试本地网站时，它居然录制了一条长达45分钟的视频，我大为震惊！由此，我怀揣着对技术的敬畏和亢奋的状态写下来这篇文章，虽然我非技术大牛，也非经济哲学家，但丝毫不影响我对技术的一些拙见。</summary>
+    </entry>
+  
+    <entry>
+      <title>晒晒年中时的骑行</title>
+      <link href="https://lhasa.icu/RidingRecordOne.html" />
+      <id>https://lhasa.icu/RidingRecordOne.html</id>
+      <updated>2024-02-02T05:24:06+08:00</updated>
+      <summary type="text">年前回家了，怀念年中在上海骑车日子</summary>
+    </entry>
+  
+    <entry>
+      <title>论南北饮食差异</title>
+      <link href="https://lhasa.icu/North-south-dietary-differences.html" />
+      <id>https://lhasa.icu/North-south-dietary-differences.html</id>
+      <updated>2024-01-29T12:18:06+08:00</updated>
+      <summary type="text">沪上为异客，巴月三成弦。朔风正摇落，行子已归旋。</summary>
+    </entry>
+  
+    <entry>
+      <title>置办了一套茶具</title>
+      <link href="https://lhasa.icu/Tea-set.html" />
+      <id>https://lhasa.icu/Tea-set.html</id>
+      <updated>2024-01-28T16:36:06+08:00</updated>
+      <summary type="text">我挺喜欢喝茶的，在采购部的时候，凌晨起来上班都会泡壶一级龙井放在车上，都是供应商明着面送采购部让大家喝的，主任睁一只眼闭一只眼也不会说什么。</summary>
+    </entry>
+  
+    <entry>
+      <title>我回来了</title>
+      <link href="https://lhasa.icu/The_song_begins.html" />
+      <id>https://lhasa.icu/The_song_begins.html</id>
+      <updated>2024-01-22T00:00:00+08:00</updated>
+      <summary type="text">一晃几年过去了，一切都物是人非，说起来有点哽咽…哎…</summary>
+    </entry>
+  
+    <entry>
+      <title>大年初一，徒步西湖</title>
+      <link href="https://lhasa.icu/West-Lake-Tour.html" />
+      <id>https://lhasa.icu/West-Lake-Tour.html</id>
+      <updated>2021-02-12T00:00:00+08:00</updated>
+      <summary type="text">早上八点从滨康路地铁口出发，从候潮门出来就一直在走</summary>
+    </entry>
+  
+    <entry>
+      <title>爱上Go语言：常量与枚举</title>
+      <link href="https://lhasa.icu/golang-consts.html" />
+      <id>https://lhasa.icu/golang-consts.html</id>
+      <updated>2020-12-19T00:00:00+08:00</updated>
+      <summary type="text">爱上Go语言：常量与枚举</summary>
+    </entry>
+  
+    <entry>
+      <title>爱上Go语言：变量定义与内建变量类型</title>
+      <link href="https://lhasa.icu/golang-variable.html" />
+      <id>https://lhasa.icu/golang-variable.html</id>
+      <updated>2020-12-18T00:00:00+08:00</updated>
+      <summary type="text">爱上Go语言：变量定义与内建变量类型</summary>
+    </entry>
+  
+    <entry>
+      <title>Manjaro Linux 双显卡切换解决方案</title>
+      <link href="https://lhasa.icu/manjaro-dual-graphics.html" />
+      <id>https://lhasa.icu/manjaro-dual-graphics.html</id>
+      <updated>2020-10-15T00:00:00+08:00</updated>
+      <summary type="text">Manjaro Linux 双显卡切换解决方案</summary>
+    </entry>
+  
+    <entry>
+      <title>Manjaro Linux 自动禁用触摸板</title>
+      <link href="https://lhasa.icu/DisableTouchpad.html" />
+      <id>https://lhasa.icu/DisableTouchpad.html</id>
+      <updated>2020-09-30T00:00:00+08:00</updated>
+      <summary type="text">Manjaro Linux 自动禁用触摸板</summary>
+    </entry>
+  
+    <entry>
+      <title>Docker Compose快速构建LNMP笔记</title>
+      <link href="https://lhasa.icu/Docker-LNMP.html" />
+      <id>https://lhasa.icu/Docker-LNMP.html</id>
+      <updated>2020-09-25T00:00:00+08:00</updated>
+      <summary type="text">Docker Compose快速构建LNMP笔记</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)一个关于if else容易迷惑的问题</title>
+      <link href="https://lhasa.icu/if-else-confuse.html" />
+      <id>https://lhasa.icu/if-else-confuse.html</id>
+      <updated>2020-08-23T00:00:00+08:00</updated>
+      <summary type="text">(转)一个关于if else容易迷惑的问题</summary>
+    </entry>
+  
+    <entry>
+      <title>使用开源项目免费申请JetBrains开源许可证</title>
+      <link href="https://lhasa.icu/JetBrains-Open-Source-license.html" />
+      <id>https://lhasa.icu/JetBrains-Open-Source-license.html</id>
+      <updated>2020-08-22T00:00:00+08:00</updated>
+      <summary type="text">使用开源项目免费申请JetBrains开源许可证</summary>
+    </entry>
+  
+    <entry>
+      <title>今天我去钓鱼了</title>
+      <link href="https://lhasa.icu/fishing.html" />
+      <id>https://lhasa.icu/fishing.html</id>
+      <updated>2020-06-29T00:00:00+08:00</updated>
+      <summary type="text">今早晨9点多醒了，透过窗户看看天气不错，看看手机了解今最低气温23度，最高气温31度，很适合钓鱼鲢鱼。</summary>
+    </entry>
+  
+    <entry>
+      <title>JetBrains官方推中文简体包了！</title>
+      <link href="https://lhasa.icu/phpstorm-official-Chinese.html" />
+      <id>https://lhasa.icu/phpstorm-official-Chinese.html</id>
+      <updated>2020-04-26T00:00:00+08:00</updated>
+      <summary type="text">JetBrains官方推中文简体包了！</summary>
+    </entry>
+  
+    <entry>
+      <title>ThinkPHP6.0下载安装与配置</title>
+      <link href="https://lhasa.icu/ThinkPHP6.0-installation.html" />
+      <id>https://lhasa.icu/ThinkPHP6.0-installation.html</id>
+      <updated>2020-04-14T00:00:00+08:00</updated>
+      <summary type="text">ThinkPHP6.0下载安装与配置</summary>
+    </entry>
+  
+    <entry>
+      <title>Manjaro KDE 调教日记</title>
+      <link href="https://lhasa.icu/Manjaro-KDE.html" />
+      <id>https://lhasa.icu/Manjaro-KDE.html</id>
+      <updated>2020-04-09T00:00:00+08:00</updated>
+      <summary type="text">Manjaro KDE 调教日记</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)谈 Linux，Windows 和 Mac</title>
+      <link href="https://lhasa.icu/Blog-Fully-Linux-working.html" />
+      <id>https://lhasa.icu/Blog-Fully-Linux-working.html</id>
+      <updated>2020-04-07T00:00:00+08:00</updated>
+      <summary type="text">(转)谈 Linux，Windows 和 Mac</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)为什么犹太人如此优秀？</title>
+      <link href="https://lhasa.icu/The-jews.html" />
+      <id>https://lhasa.icu/The-jews.html</id>
+      <updated>2020-03-18T00:00:00+08:00</updated>
+      <summary type="text">本文转自有个老外叫马绍飞</summary>
+    </entry>
+  
+    <entry>
+      <title>在CentOS下实现MySQL数据库定时自动备份</title>
+      <link href="https://lhasa.icu/Automatic-database-backup.html" />
+      <id>https://lhasa.icu/Automatic-database-backup.html</id>
+      <updated>2019-09-19T00:00:00+08:00</updated>
+      <summary type="text">在CentOS下实现MySQL数据库定时自动备份</summary>
+    </entry>
+  
+    <entry>
+      <title>阿川的个人博客"创建一周年啦!"</title>
+      <link href="https://lhasa.icu/Blog-anniversary.html" />
+      <id>https://lhasa.icu/Blog-anniversary.html</id>
+      <updated>2019-08-31T00:00:00+08:00</updated>
+      <summary type="text">岁月不居，时节如流。阿川的个人博客至今已经创建一周年了。还记得创建前看过别人的一些博客文章，说什么不推荐小白创建博客，说什么要支出各种域名服务器等费用，博客还挣不到钱，完全没必要创建博客。在我看来我觉这样的说真的误人子弟。在我创建博客这一年中我学会了太多东西，也在因为博客认识了一些志同道合的朋友。这些远比那些钱重要。当然把博客运营好且挣到钱，这也是非常有成就感的。</summary>
+    </entry>
+  
+    <entry>
+      <title>说说消失这二十多天发生的事情</title>
+      <link href="https://lhasa.icu/tech-What-happened.html" />
+      <id>https://lhasa.icu/tech-What-happened.html</id>
+      <updated>2019-08-25T00:00:00+08:00</updated>
+      <summary type="text">消失这二十多天，出了很多事情：离职，电脑坏了，找工作还有一大堆其他事情…可能这些东西看着也没啥。可是二十多天坏的电脑让我有点感觉人生低谷(；′⌒`)，先说第一件事情吧离职。</summary>
+    </entry>
+  
+    <entry>
+      <title>ThinkPHP Save 方法引发的错误</title>
+      <link href="https://lhasa.icu/tp-save.html" />
+      <id>https://lhasa.icu/tp-save.html</id>
+      <updated>2019-07-31T00:00:00+08:00</updated>
+      <summary type="text">ThinkPHP Save 方法引发的错误</summary>
+    </entry>
+  
+    <entry>
+      <title>爱上Go语言：终端命令</title>
+      <link href="https://lhasa.icu/Love-go.html" />
+      <id>https://lhasa.icu/Love-go.html</id>
+      <updated>2019-07-05T00:00:00+08:00</updated>
+      <summary type="text">爱上Go语言：终端命令</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)一个程序员眼中的价值</title>
+      <link href="https://lhasa.icu/phper-value.html" />
+      <id>https://lhasa.icu/phper-value.html</id>
+      <updated>2019-06-04T00:00:00+08:00</updated>
+      <summary type="text">(转)一个程序员眼中的价值</summary>
+    </entry>
+  
+    <entry>
+      <title>2019-05-22 博客功能更新记录</title>
+      <link href="https://lhasa.icu/Blog-feature-update.html" />
+      <id>https://lhasa.icu/Blog-feature-update.html</id>
+      <updated>2019-05-22T00:00:00+08:00</updated>
+      <summary type="text">2019-05-22 博客功能更新记录</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)我眼中的技术高手</title>
+      <link href="https://lhasa.icu/tech-whiz.html" />
+      <id>https://lhasa.icu/tech-whiz.html</id>
+      <updated>2019-05-19T00:00:00+08:00</updated>
+      <summary type="text">本文转自玉伯的博客</summary>
+    </entry>
+  
+    <entry>
+      <title>ionic笔记(环境搭建与命令)</title>
+      <link href="https://lhasa.icu/ionic.html" />
+      <id>https://lhasa.icu/ionic.html</id>
+      <updated>2019-05-06T00:00:00+08:00</updated>
+      <summary type="text">ionic笔记(环境搭建与命令)</summary>
+    </entry>
+  
+    <entry>
+      <title>我的第一部单反相机</title>
+      <link href="https://lhasa.icu/One-Single-Lens.html" />
+      <id>https://lhasa.icu/One-Single-Lens.html</id>
+      <updated>2019-04-20T00:00:00+08:00</updated>
+      <summary type="text"> 咱老百姓，今儿真啊么真高兴！嘿嘿，我的第一部单反相机”佳能EOS 200D 银色单反套机”，今早9:18快递到了！纸箱镇楼！ 
+受苦了宝贝…发货之前忘了指定快递服务，默认发了圆通。看这箱子样子，想起以前我去快递分拣兼职，活太累了管它什么物品都是暴力扔…</summary>
+    </entry>
+  
+    <entry>
+      <title>推荐10个优秀的技术栈社区</title>
+      <link href="https://lhasa.icu/it-site.html" />
+      <id>https://lhasa.icu/it-site.html</id>
+      <updated>2019-04-17T00:00:00+08:00</updated>
+      <summary type="text">推荐10个优秀的技术栈社区</summary>
+    </entry>
+  
+    <entry>
+      <title>快速定位Apache错误</title>
+      <link href="https://lhasa.icu/apache-error.html" />
+      <id>https://lhasa.icu/apache-error.html</id>
+      <updated>2019-04-15T00:00:00+08:00</updated>
+      <summary type="text">快速定位Apache错误</summary>
+    </entry>
+  
+    <entry>
+      <title>_initialize()和__construct()的区别</title>
+      <link href="https://lhasa.icu/initialize-construct.html" />
+      <id>https://lhasa.icu/initialize-construct.html</id>
+      <updated>2019-04-08T00:00:00+08:00</updated>
+      <summary type="text">_initialize()和__construct()的区别</summary>
+    </entry>
+  
+    <entry>
+      <title>Jekyll环境搭建(Windows 10)</title>
+      <link href="https://lhasa.icu/Jekyll-installation.html" />
+      <id>https://lhasa.icu/Jekyll-installation.html</id>
+      <updated>2019-03-29T00:00:00+08:00</updated>
+      <summary type="text">Jekyll环境搭建(Windows 10)</summary>
+    </entry>
+  
+    <entry>
+      <title>今日随笔</title>
+      <link href="https://lhasa.icu/thoughts.html" />
+      <id>https://lhasa.icu/thoughts.html</id>
+      <updated>2019-03-26T00:00:00+08:00</updated>
+      <summary type="text"> 到今天为止我已经工作了第十六天，我热爱我的工作也非常喜欢我司的文化与业务，公司也非常人性化，我们开发部老总人高马大平易近人，同事们很幽默经常说说笑笑，别的部门不知道怎么样，但是我们开发部氛围很棒，完全没有入职前感觉的紧张与压抑。美中不足的是小区楼下早餐店比较少，但是小区周围的绿化却很棒，出门左右拐都有一条小路，小路两旁种植了很多我认不出的花草和树木，三月的初春，小路两旁的花草和树木都长得格外养眼，它们挨挨挤挤，散发着清香。出了小区向左拐这个小路直通我公司，每次上下班我都喜欢从那里骑共享单车回家，耳机播着她喜欢的歌曲，欣赏着小路两旁的花草和树木，时不时吹来一阵微风把花草散发出清香吹入我的鼻子里，这味道能使我每一天都开心……日子过的可能太安逸了。</summary>
+    </entry>
+  
+    <entry>
+      <title>第一次校招复试总结</title>
+      <link href="https://lhasa.icu/summarize.html" />
+      <id>https://lhasa.icu/summarize.html</id>
+      <updated>2019-03-04T20:10:05+08:00</updated>
+      <summary type="text"> 上个月28号的时候校招拿到了一家公司offer，今天十号了也到了约定的时间，我早上8点30左右出发点去应聘，那会儿在公交车上晕车感觉真是生不如死….大概是9点到了目的地。进入他们公司后，环境跟自己想的差距有这么一点，我看他们应该都在忙着工作，不知道是是不是因为这个让我感觉气氛有些压抑。不过他们的技术主管给我印象还是很不错的，挺阳光的，我和他在对话的时候他也微笑的对我说，我很喜欢这人的人。
+ 这次复试大概的流程去了后填一下个人信息表，然后同把简历给了一个姐姐，提交了资料后大概十几分钟吧，我被第一个叫过去了。我这人内向第一次复试三个面试官盯着我一个我，看似我坐那抱着书包不慌，其实内心已经波涛澎湃…刚开始做个自我介绍，然后技术主管问了一些我是如何学习的，我举例说了一些Github，开源中国等等社区论坛…然后问了我项目制作的一个流程，还有MySQL的优化，MVC框架运作的原理等等…比较难受的两点是那个高并发之类的技术，因为我没有接触过这些前沿技术直接回答不懂，不过有一点真是扯淡…当时我非常紧张…他问我PHP数据类型有哪些，我直接懵逼了…
+ 差不多也就上述那些事，问完后就让我出去坐等一会儿，陆续了半个小时左右，我的朋友也都回来等最重结果。后来就是那样我们几个过了，谈论了一下公司的文化、项目与期望薪资，谈妥了经理说让我们回去等候电话，慎重考虑一下。
+ 基本是说完了，过程就是那么个过程，想想这次面试中犯的错真是幼稚，太紧张把PHP数据类型给忘了…自己面向对象这块抽象类和接口知识不太牢固，还是写的少。还有就是ThinkPHP的开发和CentOS部署，我没有玩过CentOS晚会儿装一下玩玩，正好再来一篇关于CentOS的博客。就到这里吧，第一次校招复试总结也就那么多内容。</summary>
+    </entry>
+  
+    <entry>
+      <title>第一次校招面试总结</title>
+      <link href="https://lhasa.icu/interview.html" />
+      <id>https://lhasa.icu/interview.html</id>
+      <updated>2019-02-28T12:15:01+08:00</updated>
+      <summary type="text"> 今天上午校招面试，也是我人生中对自己喜欢的工作的一次技能检验。面试提到几个问题，其中还有个关于与ajax异步请求，我记得不是太清没答上来。现在刚吃完饭就来总结一下。</summary>
+    </entry>
+  
+    <entry>
+      <title>ThinkPHP笔记(路由实现与操作方法)</title>
+      <link href="https://lhasa.icu/tp5.html" />
+      <id>https://lhasa.icu/tp5.html</id>
+      <updated>2019-02-28T00:00:00+08:00</updated>
+      <summary type="text">ThinkPHP笔记(路由实现与操作方法)</summary>
+    </entry>
+  
+    <entry>
+      <title>电信用户投诉攻略</title>
+      <link href="https://lhasa.icu/unicom.html" />
+      <id>https://lhasa.icu/unicom.html</id>
+      <updated>2019-02-25T00:00:00+08:00</updated>
+      <summary type="text"> 因为我手机卡是合约卡的原因，又临近毕业了，这张卡握在手里真的没得用，36元套餐1G流量，这样的套餐我来说真的是难受，只能更换套餐。以前我都是靠着校园网和移动纯流量卡，校园网出了校门就不能用了，不划算我给停了，那个打幌子的移动纯流量卡更是个坑，在此提醒不推荐大家办理这种卡。
+ 因为我这卡是合约卡，不能随意转套餐，然后我就拨打10010转人工客服说需求说转腾讯大王卡套餐，不过客服百般阻挠说这个不好那个不好，不过我态度比较强硬，之后在24号晚上8：25我收到了工单。</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)微不足道的坚持</title>
+      <link href="https://lhasa.icu/insist.html" />
+      <id>https://lhasa.icu/insist.html</id>
+      <updated>2019-02-23T00:00:00+08:00</updated>
+      <summary type="text">本文转自玉伯的博客</summary>
+    </entry>
+  
+    <entry>
+      <title>Redis笔记(安装与数据类型)</title>
+      <link href="https://lhasa.icu/redis.html" />
+      <id>https://lhasa.icu/redis.html</id>
+      <updated>2019-02-22T00:00:00+08:00</updated>
+      <summary type="text">Redis笔记(安装与数据类型)</summary>
+    </entry>
+  
+    <entry>
+      <title>2018小总结</title>
+      <link href="https://lhasa.icu/2018.html" />
+      <id>https://lhasa.icu/2018.html</id>
+      <updated>2018-12-31T00:00:00+08:00</updated>
+      <summary type="text"> 岁月不居,时节如流。现在距离2019年还有5分钟,想一想年后…我的求学生涯也该结束了…挺难受的,不过收获还是一箩筐的!那些不该经历和不可能经历的事情都让我走了一遭…</summary>
+    </entry>
+  
+    <entry>
+      <title>cmd笔记(长期更新)</title>
+      <link href="https://lhasa.icu/cmd.html" />
+      <id>https://lhasa.icu/cmd.html</id>
+      <updated>2018-12-20T00:00:00+08:00</updated>
+      <summary type="text">cmd笔记(长期更新)</summary>
+    </entry>
+  
+    <entry>
+      <title>php笔记(长期更新)</title>
+      <link href="https://lhasa.icu/php-notes.html" />
+      <id>https://lhasa.icu/php-notes.html</id>
+      <updated>2018-12-14T00:00:00+08:00</updated>
+      <summary type="text">php笔记(长期更新)</summary>
+    </entry>
+  
+    <entry>
+      <title>Ubuntu Server部署日记</title>
+      <link href="https://lhasa.icu/Ubuntu-Deployment.html" />
+      <id>https://lhasa.icu/Ubuntu-Deployment.html</id>
+      <updated>2018-11-08T00:00:00+08:00</updated>
+      <summary type="text">Ubuntu Server部署日记</summary>
+    </entry>
+  
+    <entry>
+      <title>解决ubuntu：E：无法获得锁(11：资源暂时不可用)</title>
+      <link href="https://lhasa.icu/ubuntu-lock.html" />
+      <id>https://lhasa.icu/ubuntu-lock.html</id>
+      <updated>2018-10-25T00:00:00+08:00</updated>
+      <summary type="text">解决ubuntu：E：无法获得锁(11：资源暂时不可用)</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)论胡编乱造的写作技巧</title>
+      <link href="https://lhasa.icu/theory-of-means.html" />
+      <id>https://lhasa.icu/theory-of-means.html</id>
+      <updated>2018-10-24T00:00:00+08:00</updated>
+      <summary type="text">本文转自廖雪峰的博客</summary>
+    </entry>
+  
+    <entry>
+      <title>更换了域名、邮箱并修复了移动端bug</title>
+      <link href="https://lhasa.icu/domain-name.html" />
+      <id>https://lhasa.icu/domain-name.html</id>
+      <updated>2018-10-21T00:00:00+08:00</updated>
+      <summary type="text"> 更换域名这件事我想了好久，原使用Github的三级域名但它太长，本来想换achuan.com不过早就被注册了，卖方叫价太高了，没有5000谈判都碰不着。ahuan.cn也是早已注册，人家买了域名都不解析挂着玩，也联系过人家，不过人家不回消息。.net .me 都没了。偶然我了解到“.io”，它是一个国别域名，同时，它还可被理解为[inputoutput]即“输入输出接口”之意。“io”看着是是不是有点像二进制的“0 与 1”！感觉很有技术内涵，而且近几年.io在区块链方面比较火，我感觉用来搭建技术博客也是不错的选择。
+ 在选择域名商我也是非常纠结，.io后缀国内域名商几乎是没有的，主要是不能备案，毕竟这是国别后域名，估计不会开放备案。国内不行那就国外吧，怎么要有免费的隐私保护、网站访问速度正常、支付方式、域名价，格至于客服响应、稳定性那都是必须的。
+ dynadot是我一个想到的，这家伙有大量的骚东西，特殊后缀域名.love .blog .wiki 等…说一下它的一些服务吧，购买域名即送终身隐私保护，但我也不是什么明星大腕，隐私保护自然用不到，dynadot所有域名都赠送终身免费的隐私保护，dynadot网站自带各国域名很多种，自然有中文，而且在北京设立有分公司，国内网站速度打开正常并且支持支付宝，解析稳定这都不用说，虽然这家口碑不是理想中的那么好，但是跑路估计是不存在的，至于转出暂时我没试过不知道，唯一就是感觉这家.io价格有点高 $29。
+ Namesilo也不错，号称全球最便宜，收费透明且支付支付宝，不过国内访问注册都过不了，翻墙就不至于了，不多考虑。Namecheap呢价格上不算便宜，但是各方面做的不错，不限于速度、稳定性、免费的SSL、客服响应等等、但是它不支持支付宝。至于GoDaddy，虽然最为业界的NO 1，但是在网上查看那些相关新闻评论，看我的我不想买了都，虽然它有中文、支持支付宝、国内访问还算凑合。但是pass。
+ 考虑了半天想想还是用“挑兵挑将”来选择吧 天选之商 dynadot 胜出….下了订单$29，吃土吧，快乐并痛苦着…买后即用，不用备案是真爽，进去NDS设置一下，ping achuanya.github.io获取IP，然后添加主域名A记录 185.199.109.153，子域名 www A记录随主域名。更换了域名，邮箱也改一下吧，网易企业邮箱免费，添加 MX记录 mx.ym.163.com 优先级10（邮箱：achuan@achuan.io），访问 achuan.io 完全ojbk。
+ 除了域名\邮箱也没闲着，修改了博客移动端的一些bug：</summary>
+    </entry>
+  
+    <entry>
+      <title>开源分布式管理控制系统——Git笔记</title>
+      <link href="https://lhasa.icu/git.html" />
+      <id>https://lhasa.icu/git.html</id>
+      <updated>2018-10-14T00:00:00+08:00</updated>
+      <summary type="text">开源分布式管理控制系统——Git笔记</summary>
+    </entry>
+  
+    <entry>
+      <title>linux命令笔记(长期更新)</title>
+      <link href="https://lhasa.icu/linux-command.html" />
+      <id>https://lhasa.icu/linux-command.html</id>
+      <updated>2018-09-24T00:00:00+08:00</updated>
+      <summary type="text">linux命令笔记(长期更新)</summary>
+    </entry>
+  
+    <entry>
+      <title>面向对象(Object Oriented)学习笔记(一)</title>
+      <link href="https://lhasa.icu/Object_oriented.html" />
+      <id>https://lhasa.icu/Object_oriented.html</id>
+      <updated>2018-09-23T00:00:00+08:00</updated>
+      <summary type="text">面向对象(Object Oriented)学习笔记(一)</summary>
+    </entry>
+  
+    <entry>
+      <title>致简写作神器——Markdown</title>
+      <link href="https://lhasa.icu/Markdown.html" />
+      <id>https://lhasa.icu/Markdown.html</id>
+      <updated>2018-09-03T00:00:00+08:00</updated>
+      <summary type="text">致简写作神器——Markdown</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)如何学习开源项目</title>
+      <link href="https://lhasa.icu/Learning-the-open-source.html" />
+      <id>https://lhasa.icu/Learning-the-open-source.html</id>
+      <updated>2018-08-31T18:20:01+08:00</updated>
+      <summary type="text">本文转自华为章宇的博客</summary>
+    </entry>
+  
+    <entry>
+      <title>(转)为什么你写不好一个快速排序? 谈程序员的职业发展</title>
+      <link href="https://lhasa.icu/Programmer-development.html" />
+      <id>https://lhasa.icu/Programmer-development.html</id>
+      <updated>2018-08-31T00:00:00+08:00</updated>
+      <summary type="text">本文转自IT技术博客大学习</summary>
+    </entry>
+  
+    <entry>
+      <title>Ubuntu调教日记之Sublime Text3</title>
+      <link href="https://lhasa.icu/Ubuntu-set-up-sublime.html" />
+      <id>https://lhasa.icu/Ubuntu-set-up-sublime.html</id>
+      <updated>2018-08-30T00:00:00+08:00</updated>
+      <summary type="text">Ubuntu18.04下安装 Sublime Text3 并解决它的一些“疑难杂症</summary>
+    </entry>
+  
+</feed>

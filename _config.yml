@@ -13,6 +13,9 @@ plugins:
   - jemoji
   - jekyll-sitemap
 
+url: "https://lhasa.icu"
+baseurl: ""
+
 permalink: /:title.html
 highlighter: rouge
 
