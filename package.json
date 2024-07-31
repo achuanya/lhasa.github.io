@@ -41,7 +41,7 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production && bundle exec jekyll build --watch"
   },
   "repository": {
     "type": "git",
