@@ -36,12 +36,13 @@ tags: [关于, 博客, 游钓四方, blog]
 * 2018-08-31 博客由Github Pages托管，起名：阿川的个人博客
 * 2018-10-16 Dynadot购入域名achuan.io，该域名于2023-10-16到期
 * 2020-10-06 加入Forever Blog十年之约
-* 2024-01-23 Tencent Cloud购入域名lhasa.icu，博客名称改为 游钓四方的博客
 * 2024-01-22 因代码历史遗留问题，舍弃原有博客。Fork Fooleap Blog
-* 2024-01-31 全站静态资源转移到Tencent Cloud COS
+* 2024-01-23 Tencent Cloud购入域名lhasa.icu，博客更名：游钓四方的博客
+* 2024-01-31 CSS、JS和Images转移到Tencent Cloud COS
 * 2024-01-31 完成域名备案，并由Tencent Cloud CDN进行全球加速
 * 2024-02-06 引入Disqus评论系统，由洛杉矶VPS，Ningx反向代理
 * 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
+* 2024-07-22 Tencent Cloud COS 再套一层 CDN 进行境内加速
 
 [1]: https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans
 [2]: https://github.com/achuanya
