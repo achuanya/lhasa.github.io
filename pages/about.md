@@ -42,7 +42,7 @@ tags: [关于, 博客, 游钓四方, blog]
 * 2024-01-31 完成域名备案，并由Tencent Cloud CDN进行全球加速
 * 2024-02-06 引入Disqus评论系统，由洛杉矶VPS，Ningx反向代理
 * 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
-* 2024-07-22 Tencent Cloud COS 再套一层 CDN 进行境内加速
+* 2024-07-22 Tencent Cloud COS再套一层CDN进行境内加速
 
 [1]: https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans
 [2]: https://github.com/achuanya
