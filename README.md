@@ -2,11 +2,7 @@
 * atom订阅：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
 * rss订阅：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=22603037&auto=1&height=32"></iframe>
-
 请使用Chrome、Firefox等现代浏览器浏览本博客，以免因为兼容性影响阅读体验。
-
-自 2018 年 8 月 31 日起，本站已运行 <span id="days"></span> 天，截至到今天，共写了博文 {{ site.posts.size }} 篇，计 {% assign count = 0 %}{% for post in site.posts %}{% assign single_count = post.content | strip_html | strip_newlines | remove: ' ' | size %}{% assign count = count | plus: single_count %}{% endfor %}{% if count > 10000 %}{{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}{% else %}{{ count }}{% endif %} 字。
 
 鄙人博客采用:<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh-hans" target="_blank">CC BY-NC-ND 4.0</a>，转载请务必注明出处，谢谢。
 
@@ -14,7 +10,7 @@
 
 ## 博主
 
-![游钓四方的骑行照]({{ site.STYLEPICTURES_PATH}}/my-photo.jpg "游钓四方的骑行照")
+![游钓四方的骑行照](https://cos.lhasa.icu/StylePictures/my-photo.jpg_640 "游钓四方的骑行照")
 
 长途骑行小学生、野钓路亚、振出并继、古典乐、茶叶爱好者
 
@@ -22,7 +18,7 @@
 - Github：<a href="https://github.com/achuanya" target="_blank">achuanya</a>
 - 微信公众号：游钓四方的博客
 
-![游钓四方的微信公众号]({{ site.STYLEPICTURES_PATH}}/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
+![游钓四方的微信公众号](https://cos.lhasa.icu/StylePictures/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
 
 ## 博客进程
 
