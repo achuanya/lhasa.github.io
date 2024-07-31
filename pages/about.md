@@ -32,16 +32,16 @@ tags: [关于, 博客, 游钓四方, blog]
 
 ## 博客进程
 
-* 2018-08-30 Fork 云计算大佬 孔令贤的 Jekyll 模板，开始接触个人博客
-* 2018-08-31 由 Github Pages 托管，起名：阿川的个人博客
-* 2018-10-16 Dynadot 购入 achuan.io，于 2023-10-16 到期
-* 2020-10-06 加入 Forever Blog 十年之约
-* 2024-01-23 腾讯云购入 lhasa.icu，博客改名为：游钓四方的博客
-* 2024-01-22 因代码历史遗留问题，舍弃原有博客，Fork Fooleap Blog
-* 2024-01-31 全站静态资源走腾讯 对象储存 COS
-* 2024-01-31 域名备案完成，由腾讯云 内容分发网络 CDN 全球加速
-* 2024-02-06 由 Ningx 反向代理引入 Disqus 评论系统
-* 2024-02-11 CSS、JS 由 webPack 打包，字体做分包处理
+* 2018-08-30 Fork孔令贤的Jekyll模板，开始接触个人博客
+* 2018-08-31 博客由Github Pages托管，起名：阿川的个人博客
+* 2018-10-16 Dynadot购入域名achuan.io，该域名于2023-10-16到期
+* 2020-10-06 加入Forever Blog十年之约
+* 2024-01-23 Tencent Cloud购入域名lhasa.icu，博客名称改为 游钓四方的博客
+* 2024-01-22 因代码历史遗留问题，舍弃原有博客。Fork Fooleap Blog
+* 2024-01-31 全站静态资源转移到Tencent Cloud COS
+* 2024-01-31 完成域名备案，并由Tencent Cloud CDN进行全球加速
+* 2024-02-06 引入Disqus评论系统，由洛杉矶VPS，Ningx反向代理
+* 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
 
 [1]: https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans
 [2]: https://github.com/achuanya
