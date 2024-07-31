@@ -257,6 +257,26 @@ func saveToGitHub(config Config, data []Article) error {
 		AccessToken: config.GithubToken,
 	})))
 
+	// 固定数据
+	manualArticles := []Article{
+		{
+			DomainName: "https://www.travellings.cn",
+			Name:       "十年之约",
+			Title:      "穿梭虫洞-随机访问十年之约友链博客",
+			Link:       "https://foreverblog.cn/go.html",
+			Date:       "August 14, 2020",
+		},
+		{
+			DomainName: "https://www.travellings.cn",
+			Name:       "开往",
+			Title:      "开往-友链接力",
+			Link:       "https://www.travellings.cn/go.html",
+			Date:       "August 13, 2020",
+		},
+	}
+
+	data = append(data, manualArticles...)
+
 	// 将文章数据序列化为 JSON 格式
 	jsonData, err := json.Marshal(data)
 	if err != nil {
