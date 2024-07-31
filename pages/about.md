@@ -5,16 +5,17 @@ title: 关于
 tags: [关于, 博客, 游钓四方, blog]
 ---
 
-* 博客网址：[https://lhasa.icu](https://lhasa.icu)
-* Atom 订阅：[https://lhasa.icu/atom.xml](/atom.xml)
+* 博客网址：<a href="https://lhasa.icu" target="_blank">https://lhasa.icu</a>
+* atom订阅：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
+* rss订阅：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
 
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=22603037&auto=1&height=32"></iframe>
 
-请使用 Firefox、Chrome 等现代浏览器浏览本博客，以免因为兼容性影响阅读体验。
+请使用Chrome、Firefox等现代浏览器浏览本博客，以免因为兼容性影响阅读体验。
 
 自 2018 年 8 月 31 日起，本站已运行 <span id="days"></span> 天，截至到今天，共写了博文 {{ site.posts.size }} 篇，计 {% assign count = 0 %}{% for post in site.posts %}{% assign single_count = post.content | strip_html | strip_newlines | remove: ' ' | size %}{% assign count = count | plus: single_count %}{% endfor %}{% if count > 10000 %}{{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}{% else %}{{ count }}{% endif %} 字。
 
-鄙人博客采用:[CC BY-NC-ND 4.0][1]，转载请务必注明出处，谢谢。
+鄙人博客采用:<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh-hans" target="_blank">CC BY-NC-ND 4.0</a>，转载请务必注明出处，谢谢。
 
 内容系本人学习、研究和总结，如有雷同，实属荣幸！
 
@@ -25,7 +26,7 @@ tags: [关于, 博客, 游钓四方, blog]
 长途骑行小学生、野钓路亚、振出并继、古典乐、茶叶爱好者
 
 - Email: <haibao1027@gmail.com>
-- Github：[achuanya][2]
+- Github：<a href="https://github.com/achuanya" target="_blank">achuanya</a>
 - 微信公众号：游钓四方的博客
 
 ![游钓四方的微信公众号]({{ site.STYLEPICTURES_PATH}}/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
@@ -44,8 +45,6 @@ tags: [关于, 博客, 游钓四方, blog]
 * 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
 * 2024-07-22 Tencent Cloud COS再套一层CDN进行境内加速
 
-[1]: https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans
-[2]: https://github.com/achuanya
 
 <script>
     var days = 0, daysMax = Math.floor((Date.now() / 1000 - {{ "2018-08-31" | date: "%s" }}) / (60 * 60 * 24));
