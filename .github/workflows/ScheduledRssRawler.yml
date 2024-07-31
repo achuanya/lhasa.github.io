@@ -20,14 +20,14 @@ jobs:
 
     - name: Install dependencies
       run: go mod tidy
-      working-directory: ./api
+      working-directory: ./api/GrabLatestRSS
 
     - name: Build
       run: go build -o main
-      working-directory: ./api
+      working-directory: ./api/GrabLatestRSS
 
     - name: Run Go program
       env:
         TOKEN: ${{ secrets.TOKEN }}
       run: ./main
-      working-directory: ./api
+      working-directory: ./api/GrabLatestRSS

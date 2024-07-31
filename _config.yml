@@ -15,12 +15,14 @@ plugins:
 
 permalink: /:title.html
 highlighter: rouge
+
 markdown: kramdown
 kramdown: 
   auto_ids:       true
   auto_id_prefix: 'id-'
   toc_levels:     '2,3'
   smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  
 emoji:
     src: 'https://api.lhasa.icu'
 paginate: 10
