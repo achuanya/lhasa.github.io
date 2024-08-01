@@ -24,6 +24,12 @@ type Config struct {
 	GithubRepository string
 }
 
+// 用于解析 avatar_data.json 文件
+type Avatar struct {
+	Name   string `json:"name"`
+	Avatar string `json:"avatar"`
+}
+
 // 爬虫数据
 type Article struct {
 	// 域名
@@ -36,6 +42,8 @@ type Article struct {
 	Link string `json:"link"`
 	// 文章发布时间，非爬虫原数据，而是格式化后的结果
 	Date string `json:"date"`
+	// 头像
+	Avatar string `json:"avatar"`
 }
 
 func initConfig() Config {
@@ -164,9 +172,59 @@ func logMessage(config Config, message string, fileName string) {
 	}
 }
 
+// 从 GitHub 仓库中获取 JSON 文件内容
+func fetchFileFromGitHub(config Config, filePath string) (string, error) {
+	ctx := context.Background()
+	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
+		AccessToken: config.GithubToken,
+	})))
+
+	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
+	if err != nil {
+		if resp.StatusCode == http.StatusNotFound {
+			return "", fmt.Errorf("file not found: %s", filePath)
+		}
+		return "", fmt.Errorf("error fetching file %s from GitHub: %v", filePath, err)
+	}
+
+	content, err := file.GetContent()
+	if err != nil {
+		return "", fmt.Errorf("error decoding file %s content: %v", filePath, err)
+	}
+
+	return content, nil
+}
+
+// 从 GitHub 仓库中读取头像配置
+func loadAvatarsFromGitHub(config Config) (map[string]string, error) {
+	content, err := fetchFileFromGitHub(config, "_data/avatar_data.json") // 从 GitHub 仓库中获取 avatar_data.json
+	if err != nil {
+		return nil, err
+	}
+
+	var avatars []Avatar
+	if err := json.Unmarshal([]byte(content), &avatars); err != nil {
+		return nil, err
+	}
+
+	avatarMap := make(map[string]string)
+	for _, a := range avatars {
+		avatarMap[a.Name] = a.Avatar
+	}
+
+	return avatarMap, nil
+}
+
 // 从 RSS 列表中抓取最新的文章，并按发布时间排序
 func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	var articles []Article
+
+	// 从 GitHub 仓库中读取头像配置
+	avatars, err := loadAvatarsFromGitHub(config)
+	if err != nil {
+		logError(config, fmt.Sprintf("[%s] [Load avatars error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
+		return nil, err
+	}
 
 	// RSS 解析器
 	fp := gofeed.NewParser()
@@ -208,6 +266,15 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 			domainName = "unknown"
 		}
 
+		// 使用 feed.Title 作为博客名称
+		name := feed.Title
+
+		// 获取头像
+		avatarURL := avatars[name]
+		if avatarURL == "" {
+			avatarURL = "https://gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=50" // 默认头像
+		}
+
 		// 只获取最新的一篇文章
 		if len(feed.Items) > 0 {
 			item := feed.Items[0]
@@ -231,6 +298,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				Name:       feed.Title,
 				Title:      item.Title,
 				Link:       item.Link,
+				Avatar:     avatarURL,
 
 				// 格式化后的发布时间
 				Date: formatTime(publishedTime),
