@@ -6,3 +6,5 @@
 
 [Fri Aug 2 03:30:2024] [Load avatars error] open avatar_data.json: The system cannot find the file specified.
 
+[Fri Aug 2 03:30:2024] [Fetch RSS error] open avatar_data.json: The system cannot find the file specified.
+
