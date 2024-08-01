@@ -39,3 +39,5 @@
 
 [Fri Aug 2 07:01:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Get "https://blog.einverne.info/feed.xml": dial tcp [2a03:2880:f10f:83:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 
+[Fri Aug 2 07:06:2024] [Extract domain error] : <nil>
+
