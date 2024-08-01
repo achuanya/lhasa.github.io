@@ -77,3 +77,5 @@
 
 [Fri Aug 2 07:26:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Get "https://blog.einverne.info/feed.xml": dial tcp 210.209.84.142:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 
+[Fri Aug 2 07:50:2024] [Parse RSS error] https://wangpei.net/feed: XML syntax error on line 1: unexpected EOF in CDATA section
+
