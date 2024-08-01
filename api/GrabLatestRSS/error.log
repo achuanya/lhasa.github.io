@@ -1,2 +1,4 @@
 [Wed Jul 31 14:11:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Get "https://blog.fooleap.org/atom.xml": net/http: TLS handshake timeout
 
+[Fri Aug 2 03:29:2024] [Load avatars error] open avatar_data.json: The system cannot find the file specified.
+
