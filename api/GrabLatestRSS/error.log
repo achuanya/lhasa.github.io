@@ -10,3 +10,5 @@
 
 [Fri Aug 2 03:33:2024] [Load avatars error] open _data/avatar_data.json: The system cannot find the path specified.
 
+[Fri Aug 2 03:33:2024] [Fetch RSS error] open _data/avatar_data.json: The system cannot find the path specified.
+
