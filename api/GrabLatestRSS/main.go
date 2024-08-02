@@ -18,6 +18,9 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const maxRetries = 3
+const retryInterval = 2 * time.Second
+
 type Config struct {
 	GithubToken      string
 	GithubName       string
@@ -99,6 +102,21 @@ func extractDomain(urlStr string) (string, error) {
 	fullURL := protocol + domain
 
 	return fullURL, nil
+}
+
+// 拼接相对链接
+func resolveURL(baseURL, relativeURL string) (string, error) {
+	base, err := url.Parse(baseURL)
+	if err != nil {
+		return "", err
+	}
+
+	relative, err := url.Parse(relativeURL)
+	if err != nil {
+		return "", err
+	}
+
+	return base.ResolveReference(relative).String(), nil
 }
 
 // 中国标准时间 CST，UTC+8
@@ -228,22 +246,31 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 	// RSS 解析器
 	fp := gofeed.NewParser()
-
 	for _, feedURL := range feeds {
-		resp, err := http.Get(feedURL)
+		var resp *http.Response
+		var bodyString string
+		var fetchErr error
 
-		// 获取 RSS 错误，写入日志
-		if err != nil {
-			logError(config, fmt.Sprintf("[%s] [Get RSS error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, err))
+		// 尝试获取 RSS 内容，添加重试逻辑
+		for i := 0; i < maxRetries; i++ {
+			resp, fetchErr = http.Get(feedURL)
+			if fetchErr == nil {
+				bodyBytes := new(bytes.Buffer)
+				bodyBytes.ReadFrom(resp.Body)
+				bodyString = bodyBytes.String()
+				resp.Body.Close()
+				break
+			}
+			// 记录获取 RSS 失败的日志，并等待一段时间后重试
+			logError(config, fmt.Sprintf("[%s] [Get RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, fetchErr))
+			time.Sleep(retryInterval)
+		}
 
-			// 跳过当前无法解析的 RSS
+		if fetchErr != nil {
+			// 如果所有重试都失败，记录失败日志并跳过当前 RSS 源
+			logError(config, fmt.Sprintf("[%s] [Failed to fetch RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, fetchErr))
 			continue
 		}
-		defer resp.Body.Close()
-
-		bodyBytes := new(bytes.Buffer)
-		bodyBytes.ReadFrom(resp.Body)
-		bodyString := bodyBytes.String()
 
 		// 清理 XML 内容中的非法字符
 		cleanBody := cleanXMLContent(bodyString)
@@ -293,11 +320,18 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				publishedTime = time.Now()
 			}
 
+			// 拼接文章链接
+			articleLink, err := resolveURL(mainSiteURL, item.Link)
+			if err != nil {
+				logError(config, fmt.Sprintf("[%s] [Resolve URL error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), item.Link, err))
+				articleLink = item.Link
+			}
+
 			articles = append(articles, Article{
 				DomainName: domainName,
 				Name:       feed.Title,
 				Title:      item.Title,
-				Link:       item.Link,
+				Link:       articleLink,
 				Avatar:     avatarURL,
 
 				// 格式化后的发布时间
