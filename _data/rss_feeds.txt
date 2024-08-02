@@ -20,5 +20,4 @@ https://blog.pursuitus.com/feed
 https://limboy.me/index.xml
 https://blog.devtang.com/atom.xml
 https://blog.ursb.me/feed.xml
-https://blog.einverne.info/feed.xml
 https://www.loyhome.com/feed

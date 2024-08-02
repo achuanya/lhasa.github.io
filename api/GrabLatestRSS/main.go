@@ -104,20 +104,6 @@ func extractDomain(urlStr string) (string, error) {
 	return fullURL, nil
 }
 
-// 解析相对路径为绝对 URL
-func resolveURL(base, ref string) (string, error) {
-	baseURL, err := url.Parse(base)
-	if err != nil {
-		return "", err
-	}
-	refURL, err := url.Parse(ref)
-	if err != nil {
-		return "", err
-	}
-	resolvedURL := baseURL.ResolveReference(refURL)
-	return resolvedURL.String(), nil
-}
-
 // 中国标准时间 CST，UTC+8
 func getBeijingTime() time.Time {
 	beijingTimeZone := time.FixedZone("CST", 8*3600)
@@ -319,18 +305,11 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				publishedTime = time.Now()
 			}
 
-			// 拼接文章链接
-			articleLink, err := resolveURL(mainSiteURL, item.Link)
-			if err != nil {
-				logError(config, fmt.Sprintf("[%s] [Resolve URL error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), item.Link, err))
-				articleLink = item.Link
-			}
-
 			articles = append(articles, Article{
 				DomainName: domainName,
 				Name:       feed.Title,
 				Title:      item.Title,
-				Link:       articleLink,
+				Link:       item.Link,
 				Avatar:     avatarURL,
 
 				// 格式化后的发布时间
