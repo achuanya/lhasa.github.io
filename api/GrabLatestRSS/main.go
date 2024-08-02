@@ -330,12 +330,25 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				"Homepage on Yihui Xie | 谢益辉": "谢益辉",
 			}
 
+			// 将固定数据的原始名称收集到集合中
+			validNames := make(map[string]struct{})
+			for key := range nameMapping {
+				validNames[key] = struct{}{}
+			}
+
 			// 检查名称映射
-			mappedName, ok := nameMapping[originalName]
-			if !ok {
-				logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName))
+			_, valid := validNames[originalName]
+			if !valid {
+				// 记录名称映射未找到的日志，仅当原始名称在固定数据中
+				for key := range validNames {
+					if key == originalName {
+						logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName))
+						break
+					}
+				}
 			} else {
-				name = mappedName
+				// 使用映射后的名称
+				name = nameMapping[originalName]
 			}
 
 			articles = append(articles, Article{
