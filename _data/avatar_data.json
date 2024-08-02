@@ -91,7 +91,7 @@
     },
     {
         "domainName": "https://blog.ursb.me",
-        "name": "Airing 的博客",
+        "name": " Airing 的博客 ",
         "avatar": "https://cos.lhasa.icu/LinksAvatar/blog.ursb.me.png"
     },
     {
@@ -118,5 +118,10 @@
         "domainName": "https://yufree.cn",
         "name": "Homepage on Miao Yu | 于淼",
         "avatar": "https://cos.lhasa.icu/LinksAvatar/yufree.cn.png"
+    },
+    {
+        "domainName": "https://limboy.me",
+        "name": "Limboy",
+        "avatar": "https://cos.lhasa.icu/LinksAvatar/limboy.me.png"
     }
 ]
