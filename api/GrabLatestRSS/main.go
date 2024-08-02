@@ -229,14 +229,6 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		return nil, err
 	}
 
-	// 截断
-	nameMapping := map[string]string{
-		"obaby@mars": "obaby",
-		"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
-		"Homepage on Miao Yu | 于淼":    "于淼",
-		"Homepage on Yihui Xie | 谢益辉": "谢益辉",
-	}
-
 	// RSS 解析器
 	fp := gofeed.NewParser()
 	for _, feedURL := range feeds {
@@ -300,6 +292,14 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 		// 使用 feed.Title 作为博客名称
 		name := feed.Title
+
+		// 截断
+		nameMapping := map[string]string{
+			"obaby@mars": "obaby",
+			"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
+			"Homepage on Miao Yu | 于淼":    "于淼",
+			"Homepage on Yihui Xie | 谢益辉": "谢益辉",
+		}
 
 		// 检查名称映射
 		if mappedName, ok := nameMapping[name]; ok {
