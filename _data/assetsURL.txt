@@ -83,7 +83,7 @@ https://cos.lhasa.icu/LinksAvatar/xyzbz.cn.png
 https://cos.lhasa.icu/LinksAvatar/www.shephe.com.png
 https://cos.lhasa.icu/LinksAvatar/blog.zhheo.com.png
 https://cos.lhasa.icu/LinksAvatar/lingxiankong.github.io.png
-https://cos.lhasa.icu/LinksAvatar/armstrong.viyf.org.png
+https://cos.lhasa.icu/LinksAvatar/default.png
 https://cos.lhasa.icu/LinksAvatar/www.laruence.com.png
 https://cos.lhasa.icu/LinksAvatar/blog.fooleap.org.png
 https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png
