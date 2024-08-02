@@ -17,6 +17,7 @@ https://lhasa.icu/tags.json
 https://lhasa.icu/tags.html
 https://lhasa.icu/tech.html
 https://lhasa.icu/assets/css/style.css
+https://lhasa.icu/sitemap.xml
 https://lhasa.icu/page2/
 https://lhasa.icu/page3/
 https://lhasa.icu/page4/
