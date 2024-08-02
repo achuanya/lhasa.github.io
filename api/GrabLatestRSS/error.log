@@ -133,3 +133,5 @@
 
 [Fri Aug 2 09:33:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Attempt 3/3: Get "https://blog.einverne.info/feed.xml": dial tcp [2a03:2880:f11c:8083:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 
+[Fri Aug 2 09:33:2024] [Failed to fetch RSS] https://blog.einverne.info/feed.xml: Get "https://blog.einverne.info/feed.xml": dial tcp [2a03:2880:f11c:8083:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
