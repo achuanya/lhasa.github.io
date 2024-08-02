@@ -104,19 +104,18 @@ func extractDomain(urlStr string) (string, error) {
 	return fullURL, nil
 }
 
-// 拼接相对链接
-func resolveURL(baseURL, relativeURL string) (string, error) {
-	base, err := url.Parse(baseURL)
+// 解析相对路径为绝对 URL
+func resolveURL(base, ref string) (string, error) {
+	baseURL, err := url.Parse(base)
 	if err != nil {
 		return "", err
 	}
-
-	relative, err := url.Parse(relativeURL)
+	refURL, err := url.Parse(ref)
 	if err != nil {
 		return "", err
 	}
-
-	return base.ResolveReference(relative).String(), nil
+	resolvedURL := baseURL.ResolveReference(refURL)
+	return resolvedURL.String(), nil
 }
 
 // 中国标准时间 CST，UTC+8
