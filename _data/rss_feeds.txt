@@ -13,7 +13,6 @@ https://yufree.cn/index.xml
 https://stephenleng.com/cn/rss
 https://yihui.org/index.xml
 http://weiwuhui.com/feed
-https://blog.yitianshijie.net/feed/
 https://wangpei.net/feed
 https://tumutanzi.com/feed
 https://hwv430.blogspot.com/feeds/posts/default
