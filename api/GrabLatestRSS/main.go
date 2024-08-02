@@ -252,18 +252,30 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		}
 
 		if fetchErr != nil {
-			// 如果所有重试都失败，记录失败日志并跳过当前 RSS 源
+			// 如果所有重试都失败，记录失败日志并跳过当前 RSS
 			logError(config, fmt.Sprintf("[%s] [Failed to fetch RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, fetchErr))
 			continue
 		}
 
 		// 清理 XML 内容中的非法字符
 		cleanBody := cleanXMLContent(bodyString)
-		feed, err := fp.ParseString(cleanBody)
-		if err != nil {
 
-			// 解析 RSS 错误，写入日志
-			logError(config, fmt.Sprintf("[%s] [Parse RSS error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, err))
+		// 尝试解析 RSS 内容，添加重试逻辑
+		var feed *gofeed.Feed
+		var parseErr error
+		for i := 0; i < maxRetries; i++ {
+			feed, parseErr = fp.ParseString(cleanBody)
+			if parseErr == nil {
+				break
+			}
+			// 记录解析 RSS 错误的日志，并等待一段时间后重试
+			logError(config, fmt.Sprintf("[%s] [Parse RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, parseErr))
+			time.Sleep(retryInterval)
+		}
+
+		if parseErr != nil {
+			// 如果所有重试都失败，记录失败日志并跳过当前 RSS
+			logError(config, fmt.Sprintf("[%s] [Failed to parse RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, parseErr))
 			continue
 		}
 
