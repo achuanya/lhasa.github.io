@@ -117,3 +117,5 @@
 
 [Fri Aug 2 09:31:2024] [Get RSS error] https://hwv430.blogspot.com/feeds/posts/default: Attempt 3/3: Get "https://hwv430.blogspot.com/feeds/posts/default": dial tcp [2a03:2880:f10a:83:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 
+[Fri Aug 2 09:31:2024] [Failed to fetch RSS] https://hwv430.blogspot.com/feeds/posts/default: Get "https://hwv430.blogspot.com/feeds/posts/default": dial tcp [2a03:2880:f10a:83:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
