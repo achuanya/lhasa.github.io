@@ -229,6 +229,13 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		return nil, err
 	}
 
+	// 截断
+	nameMapping := map[string]string{
+		"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
+		"Homepage on Miao Yu | 于淼":    "于淼",
+		"Homepage on Yihui Xie | 谢益辉": "谢益辉",
+	}
+
 	// RSS 解析器
 	fp := gofeed.NewParser()
 	for _, feedURL := range feeds {
@@ -293,10 +300,17 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		// 使用 feed.Title 作为博客名称
 		name := feed.Title
 
+		// 检查名称映射
+		if mappedName, ok := nameMapping[name]; ok {
+			name = mappedName
+		}
+
 		// 获取头像
 		avatarURL := avatars[name]
 		if avatarURL == "" {
-			avatarURL = "https://gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=50" // 默认头像
+
+			// 默认头像
+			avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
 		}
 
 		// 只获取最新的一篇文章
@@ -319,7 +333,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 			articles = append(articles, Article{
 				DomainName: domainName,
-				Name:       feed.Title,
+				Name:       name,
 				Title:      item.Title,
 				Link:       item.Link,
 				Avatar:     avatarURL,
