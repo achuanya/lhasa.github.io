@@ -21,3 +21,6 @@ title: 订阅
   </section>
 </section>
 
+<div class="comment-guestbook">
+  <div id="comment"></div>
+</div>
