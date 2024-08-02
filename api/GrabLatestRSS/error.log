@@ -127,3 +127,5 @@
 
 [Fri Aug 2 09:31:2024] [Failed to fetch RSS] https://limboy.me/index.xml: Get "https://limboy.me/index.xml": read tcp [2408:8220:9115:f0d0:b80f:d606:1bf0:a560]:13925->[2606:4700:3037::6815:3af6]:443: wsarecv: An existing connection was forcibly closed by the remote host.
 
+[Fri Aug 2 09:32:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Attempt 1/3: Get "https://blog.einverne.info/feed.xml": dial tcp [2a03:2880:f134:83:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
