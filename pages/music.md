@@ -11,6 +11,8 @@ tags: [音乐]
 <div id="music_bg"></div>
 <div id="heoMusic-page"></div>
 <div id="comment"></div>
+{% include wechat.html %}
+
 <script>
   var userId = "9260534371";
   var userServer = "netease";

@@ -4,7 +4,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'JetBrains Mono', 'TsangerJinKai01 W04', sans-serif;
 }
 
 html::-webkit-scrollbar {
@@ -113,8 +112,7 @@ body {
   background-color: $lightblue;
   overflow-y: scroll;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 1.6;
+  font: 400 14px/1.6 -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
   text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
@@ -199,7 +197,7 @@ body {
     padding-bottom: 5px;
     margin-bottom: 5px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
     align-items: flex-end;
     &:before{
       content: "";
@@ -231,7 +229,6 @@ body {
       color: $black;
       border-bottom: none;
       display: block;
-      font-size: 20px;
     }
     .page-title-desc {
       color: #666;
@@ -350,7 +347,7 @@ body {
     line-height: 25px;
     /* 导航栏 文章标题 */
     .post-item-title {
-      font-size: 16px;
+      font-size: 14px;
       color: $darkblue;
       height: 25px;
       overflow: hidden;
@@ -737,7 +734,8 @@ body {
 
 pre,
 code {
-  font-size: 14px;
+  font-size: 12px;
+  font-family: "Roboto Mono", Consolas, source-han-sans-cjk-sc, monospace;
   background-color: rgb(245, 245, 245);
   overflow: auto;
   padding: 2px 2px;

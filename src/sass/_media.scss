@@ -2,12 +2,12 @@
 /*Firefox hack*/
 @media screen and (min--moz-device-pixel-ratio:0) {
 }
-@media screen and(max-width: 768px) {
+@media screen and (max-width: 768px) {
   .page-main{
     margin: 0!important;
   }
 }
-@media screen and(min-width: 450px) {
+@media screen and (min-width: 450px) {
   .iframe-wide-container,
   .iframe-normal-container {
     margin-top: -50px;
@@ -53,56 +53,6 @@
       }
     }
   }
-  .post-cats{
-    display: flex;
-    position: fixed;
-    left: 0;
-    z-index: 500;
-    bottom: 0;
-    width: 100%;
-    background-color: #F7F7FA;
-    &:before{
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      height: 1px;
-      border-top: 1px solid #C0BFC4;
-      color: #C0BFC4;
-      transform-origin: 0 0;
-      transform: scaleY(0.5);
-    }
-    /*导航栏*/
-    .post-cat-tag{
-      display: block;
-      flex: 1;
-      padding: 13px 0;
-      text-align: center;
-      font-size: 14px;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      color: #000;
-      margin: 0;
-      &.active{
-        background-color: #eaeaea;
-      }
-      &:after{
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 1px;
-        bottom: 0;
-        border-right: 1px solid #ccc;
-        color: #ccc;
-        transform-origin: 100% 0;
-        transform: scaleX(0.5);
-      }
-      &:last-child:after{
-        display: none;
-      }
-    }
-  }
   body{
     background-color: #fff;
   }
@@ -121,7 +71,7 @@
     }
     /*导航栏分类*/
     .page-subtitle{
-      font-size: 14px;
+      font-size: 11px;
       padding: 0 7px;
     }
     .page-content{
