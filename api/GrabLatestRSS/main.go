@@ -319,6 +319,9 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				publishedTime = time.Now()
 			}
 
+			// 保存原始名称
+			originalName := feed.Title
+
 			// 名称映射
 			nameMapping := map[string]string{
 				"obaby@mars": "obaby",
@@ -328,8 +331,13 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 			}
 
 			// 检查名称映射
-			if mappedName, ok := nameMapping[name]; ok {
+			mappedName, ok := nameMapping[originalName]
+			if ok {
 				name = mappedName
+				logError(config, fmt.Sprintf("[%s] [Name mapping applied] %s -> %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName, name))
+			} else {
+				name = originalName
+				logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), name))
 			}
 
 			articles = append(articles, Article{
