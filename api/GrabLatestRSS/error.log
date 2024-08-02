@@ -30,3 +30,21 @@
 
 [Fri Aug 2 18:27:2024] [Parse RSS error] https://tumutanzi.com/feed: Attempt 1/3: Failed to detect feed type
 
+[Fri Aug 2 18:27:2024] [Parse RSS error] https://tumutanzi.com/feed: Attempt 2/3: Failed to detect feed type
+
+[Fri Aug 2 18:27:2024] [Parse RSS error] https://tumutanzi.com/feed: Attempt 3/3: Failed to detect feed type
+
+[Fri Aug 2 18:27:2024] [Failed to parse RSS] https://tumutanzi.com/feed: Failed to detect feed type
+
+[Fri Aug 2 18:27:2024] [Name mapping not found] 核电站
+
+[Fri Aug 2 18:27:2024] [Name mapping not found] Ouroboros
+
+[Fri Aug 2 18:27:2024] [Name mapping not found] Limboy
+
+[Fri Aug 2 18:27:2024] [Name mapping not found] 唐巧的博客
+
+[Fri Aug 2 18:27:2024] [Name mapping not found]  Airing 的博客 
+
+[Fri Aug 2 18:27:2024] [Name mapping not found] 落园
+
