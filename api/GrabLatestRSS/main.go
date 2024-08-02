@@ -231,6 +231,9 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 	// RSS 解析器
 	fp := gofeed.NewParser()
+	httpClient := &http.Client{
+		Timeout: 30 * time.Second, // 设置超时时间为30秒
+	}
 	for _, feedURL := range feeds {
 		var resp *http.Response
 		var bodyString string
@@ -238,7 +241,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 		// 尝试获取 RSS 内容，添加重试逻辑
 		for i := 0; i < maxRetries; i++ {
-			resp, fetchErr = http.Get(feedURL)
+			resp, fetchErr = httpClient.Get(feedURL)
 			if fetchErr == nil {
 				bodyBytes := new(bytes.Buffer)
 				bodyBytes.ReadFrom(resp.Body)
@@ -296,7 +299,6 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		// 获取头像
 		avatarURL := avatars[name]
 		if avatarURL == "" {
-
 			// 默认头像
 			avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
 		}
