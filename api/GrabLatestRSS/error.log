@@ -137,3 +137,5 @@
 
 [Fri Aug 2 09:34:2024] [Get RSS error] https://yufree.cn/index.xml: Attempt 1/3: Get "https://yufree.cn/index.xml": read tcp [2408:8220:9115:f0d0:b80f:d606:1bf0:a560]:14213->[2600:1f1c:471:9d00::c8]:443: wsarecv: An existing connection was forcibly closed by the remote host.
 
+[Fri Aug 2 09:34:2024] [Get RSS error] https://hwv430.blogspot.com/feeds/posts/default: Attempt 1/3: Get "https://hwv430.blogspot.com/feeds/posts/default": dial tcp [2a03:2880:f10a:83:face:b00c:0:25de]:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
