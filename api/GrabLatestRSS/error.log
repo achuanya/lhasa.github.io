@@ -101,3 +101,5 @@
 
 [Fri Aug 2 09:09:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Get "https://blog.einverne.info/feed.xml": dial tcp 118.193.240.37:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 
+[Fri Aug 2 09:13:2024] [Get RSS error] https://yufree.cn/index.xml: Get "https://yufree.cn/index.xml": read tcp 192.168.1.4:12540->52.9.166.110:443: wsarecv: An existing connection was forcibly closed by the remote host.
+
