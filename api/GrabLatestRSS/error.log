@@ -107,3 +107,5 @@
 
 [Fri Aug 2 09:14:2024] [Get RSS error] https://limboy.me/index.xml: Get "https://limboy.me/index.xml": read tcp 192.168.1.4:12657->104.21.58.246:443: wsarecv: An existing connection was forcibly closed by the remote host.
 
+[Fri Aug 2 09:15:2024] [Get RSS error] https://blog.einverne.info/feed.xml: Get "https://blog.einverne.info/feed.xml": dial tcp 174.37.243.85:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
