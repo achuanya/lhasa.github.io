@@ -123,3 +123,5 @@
 
 [Fri Aug 2 09:31:2024] [Get RSS error] https://limboy.me/index.xml: Attempt 2/3: Get "https://limboy.me/index.xml": read tcp [2408:8220:9115:f0d0:b80f:d606:1bf0:a560]:13921->[2606:4700:3037::6815:3af6]:443: wsarecv: An existing connection was forcibly closed by the remote host.
 
+[Fri Aug 2 09:31:2024] [Get RSS error] https://limboy.me/index.xml: Attempt 3/3: Get "https://limboy.me/index.xml": read tcp [2408:8220:9115:f0d0:b80f:d606:1bf0:a560]:13925->[2606:4700:3037::6815:3af6]:443: wsarecv: An existing connection was forcibly closed by the remote host.
+
