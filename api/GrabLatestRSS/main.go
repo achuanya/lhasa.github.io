@@ -19,7 +19,7 @@ import (
 )
 
 const maxRetries = 3
-const retryInterval = 2 * time.Second
+const retryInterval = 30 * time.Second
 
 type Config struct {
 	GithubToken      string
