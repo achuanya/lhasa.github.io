@@ -293,19 +293,6 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 		// 使用 feed.Title 作为博客名称
 		name := feed.Title
 
-		// 截断
-		nameMapping := map[string]string{
-			"obaby@mars": "obaby",
-			"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
-			"Homepage on Miao Yu | 于淼":    "于淼",
-			"Homepage on Yihui Xie | 谢益辉": "谢益辉",
-		}
-
-		// 检查名称映射
-		if mappedName, ok := nameMapping[name]; ok {
-			name = mappedName
-		}
-
 		// 获取头像
 		avatarURL := avatars[name]
 		if avatarURL == "" {
@@ -330,6 +317,19 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 				// 使用当前时间作为文章时间
 				publishedTime = time.Now()
+			}
+
+			// 名称映射
+			nameMapping := map[string]string{
+				"obaby@mars": "obaby",
+				"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
+				"Homepage on Miao Yu | 于淼":    "于淼",
+				"Homepage on Yihui Xie | 谢益辉": "谢益辉",
+			}
+
+			// 检查名称映射
+			if mappedName, ok := nameMapping[name]; ok {
+				name = mappedName
 			}
 
 			articles = append(articles, Article{
