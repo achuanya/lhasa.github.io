@@ -20,3 +20,5 @@
 
 [Fri Aug 2 20:18:2024] [Parse RSS error] https://tumutanzi.com/feed: Attempt 3/3: Failed to detect feed type
 
+[Fri Aug 2 20:18:2024] [Failed to parse RSS] https://tumutanzi.com/feed: Failed to detect feed type
+
