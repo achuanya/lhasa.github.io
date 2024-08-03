@@ -2,3 +2,5 @@
 
 [Sat Aug 3 23:34:2024] [Extract domain error] : invalid domain extracted from URL: 
 
+[Sat Aug 3 23:34:2024] [Parse RSS error] https://tumutanzi.com/feed: Attempt 2/3: Failed to detect feed type
+
