@@ -21,7 +21,7 @@ import (
 
 const (
 	maxRetries    = 3                // 最大重试次数
-	retryInterval = 30 * time.Second // 重试间隔时间
+	retryInterval = 10 * time.Second // 重试间隔时间
 )
 
 type Config struct {
@@ -83,16 +83,13 @@ func formatTime(t time.Time) string {
 	return t.Format("January 2, 2006")
 }
 
-// 从 URL 中提取域名，并添加 https:// 前缀// 从 URL 中提取域名，并添加 https:// 前缀
+// 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
 	domain := u.Hostname()
-	if domain == "" {
-		return "", fmt.Errorf("invalid domain extracted from URL: %s", urlStr)
-	}
 	protocol := "https://"
 	if u.Scheme != "" {
 		protocol = u.Scheme + "://"
@@ -215,7 +212,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 	fp := gofeed.NewParser()
 	httpClient := &http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: 10 * time.Second,
 	}
 
 	for _, feedURL := range feeds {
