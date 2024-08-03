@@ -11,6 +11,7 @@ import (
 	"os"
 	"regexp"
 	"sort"
+	"sync"
 	"time"
 
 	"github.com/google/go-github/v39/github"
@@ -200,6 +201,8 @@ func loadAvatarsFromGitHub(config Config) (map[string]string, error) {
 // 从 RSS 列表中抓取最新的文章，并按发布时间排序
 func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	var articles []Article
+	var mu sync.Mutex     // 用于保证并发安全
+	var wg sync.WaitGroup // 用于等待所有 goroutine 完成
 
 	avatars, err := loadAvatarsFromGitHub(config)
 	if err != nil {
@@ -208,112 +211,123 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	}
 
 	fp := gofeed.NewParser()
-	for _, feedURL := range feeds {
-		var resp *http.Response
-		var bodyString string
-		var fetchErr error
-
-		for i := 0; i < maxRetries; i++ {
-			resp, fetchErr = http.Get(feedURL)
-			if fetchErr == nil {
-				bodyBytes := new(bytes.Buffer)
-				bodyBytes.ReadFrom(resp.Body)
-				bodyString = bodyBytes.String()
-				resp.Body.Close()
-				break
-			}
-
-			logError(config, fmt.Sprintf("[%s] [Get RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, fetchErr))
-			time.Sleep(retryInterval)
-		}
-
-		if fetchErr != nil {
-			logError(config, fmt.Sprintf("[%s] [Failed to fetch RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, fetchErr))
-			continue
-		}
-
-		cleanBody := cleanXMLContent(bodyString)
-
-		var feed *gofeed.Feed
-		var parseErr error
-		for i := 0; i < maxRetries; i++ {
-			feed, parseErr = fp.ParseString(cleanBody)
-			if parseErr == nil {
-				break
-			}
-			logError(config, fmt.Sprintf("[%s] [Parse RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, parseErr))
-			time.Sleep(retryInterval)
-		}
-
-		if parseErr != nil {
-			logError(config, fmt.Sprintf("[%s] [Failed to parse RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, parseErr))
-			continue
-		}
-
-		mainSiteURL := feed.Link
-		domainName, err := extractDomain(mainSiteURL)
-		if err != nil {
-			logError(config, fmt.Sprintf("[%s] [Extract domain error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), mainSiteURL, err))
-			domainName = "unknown"
-		}
-
-		name := feed.Title
-		avatarURL := avatars[name]
-		if avatarURL == "" {
-			avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
-		}
-
-		if len(feed.Items) > 0 {
-			item := feed.Items[0]
-			publishedTime, err := parseTime(item.Published)
-			if err != nil && item.Updated != "" {
-				publishedTime, err = parseTime(item.Updated)
-			}
-			if err != nil {
-				logError(config, fmt.Sprintf("[%s] [Getting article time error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), item.Title, err))
-				publishedTime = time.Now()
-			}
-
-			originalName := feed.Title
-			nameMapping := map[string]string{
-				"obaby@mars": "obaby",
-				"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
-				"Homepage on Miao Yu | 于淼":    "于淼",
-				"Homepage on Yihui Xie | 谢益辉": "谢益辉",
-			}
-
-			validNames := make(map[string]struct{})
-			for key := range nameMapping {
-				validNames[key] = struct{}{}
-			}
-
-			_, valid := validNames[originalName]
-			if !valid {
-				for key := range validNames {
-					if key == originalName {
-						logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName))
-						break
-					}
-				}
-			} else {
-				name = nameMapping[originalName]
-			}
-
-			articles = append(articles, Article{
-				DomainName: domainName,
-				Name:       name,
-				Title:      item.Title,
-				Link:       item.Link,
-				Avatar:     avatarURL,
-				Date:       formatTime(publishedTime),
-			})
-		}
+	httpClient := &http.Client{
+		Timeout: 10 * time.Second,
 	}
 
+	for _, feedURL := range feeds {
+		wg.Add(1)
+		go func(feedURL string) {
+			defer wg.Done()
+			var resp *http.Response
+			var bodyString string
+			var fetchErr error
+
+			for i := 0; i < maxRetries; i++ {
+				resp, fetchErr = httpClient.Get(feedURL)
+				if fetchErr == nil {
+					bodyBytes := new(bytes.Buffer)
+					bodyBytes.ReadFrom(resp.Body)
+					bodyString = bodyBytes.String()
+					resp.Body.Close()
+					break
+				}
+				logError(config, fmt.Sprintf("[%s] [Get RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, fetchErr))
+				time.Sleep(retryInterval)
+			}
+
+			if fetchErr != nil {
+				logError(config, fmt.Sprintf("[%s] [Failed to fetch RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, fetchErr))
+				return
+			}
+
+			cleanBody := cleanXMLContent(bodyString)
+
+			var feed *gofeed.Feed
+			var parseErr error
+			for i := 0; i < maxRetries; i++ {
+				feed, parseErr = fp.ParseString(cleanBody)
+				if parseErr == nil {
+					break
+				}
+				logError(config, fmt.Sprintf("[%s] [Parse RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, parseErr))
+				time.Sleep(retryInterval)
+			}
+
+			if parseErr != nil {
+				logError(config, fmt.Sprintf("[%s] [Failed to parse RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, parseErr))
+				return
+			}
+
+			mainSiteURL := feed.Link
+			domainName, err := extractDomain(mainSiteURL)
+			if err != nil {
+				logError(config, fmt.Sprintf("[%s] [Extract domain error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), mainSiteURL, err))
+				domainName = "unknown"
+			}
+
+			name := feed.Title
+			avatarURL := avatars[name]
+			if avatarURL == "" {
+				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
+			}
+
+			if len(feed.Items) > 0 {
+				item := feed.Items[0]
+
+				publishedTime, err := parseTime(item.Published)
+				if err != nil && item.Updated != "" {
+					publishedTime, err = parseTime(item.Updated)
+				}
+
+				if err != nil {
+					logError(config, fmt.Sprintf("[%s] [Getting article time error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), item.Title, err))
+					publishedTime = time.Now()
+				}
+
+				originalName := feed.Title
+				nameMapping := map[string]string{
+					"obaby@mars": "obaby",
+					"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
+					"Homepage on Miao Yu | 于淼":    "于淼",
+					"Homepage on Yihui Xie | 谢益辉": "谢益辉",
+				}
+
+				validNames := make(map[string]struct{})
+				for key := range nameMapping {
+					validNames[key] = struct{}{}
+				}
+
+				_, valid := validNames[originalName]
+				if !valid {
+					for key := range validNames {
+						if key == originalName {
+							logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName))
+							break
+						}
+					}
+				} else {
+					name = nameMapping[originalName]
+				}
+
+				mu.Lock()
+				articles = append(articles, Article{
+					DomainName: domainName,
+					Name:       name,
+					Title:      item.Title,
+					Link:       item.Link,
+					Avatar:     avatarURL,
+					Date:       formatTime(publishedTime),
+				})
+				mu.Unlock()
+			}
+		}(feedURL)
+	}
+
+	wg.Wait()
 	sort.Slice(articles, func(i, j int) bool {
 		date1, _ := time.Parse("January 2, 2006", articles[i].Date)
 		date2, _ := time.Parse("January 2, 2006", articles[j].Date)
-
 		return date1.After(date2)
 	})
 
