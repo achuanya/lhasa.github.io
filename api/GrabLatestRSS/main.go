@@ -30,13 +30,13 @@ type Config struct {
 	GithubRepository string // GitHub 仓库名
 }
 
-// Avatar 定义了用于解析 avatar_data.json 文件的结构
+// 用于解析 avatar_data.json 文件的结构
 type Avatar struct {
 	Name   string `json:"name"`   // 用户名
 	Avatar string `json:"avatar"` // 头像 URL
 }
 
-// Article 定义了爬虫抓取的数据结构
+// 爬虫抓取的数据结构
 type Article struct {
 	DomainName string `json:"domainName"` // 域名
 	Name       string `json:"name"`       // 博客名称
@@ -46,7 +46,7 @@ type Article struct {
 	Avatar     string `json:"avatar"`     // 头像 URL
 }
 
-// initConfig 初始化并返回配置信息
+// 初始化并返回配置信息
 func initConfig() Config {
 	return Config{
 		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
@@ -55,13 +55,13 @@ func initConfig() Config {
 	}
 }
 
-// cleanXMLContent 清理 XML 内容中的非法字符
+// 清理 XML 内容中的非法字符
 func cleanXMLContent(content string) string {
 	re := regexp.MustCompile(`[\x00-\x1F\x7F-\x9F]`)
 	return re.ReplaceAllString(content, "")
 }
 
-// parseTime 尝试解析不同格式的时间字符串
+// 尝试解析不同格式的时间字符串
 func parseTime(timeStr string) (time.Time, error) {
 	formats := []string{
 		time.RFC3339,
@@ -78,12 +78,12 @@ func parseTime(timeStr string) (time.Time, error) {
 	return time.Time{}, fmt.Errorf("unable to parse time: %s", timeStr)
 }
 
-// formatTime 将时间格式化为 "January 2, 2006"
+// 将时间格式化为 "January 2, 2006"
 func formatTime(t time.Time) string {
 	return t.Format("January 2, 2006")
 }
 
-// extractDomain 从 URL 中提取域名，并添加 https:// 前缀
+// 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
 	u, err := url.Parse(urlStr)
 	if err != nil {
@@ -99,25 +99,25 @@ func extractDomain(urlStr string) (string, error) {
 	return fullURL, nil
 }
 
-// getBeijingTime 获取当前的北京时间
+// 获取当前的北京时间
 func getBeijingTime() time.Time {
 	beijingTimeZone := time.FixedZone("CST", 8*3600)
 	return time.Now().In(beijingTimeZone)
 }
 
-// logError 记录错误信息到 error.log 文件
+// 记录错误信息到 error.log 文件
 func logError(config Config, message string) {
 	logMessage(config, message, "error.log")
 }
 
-// logMessage 记录信息到指定的文件
+// 记录信息到指定的文件
 func logMessage(config Config, message string, fileName string) {
 	ctx := context.Background()
 	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
 		AccessToken: config.GithubToken,
 	})))
 
-	filePath := "api/GrabLatestRSS/" + fileName
+	filePath := "_data/" + fileName
 	fileContent := []byte(message + "\n\n")
 
 	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
@@ -155,7 +155,7 @@ func logMessage(config Config, message string, fileName string) {
 	}
 }
 
-// fetchFileFromGitHub 从 GitHub 仓库中获取 JSON 文件内容
+// 从 GitHub 仓库中获取 JSON 文件内容
 func fetchFileFromGitHub(config Config, filePath string) (string, error) {
 	ctx := context.Background()
 	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
@@ -178,7 +178,7 @@ func fetchFileFromGitHub(config Config, filePath string) (string, error) {
 	return content, nil
 }
 
-// loadAvatarsFromGitHub 从 GitHub 仓库中读取头像配置
+// 从 GitHub 仓库中读取头像配置
 func loadAvatarsFromGitHub(config Config) (map[string]string, error) {
 	content, err := fetchFileFromGitHub(config, "_data/avatar_data.json")
 	if err != nil {
@@ -198,7 +198,7 @@ func loadAvatarsFromGitHub(config Config) (map[string]string, error) {
 	return avatarMap, nil
 }
 
-// fetchRSS 从 RSS 列表中抓取最新的文章，并按发布时间排序
+// 从 RSS 列表中抓取最新的文章，并按发布时间排序
 func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	var articles []Article
 	var mu sync.Mutex     // 用于保证并发安全
@@ -334,7 +334,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	return articles, nil
 }
 
-// saveToGitHub 将爬虫抓取的数据保存到 GitHub
+// 将爬虫抓取的数据保存到 GitHub
 func saveToGitHub(config Config, data []Article) error {
 	ctx := context.Background()
 	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
@@ -395,7 +395,7 @@ func saveToGitHub(config Config, data []Article) error {
 	return nil
 }
 
-// readFeedsFromGitHub 从 GitHub 仓库中获取 RSS 文件
+// 从 GitHub 仓库中获取 RSS 文件
 func readFeedsFromGitHub(config Config) ([]string, error) {
 	ctx := context.Background()
 	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
