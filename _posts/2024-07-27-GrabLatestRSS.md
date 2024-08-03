@@ -143,19 +143,32 @@ func formatTime(t time.Time) string {
 
 // 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
+	// 如果 URL 为空或只有协议部分
+	if urlStr == "" || len(urlStr) < 5 {
+		return "", fmt.Errorf("invalid URL: %s", urlStr)
+	}
+
+	// 解析 URL
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
-	domain := u.Hostname()
-	protocol := "https://"
-	if u.Scheme != "" {
-		protocol = u.Scheme + "://"
+
+	// 确保有协议前缀，默认为 https
+	if u.Scheme == "" {
+		u.Scheme = "https"
 	}
-	fullURL := protocol + domain
+
+	// 获取域名并构建完整的 URL
+	domain := u.Hostname()
+	if domain == "" {
+		return "", fmt.Errorf("failed to extract domain from URL: %s", urlStr)
+	}
+	fullURL := u.Scheme + "://" + domain
 
 	return fullURL, nil
 }
+
 
 // 获取当前的北京时间
 func getBeijingTime() time.Time {
