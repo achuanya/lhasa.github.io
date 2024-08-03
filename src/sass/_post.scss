@@ -246,7 +246,7 @@ body {
       padding: 0 0px;
       border: 0px;
       border-radius: 0;
-      font-size: 14px;
+      font-size: 13px;
       color: #333;
     }
     /* 归档搜索 */
@@ -266,7 +266,7 @@ body {
   .page-subtitle {
     color: $lightgray;
     width: 100%;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 2;
     &:hover{
       border-bottom: none;
@@ -453,7 +453,7 @@ body {
   .pagination-list {
     list-style-type: none;
     margin: 10px auto;
-    font-size: 16px;
+    font-size: 13px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
@@ -494,7 +494,7 @@ body {
   ul,
   ol {
     margin-left: 25px;
-    font-size: 16px;
+    font-size: 13px;
   }
   >*{
     margin: 18px 0;
@@ -502,14 +502,14 @@ body {
   h2 {
     border-left: 4px solid $darkblue;
     padding-left: 5px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     &:hover:after, &:target:after{
       content: " ¶";
     }
   }
   h3 {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 500;
     &:hover:after, &:target:after{
       content: " ¶";
@@ -605,7 +605,7 @@ body {
       padding: 0 5px;
       line-height: 30px;
       text-shadow: 0 0 1px rgba(0,0,0,.3);
-      font-size: 14px;
+      font-size: 12px;
       background: linear-gradient(to right, rgba(0, 0, 0, .8), transparent);
     }
     .post-image.small + .post-figcaption {
