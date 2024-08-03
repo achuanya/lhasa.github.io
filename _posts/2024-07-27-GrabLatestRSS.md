@@ -543,18 +543,20 @@ func main() {
 ```json
 [
     {
-        "domainName": "https://lingxiankong.github.io",
-        "name": "孔令贤的个人博客",
-        "title": "关于 AI 的一些思考",
-        "link": "https://lingxiankong.github.io/2024-05-15-openai-gpt-4o.html",
-        "date": "May 15, 2024"
+        "domainName": "https://yihui.org",
+        "name": "谢益辉",
+        "title": "Rd2roxygen",
+        "link": "https://yihui.org/rd2roxygen/",
+        "date": "April 14, 2024",
+        "avatar": "https://cos.lhasa.icu/LinksAvatar/yihui.org.png"
     },
     {
-        "domainName": "https://blog.fooleap.org",
-        "name": "Fooleap's Blog",
-        "title": "渴望理想",
-        "link": "https://blog.fooleap.org/longing-for-ideals.html",
-        "date": "August 15, 2020"
+        "domainName": "https://www.laruence.com",
+        "name": "风雪之隅",
+        "title": "PHP8.0的Named Parameter",
+        "link": "https://www.laruence.com/2022/05/10/6192.html",
+        "date": "May 10, 2022",
+        "avatar": "https://cos.lhasa.icu/LinksAvatar/www.laruence.com.png"
     }
 ]
 ```
