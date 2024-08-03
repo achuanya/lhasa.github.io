@@ -54,7 +54,6 @@ go get golang.org/x/oauth2
 ```
 
 ## Go RSS 爬虫 Code
-
 ```go
 package main
 
@@ -79,7 +78,7 @@ import (
 
 const (
 	maxRetries    = 3                // 最大重试次数
-	retryInterval = 30 * time.Second // 重试间隔时间
+	retryInterval = 10 * time.Second // 重试间隔时间
 )
 
 type Config struct {
@@ -143,32 +142,19 @@ func formatTime(t time.Time) string {
 
 // 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
-	// 如果 URL 为空或只有协议部分
-	if urlStr == "" || len(urlStr) < 5 {
-		return "", fmt.Errorf("invalid URL: %s", urlStr)
-	}
-
-	// 解析 URL
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
-
-	// 确保有协议前缀，默认为 https
-	if u.Scheme == "" {
-		u.Scheme = "https"
-	}
-
-	// 获取域名并构建完整的 URL
 	domain := u.Hostname()
-	if domain == "" {
-		return "", fmt.Errorf("failed to extract domain from URL: %s", urlStr)
+	protocol := "https://"
+	if u.Scheme != "" {
+		protocol = u.Scheme + "://"
 	}
-	fullURL := u.Scheme + "://" + domain
+	fullURL := protocol + domain
 
 	return fullURL, nil
 }
-
 
 // 获取当前的北京时间
 func getBeijingTime() time.Time {
@@ -283,7 +269,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 
 	fp := gofeed.NewParser()
 	httpClient := &http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: 10 * time.Second,
 	}
 
 	for _, feedURL := range feeds {
@@ -357,6 +343,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 				}
 
 				originalName := feed.Title
+				// 该长的地方短，该短的地方长
 				nameMapping := map[string]string{
 					"obaby@mars": "obaby",
 					"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
@@ -538,6 +525,7 @@ func main() {
 }
 
 ```
+
 
 ### Go 生成的 json 数据
 ```json
