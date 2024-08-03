@@ -350,14 +350,6 @@ func saveToGitHub(config Config, data []Article) error {
 			Date:       "January 01, 2000",
 			Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
 		},
-		{
-			DomainName: "https://www.travellings.cn",
-			Name:       "开往",
-			Title:      "开往-友链接力",
-			Link:       "https://www.travellings.cn/go.html",
-			Date:       "January 01, 2000",
-			Avatar:     "https://cos.lhasa.icu/LinksAvatar/www.travellings.png",
-		},
 	}
 
 	data = append(data, manualArticles...)
