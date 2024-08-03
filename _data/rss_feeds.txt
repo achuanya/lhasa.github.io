@@ -20,3 +20,4 @@ https://limboy.me/index.xml
 https://blog.devtang.com/atom.xml
 https://blog.ursb.me/feed.xml
 https://www.loyhome.com/feed
+https://geekinney.com/index.xml
