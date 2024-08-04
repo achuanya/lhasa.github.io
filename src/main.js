@@ -98,8 +98,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
         clearInterval(timer);
       }
     });
-  } else {
-    console.log('No .post-content element found on this page.');
   }
 
   // Disqus

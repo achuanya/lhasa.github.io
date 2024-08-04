@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+<link rel="stylesheet" href="/assets//highlight/a11y-light.min.css?v={{ site.time | date: '%s' }}">
 <article class="post-content">
   {% if content contains site.ARTICLEPICTURES_PATH %}
     {% assign images = content | split:'<img src="' %}
@@ -19,5 +20,10 @@ layout: default
   {{ content }}
 </article>
 {% include info.html %}
+<script src="/assets/img-previewer.min.js?v={{ site.time | date: '%s' }}"></script>
+<script src="/assets/highlight/highlight.min.js?v={{ site.time | date: '%s' }}"></script>
+<script>
+  hljs.highlightAll();
+</script>
 <div id="comment"></div>
 {% include wechat.html %}
