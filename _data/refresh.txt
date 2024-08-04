@@ -114,7 +114,6 @@ https://lhasa.icu/cycling.html
 https://lhasa.icu/guestbook.html
 https://lhasa.icu/
 https://lhasa.icu/life.html
-https://lhasa.icu/links.html
 https://lhasa.icu/music.html
 https://lhasa.icu/posts.json
 https://lhasa.icu/rss.xml
