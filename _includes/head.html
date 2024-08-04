@@ -57,19 +57,24 @@
       };
   </script>
   <script src="/assets/main.min.js?v={{ site.time | date: '%s' }}"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19Q4N0N6FV"></script>
   <script async>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-19Q4N0N6FV');
 
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?2f325d81a4b600b2b4be3c277d6fa88a";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
+    window.addEventListener('load', function(){
+        var s = document.createElement('script');
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-19Q4N0N6FV";
+        document.body.appendChild(s);
+
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2f325d81a4b600b2b4be3c277d6fa88a";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    });
   </script>
 </head>
