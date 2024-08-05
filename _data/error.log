@@ -4,3 +4,5 @@
 
 [Mon Aug 5 10:02:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 2/3: Get "https://ihaihe.cn/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Mon Aug 5 10:02:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 3/3: Get "https://ihaihe.cn/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
