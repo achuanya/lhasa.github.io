@@ -56,3 +56,5 @@
 
 [Wed Aug 7 01:10:2024] [Parse RSS error] https://www.shephe.com/feed: Attempt 3/3: Failed to detect feed type
 
+[Wed Aug 7 01:10:2024] [Failed to parse RSS] https://www.shephe.com/feed: Failed to detect feed type
+
