@@ -36,3 +36,5 @@
 
 [Tue Aug 6 18:10:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 1/3: Get "https://ihaihe.cn/feed": dial tcp 139.196.146.171:443: connect: connection refused
 
+[Tue Aug 6 18:10:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 2/3: Get "https://ihaihe.cn/feed": dial tcp 139.196.146.171:443: connect: connection refused
+
