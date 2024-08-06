@@ -48,3 +48,5 @@
 
 [Tue Aug 6 19:08:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 3/3: Failed to detect feed type
 
+[Tue Aug 6 19:08:2024] [Failed to parse RSS] https://ihaihe.cn/feed: Failed to detect feed type
+
