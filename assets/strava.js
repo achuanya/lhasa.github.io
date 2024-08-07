@@ -1,5 +1,5 @@
 const clientId = '130832';
-const clientSecret = 'f399602d61792b1e12b84ba9a0e49d9cb2e5571e';
+const clientSecret = 'cd2f3b989e5f1edea85e758a87434e47e08d97af';
 let accessToken = '89050cc9dc217ab1fe80558dbd2523687118d1ab';
 const refreshToken = '31ae71ec99deb6be48629ce52af2915b01eba41f';
 
