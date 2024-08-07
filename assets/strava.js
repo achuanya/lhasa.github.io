@@ -17,10 +17,10 @@ function refreshAccessToken() {
         success: function(response) {
             accessToken = response.access_token;
             console.log('Access token refreshed');
-            return response.access_token;
+            getRecentRides(); // 获取新的访问令牌后再次调用
         },
-        error: function() {
-            console.log('Error refreshing access token');
+        error: function(jqXHR) {
+            console.log('Error refreshing access token:', jqXHR);
         }
     });
 }
@@ -39,9 +39,9 @@ function getRecentRides() {
             displayRides(data);
         },
         error: function(jqXHR) {
-            console.log('Error fetching rides:', jqXHR.status);
+            console.log('Error fetching rides:', jqXHR.status, jqXHR.responseText);
             if (jqXHR.status === 401) { // Unauthorized
-                refreshAccessToken().then(getRecentRides);
+                refreshAccessToken();
             }
         }
     });
