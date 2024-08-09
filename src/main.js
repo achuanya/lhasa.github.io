@@ -354,31 +354,20 @@ document.addEventListener('DOMContentLoaded', function (event) {
     })
 
     function search(keyword) {
-      // 清空搜索结果区域
       result.innerHTML = '';
-      // 设置页面标题
       var title = '搜索：' + keyword + ' | ' + site.title;
-      // 构建搜索结果的URL
       var url = '/search.html?keyword=' + keyword;
-      // 获取搜索结果的总数
       var total = result.length;
-      // 初始化HTML字符串
       var html = '';
 
       // 遍历搜索数据
       searchData.forEach(function (item) {
-        // 拼接内容
         var postContent = item.title + item.tags.join('') + item.content;
-        // 检查关键字是否出现在内容中（不区分大小写）
         if (postContent.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
-          // 获取关键字在内容中的索引
           var index = item.content.toLowerCase().indexOf(keyword.toLowerCase());
-          // 获取实际关键字
           var realKeyword = item.content.substr(index, keyword.length);
-          // 确定内容片段的起始和结束位置
           var first = index > 75 ? index - 75 : 0;
           var last = first + 150;
-          // 构建搜索结果的HTML
           html += '<div class="search-result-item">' +
             '      <i class="search-result-thumb" data-src="' + item.thumb + '" style="background-image:url(' + item.thumb + ')"></i>' +
             '      <div class="search-result-content">' +
@@ -391,9 +380,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
             '    </div>';
         }
       })
-      // 更新搜索结果区域的HTML内容
       result.innerHTML = html;
-      // 更新页面标题
       document.title = title;
       // 使用History API更新浏览器历史记录
       history.replaceState({
@@ -457,9 +444,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
 
-  // 处理 tech.html, life.html 页面分页功能
-  if (page.url == '/tech.html' || page.url == '/life.html') {
-    // 获取当前页面的页码，如果没有则默认为第一页
+  // 处理 tech.html, life.html , cycling.html 页面分页功能
+  if (page.url == '/life.html' || page.url == '/cycling.html'|| page.url == '/tech.html') {
     var pageNum = !!getQuery('page') ? parseInt(getQuery('page')) : 1;
     var postData, posts = [];
     var xhrPosts = new XMLHttpRequest();
@@ -467,9 +453,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     var category = page.url.slice(1, -5);
     xhrPosts.open('GET', '/posts.json', true);
     xhrPosts.onreadystatechange = function () {
-      // 当数据加载完成且成功时
       if (xhrPosts.readyState == 4 && xhrPosts.status == 200) {
-        // 解析获取到的文章数据
         postData = JSON.parse(xhrPosts.responseText);
         // 根据分类筛选出符合条件的文章
         postData.forEach(function (item) {
@@ -477,7 +461,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
             posts.push(item);
           }
         })
-        // 根据当前页码显示对应页的文章列表
         turn(pageNum);
       }
     }
@@ -490,15 +473,19 @@ document.addEventListener('DOMContentLoaded', function (event) {
       var pageSize = 10;
       // 根据不同的页面 URL 设置分类名称和文章列表样式类
       switch (page.url) {
+        case '/life.html':
+            cat = '生活';
+            pageSize = 12;
+            postClass = 'post-life';
+            break;
+        case '/cycling.html':
+            cat = '骑行';
+            pageSize = 6;
+            postClass = 'post-cycling';
+            break;
         case '/tech.html':
           cat = '技术';
           postClass = 'post-tech';
-          break;
-        case '/life.html':
-          cat = '生活';
-          // 生活页面每页显示 12 篇文章
-          pageSize = 12;
-          postClass = 'post-life';
           break;
       }
       // 根据当前页码计算文章起始和结束位置
@@ -509,30 +496,39 @@ document.addEventListener('DOMContentLoaded', function (event) {
       var first = (pageNum - 1) * pageSize;
       var last = total > pageNum * pageSize ? pageNum * pageSize : total;
       // 根据不同页面的文章列表格式生成 HTML
-      if (page.url == '/life.html') {
-        // 生活页面特定格式
+      if (page.url === '/life.html') {
         for (var i = first; i < last; i++) {
           var item = posts[i];
           html += '<article class="post-item">' +
-            '    <i class="post-item-thumb" data-src="' + item.image + '" style="background-image:url(' + (item.image.indexOf('svg') > -1 ? item.image : item.image + '?imageView2/1/w/400/h/266') + ')"></i>' +
-            '    <section class="post-item-summary">' +
-            '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category == 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
-            '    </section>' +
-            '    <section class="post-item-footer"><time class="post-item-date timeago" datetime="' + item.date + '"></time><a class="post-item-cmt" title="查看评论" href="' + item.url + '#comment"><span data-disqus-url="' + item.url + '"></span><span>条评论</span></a></section>' +
-            '</article>';
-        }
+              '    <i class="post-item-thumb" data-src="' + item.image + '" style="background-image:url(' + (item.image.indexOf('svg') > -1 ? item.image : item.image + '?imageView2/1/w/400/h/266') + ')"></i>' +
+              '    <section class="post-item-summary">' +
+              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
+              '    </section>' +
+              '    <section class="post-item-footer"><time class="post-item-date timeago" datetime="' + item.date + '"></time><a class="post-item-cmt" title="查看评论" href="' + item.url + '#comment"><span data-disqus-url="' + item.url + '"></span><span>条评论</span></a></section>' +
+              '</article>';
+          }
+      } else if (page.url === '/cycling.html') {
+        for (var i = first; i < last; i++) {
+          var item = posts[i];
+          html += '<article class="post-item">' +
+              '    <i class="post-item-thumb" data-src="' + item.image + '" style="background-image:url(' + (item.image.indexOf('svg') > -1 ? item.image : item.image + '?imageView2/1/w/400/h/266') + ')"></i>' +
+              '    <section class="post-item-summary">' +
+              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
+              '    </section>' +
+              '    <section class="post-item-footer"><time class="post-item-date timeago" datetime="' + item.date + '"></time><a class="post-item-cmt" title="查看评论" href="' + item.url + '#comment"><span data-disqus-url="' + item.url + '"></span><span>条评论</span></a></section>' +
+              '</article>';
+          }
       } else {
-        // 其他页面的通用格式
         for (var i = first; i < last; i++) {
           var item = posts[i];
           html += '<article class="post-item">' +
-            '    <i class="post-item-thumb" data-src="' + item.thumb + '" style="background-image:url(' + item.thumb + ')"></i>' +
-            '    <section class="post-item-summary">' +
-            '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category == 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
-            '    <time class="post-item-date timeago" datetime="' + item.date + '"></time>' +
-            '    </section>' +
-            '    <a class="post-item-comment" title="查看评论" data-disqus-url="' + item.url + '" href="' + item.url + '#comment"></a>' +
-            '</article>';
+              '    <i class="post-item-thumb" data-src="' + item.thumb + '" style="background-image:url(' + item.thumb + ')"></i>' +
+              '    <section class="post-item-summary">' +
+              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
+              '    <time class="post-item-date timeago" datetime="' + item.date + '"></time>' +
+              '    </section>' +
+              '    <a class="post-item-comment" title="查看评论" data-disqus-url="' + item.url + '" href="' + item.url + '#comment"></a>' +
+              '</article>';
         }
       }
 
@@ -549,16 +545,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
         '</ul>';
 
       // 将生成的文章列表和分页控件插入到页面中
-      // 添加文章列表的样式类
       document.querySelector('.post-list').classList.add(postClass);
-      // 插入文章列表的 HTML 内容
       document.querySelector('.post-list').innerHTML = html;
-      // 插入分页控件的 HTML 内容
       document.querySelector('.pagination').innerHTML = pagination;
-      // 更新文章列表中的时间显示
       timeAgo();
-      // 更新文章列表中评论数量的显示
       disq.count();
+      
       // 给分页链接添加点击事件，点击时切换到对应页码的文章列表
       var link = document.getElementsByClassName('pagination-item-link');
       for (var i = 0; i < link.length; i++) {
@@ -579,4 +571,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
       // }
     }
   }
+
+
+
+  
 })

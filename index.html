@@ -21,7 +21,8 @@ layout: default
 <nav class="pagination">
     <ul class="pagination-list">
     {% if paginator.next_page %}
-        <li class="pagination-item"><a class="pagination-item-link" href="/page{{ paginator.next_page}}/">&laquo; 较旧文章</a></li>
+        <li class="pagination-item">
+            <a class="pagination-item-link" href="/page{{ paginator.next_page}}/">&laquo; 较旧文章</a></li>
     {% else %}
         <li class="pagination-item"></li>
     {% endif %}

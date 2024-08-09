@@ -1,14 +1,16 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'production',
     entry: path.resolve(__dirname, 'src/main.js'),
     output: {
         path: path.resolve(__dirname, 'assets'),
-        filename: 'main.min.js'
+        filename: 'main.min.js',
+        publicPath: '/'
     },
     stats: {
         entrypoints: false,
@@ -43,7 +45,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'iDisqus.css': "disqus-php-api/dist/iDisqus.css"
+            'iDisqus.css': 'disqus-php-api/dist/iDisqus.css',
         }
     },
     plugins: [
@@ -55,7 +57,7 @@ module.exports = {
         minimize: true,
         minimizer: [
             new TerserPlugin({
-                parallel: true,
+                parallel: true
             }),
             new CssMinimizerPlugin()
         ],

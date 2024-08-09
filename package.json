@@ -12,6 +12,7 @@
     "highlight.js": "^11.10.0",
     "img-previewer": "^2.1.7",
     "node-fetch": "^3.3.2",
+    "pjax": "^0.2.8",
     "typocss": "^1.4.0",
     "webpack-raphael": "^2.1.4",
     "weixin-js-sdk": "^1.3.3"

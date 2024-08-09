@@ -2,7 +2,7 @@
 layout: post
 title: 公路车管胎被扎，怎么补胎
 date: 2024-07-19 14:38:01 +0800
-category: life
+category: cycling
 thumb: ARTICLEPICTURES_PATH/TubularTireRepair.jpg
 tags: [公路车, 管胎, 补胎]
 ---

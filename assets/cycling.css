@@ -1,0 +1,69 @@
+/* Calendar Container */
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 350px;
+    margin: auto;
+}
+
+/* Day Container */
+.day-container {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    height: 60px; /* 固定高度 */
+    width: 14.28%; /* 7列的宽度百分比 */
+    box-sizing: border-box; /* 包括内边距和边框在内 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* 确保超出部分隐藏 */
+}
+
+/* Day Header */
+.header {
+    font-weight: bold;
+    width: 14.28%; /* 使星期标题和日历宽度对齐 */
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Today Highlight */
+.today {
+    font-weight: bold;
+}
+
+/* Date Number */
+.date-number {
+    position: relative;
+    font-size: 16px; /* 日期数字的字体大小 */
+    color: black; /* 日期数字颜色 */
+    opacity: 0; /* 默认隐藏 */
+    transition: opacity 0.5s ease;
+    z-index: 1; /* 确保日期在球上方 */
+}
+
+/* Activity Indicator (Ball) */
+.activity-indicator {
+    position: absolute;
+    background: black;
+    border-radius: 50%;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 0; /* 球在日期数字下方 */
+    display: block; /* 使球能够响应悬停事件 */
+    transform: translate(-50%, -50%); /* 确保球居中对齐 */
+    min-width: 10px; /* 确保球的最小尺寸 */
+    min-height: 10px; /* 确保球的最小尺寸 */
+    max-width: 30px; /* 设置球的最大尺寸 */
+    max-height: 30px; /* 设置球的最大尺寸 */
+}
+
+/* Hover Effect */
+.day-container:hover .date-number {
+    opacity: 1; /* 鼠标悬停时显示日期数字 */
+}
+
+.day-container:hover .activity-indicator {
+    opacity: 0; /* 鼠标悬停时隐藏球 */
+}

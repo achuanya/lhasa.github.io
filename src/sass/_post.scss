@@ -6,50 +6,23 @@
   box-sizing: border-box;
 }
 
-html::-webkit-scrollbar {
-  width: 10px;
-}
-html::-webkit-scrollbar-track {
-  background: rgb(179, 177, 177);
-  border-radius: 10px;
-}
-
-html::-webkit-scrollbar-thumb {
-  background: rgb(136, 136, 136);
-  border-radius: 10px;
-}
-
-html::-webkit-scrollbar-thumb:hover {
-  background: rgb(100, 100, 100);
-  border-radius: 10px;
-}
-
-html::-webkit-scrollbar-thumb:active {
-  background: #505050;
-  border-radius: 10px;
-}
 ::-webkit-scrollbar {
   width: 10px;
-  height: 10px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(179, 177, 177);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(136, 136, 136);
-  border-radius: 10px;
+  background: $scrollbar-thumb
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(100, 100, 100);
+  background: $scrollbar-hover
 }
 
-::-webkit-scrollbar-thumb:active {
-  background: #505050;
-}
 a{
   text-decoration: none;
 }
@@ -399,8 +372,50 @@ body {
     }
   }
 }
-
+// 生活
 .post-life{
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 0;
+  margin: 0 -5px;
+  .post-item{
+    flex: none;
+    padding: 0 5px;
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    width: 33.3333%;
+  }
+  .post-item-thumb{
+    background-size: contain;
+    width: 100%;
+    height: 0;
+    padding-top: 67%;
+  }
+  .post-item-summary{
+    margin: 3px 0 0;
+    height: 25px;
+    font-size: 13px;
+    flex: none;
+  }
+  .post-item-footer{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .post-item-cmt{
+    color: #333;
+    &:hover{
+      border-bottom: none;
+    }
+    span:empty + span{
+      display: none;
+    }
+  }
+}
+
+// 骑行
+.post-cycling{
   display: flex;
   flex-wrap: wrap;
   min-height: 0;
