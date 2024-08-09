@@ -364,3 +364,5 @@
 
 [Fri Aug 9 21:13:2024] [Get RSS error] https://blog.pursuitus.com/feed: Attempt 1/3: Get "https://blog.pursuitus.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Aug 9 21:14:2024] [Get RSS error] https://blog.pursuitus.com/feed: Attempt 2/3: Get "https://blog.pursuitus.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
