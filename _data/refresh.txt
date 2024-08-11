@@ -202,3 +202,4 @@ https://cos.lhasa.icu/assets/cycling.min.css
 https://cos.lhasa.icu/assets/cycling.min.js
 https://cos.lhasa.icu/ArticlePictures/3138bbfa27873a47be243177e9865ac.png
 https://cos.lhasa.icu/ArticlePictures/6ebf4b151477aacd7908d80dad937a91.png
+https://lhasa.icu/CyclingPage.html
