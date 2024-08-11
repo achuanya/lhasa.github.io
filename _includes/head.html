@@ -19,7 +19,7 @@
   <meta name="google-site-verification" content="8Sdxh73EjjXanBcmOpNtsiALfpB7PUEE9JFoHkA3Xmc" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="stylesheet preload" href="/assets/main.min.css?v={{ site.time | date: '%s' }}" as="style" />
+  <link rel="stylesheet preload" href="{{ site.ASSETS_PATH }}/main.min.css?v={{ site.time | date: '%s' }}" as="style" />
   <link rel="canonical" href="{{ page.url | replace: 'index.html','' | prepend: site.home }}" />
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }} Atom Feed" href="https://lhasa.icu/atom.xml" />
   <link rel="icon" href="{{ site.STYLEPICTURES_PATH }}/favicon.ico" />
@@ -57,7 +57,7 @@
         wechat: /MicroMessenger/i.test(ua),
       };
   </script>
-  <script src="/assets/main.min.js?v={{ site.time | date: '%s' }}"></script>
+  <script src="{{ site.ASSETS_PATH }}/main.min.js?v={{ site.time | date: '%s' }}"></script>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QG2VELXEMS"></script>
