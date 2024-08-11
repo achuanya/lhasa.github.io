@@ -80,6 +80,37 @@ window.addEventListener('beforeunload', function (event) {
   document.getElementById('menu').checked = false;
 });
 
+// 年度条
+// function insertDynamicStyles() {
+//   var curYear = new Date().getFullYear();
+//   var startYear = Date.parse('01 Jan ' + curYear + ' 00:00:00');
+//   var endYear = Date.parse('31 Dec ' + curYear + ' 23:59:59');
+//   var yearProgress = (Date.now() - startYear) / (endYear - startYear) * 100;
+//   var widthProgress = yearProgress.toFixed(2) + '%';
+
+//   var styleElement = document.createElement('style');
+//   styleElement.type = 'text/css';
+
+//   var cssRules = `
+//       .page-header .page-title:before {
+//           width: ${widthProgress};
+//       }
+//       .page-header .page-title:after {
+//           left: ${widthProgress};
+//           content: "${parseInt(yearProgress)}%";
+//       }
+//   `;
+
+//   if (styleElement.styleSheet) {
+//       // IE
+//       styleElement.styleSheet.cssText = cssRules;
+//   } else {
+//       // 其他浏览器
+//       styleElement.appendChild(document.createTextNode(cssRules));
+//   }
+//   document.head.appendChild(styleElement);
+// }
+
 document.addEventListener('DOMContentLoaded', function (event) {
 
   // Img-previewer
@@ -119,16 +150,29 @@ document.addEventListener('DOMContentLoaded', function (event) {
   disq.count();
   timeAgo();
 
-  // 计算当前年份的开始和结束时间戳(导航栏年度条)
+  // insertDynamicStyles()
+
   var curYear = new Date().getFullYear();
-  var startYear = Date.parse('01 Jan '+curYear+' 00:00:00');
-  var endYear = Date.parse('31 Dec '+curYear+' 23:59:59');
+  var startYear = Date.parse('01 Jan ' + curYear + ' 00:00:00');
+  var endYear = Date.parse('31 Dec ' + curYear + ' 23:59:59');
   var yearProgress = (Date.now() - startYear) / (endYear - startYear) * 100;
-  var widthProgress = yearProgress.toFixed(2) + '%'
-  var styles = document.styleSheets;
-  styles[styles.length-1].insertRule('.page-header .page-title:before{width:'+widthProgress+'}',0);
-  styles[styles.length-1].insertRule('.page-header .page-title:after{left:'+widthProgress+'}',0);
-  styles[styles.length-1].insertRule('.page-header .page-title:after{content:"' + parseInt(yearProgress) + '%"}',0);
+  var widthProgress = yearProgress.toFixed(2) + '%';
+
+  // 创建 <style> 元素
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  // 为 IE 浏览器兼容
+  if (style.styleSheet) {
+      style.styleSheet.cssText = '.page-header .page-title:before { width: ' + widthProgress + '; }' +
+                                '.page-header .page-title:after { left: ' + widthProgress + '; content: "' + parseInt(yearProgress) + '%"; }';
+  } else {
+      style.appendChild(document.createTextNode('.page-header .page-title:before { width: ' + widthProgress + '; }' +
+                                                '.page-header .page-title:after { left: ' + widthProgress + '; content: "' + parseInt(yearProgress) + '%"; }'));
+  }
+
+  // 将 <style> 元素插入到 <head> 中
+  document.head.appendChild(style);
 
   // 检查是否为文章页面
   if (page.layout == 'post') {
@@ -172,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
       // imgdom.addEventListener('click', function () {
 
       // });
-
     })
 
     // 获取图片的 EXIF 信息
@@ -513,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
           html += '<article class="post-item">' +
               '    <i class="post-item-thumb" data-src="' + item.image + '" style="background-image:url(' + (item.image.indexOf('svg') > -1 ? item.image : item.image + '?imageView2/1/w/400/h/266') + ')"></i>' +
               '    <section class="post-item-summary">' +
-              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
+              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'cycling' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
               '    </section>' +
               '    <section class="post-item-footer"><time class="post-item-date timeago" datetime="' + item.date + '"></time><a class="post-item-cmt" title="查看评论" href="' + item.url + '#comment"><span data-disqus-url="' + item.url + '"></span><span>条评论</span></a></section>' +
               '</article>';
@@ -524,7 +567,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
           html += '<article class="post-item">' +
               '    <i class="post-item-thumb" data-src="' + item.thumb + '" style="background-image:url(' + item.thumb + ')"></i>' +
               '    <section class="post-item-summary">' +
-              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'life' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
+              '    <h3 class="post-item-title"><a class="post-item-link" href="' + item.url + '" title="' + item.title + '">' + item.title + (item.images > 30 && item.category === 'tech' ? '[' + item.images + 'P]' : '') + '</a></h3>' +
               '    <time class="post-item-date timeago" datetime="' + item.date + '"></time>' +
               '    </section>' +
               '    <a class="post-item-comment" title="查看评论" data-disqus-url="' + item.url + '" href="' + item.url + '#comment"></a>' +
@@ -571,8 +614,4 @@ document.addEventListener('DOMContentLoaded', function (event) {
       // }
     }
   }
-
-
-
-  
 })
