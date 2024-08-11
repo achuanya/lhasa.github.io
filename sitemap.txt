@@ -24,6 +24,7 @@ https://lhasa.icu/page4/
 https://lhasa.icu/page5/
 https://lhasa.icu/page6/
 https://lhasa.icu/page7/
+https://lhasa.icu/CyclingPage.html
 https://lhasa.icu/FormAutomationPlugin.html
 https://lhasa.icu/RidingOnThelastDayOfJuly.html
 https://lhasa.icu/GrabLatestRSS.html
