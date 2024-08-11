@@ -2,14 +2,16 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
     mode: 'production',
-    entry: path.resolve(__dirname, 'src/main.js'),
+    entry: {
+        main: path.resolve(__dirname, 'src/main.js'),
+        cycling: path.resolve(__dirname, 'src/cycling.js'),
+    },
     output: {
         path: path.resolve(__dirname, 'assets'),
-        filename: 'main.min.js',
+        filename: '[name].min.js',
         publicPath: '/'
     },
     stats: {
@@ -23,17 +25,7 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [
-                                    require('autoprefixer'),
-                                    require('postcss-discard-comments')
-                                ]
-                            }
-                        }
-                    },
+                    'postcss-loader',
                     'sass-loader'
                 ]
             },
@@ -50,7 +42,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'main.min.css'
+            filename: '[name].min.css'
         })
     ],
     optimization: {

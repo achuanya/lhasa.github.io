@@ -3,17 +3,35 @@ layout: default
 permalink: /cycling.html
 title: 骑行
 ---
-<link rel="stylesheet" href="https://cos.lhasa.icu/assets/cycling.css?v={{ site.time | date: '%s' }}">
-<script src="https://cos.lhasa.icu/assets/cycling.js?v={{ site.time | date: '%s' }}"></script>
-<div>
-    <div>
-        <h3>过去 4 周</h3>
-        <div>
-            <div>17</div>
-            <div>活动总数</div>
+<div class="container">
+    <div id="totalActivities">
+        <div id="totalTitle" class="total-title">过去 4 周</div>
+        <div id="totalCount" class="total-count">
+            <span id="totalCountValue">0</span>
+            <div class="loading-spinner"></div>
+        </div>
+        <div id="totalLabel" class="total-label">活动总数</div>
+        <div id="totalDistance" class="total-distance">
+            <span id="totalDistanceValue">0</span>
+            <div class="loading-spinner"></div>
         </div>
     </div>
     <div id="calendar" class="calendar"></div>
+    <div class="sports">
+        <div class="icon-container">
+            <div class="icon-item">
+                <div class="road_bike_color"></div>
+                <div class="icon-svg">{% include svg/road_bike.svg %}</div>
+            </div>
+            <div class="icon-item running">
+                <div class="running_color"></div>
+                <div class="icon-svg running">{% include svg/running.svg %}</div>
+            </div>
+        </div>
+        <div id="barChart" class="bar-chart"></div>
+    </div>
 </div>
 <section class="post-list"></section>
 <nav class="pagination"></nav>
+<link rel="stylesheet" href="https://cos.lhasa.icu/assets/cycling.min.css">
+<script src="https://cos.lhasa.icu/assets/cycling.min.js"></script>
