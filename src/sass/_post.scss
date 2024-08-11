@@ -5,22 +5,34 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+// 竖向
 ::-webkit-scrollbar {
   width: 10px;
   height: 5px;
 }
-
 ::-webkit-scrollbar-track {
   border-radius: 10px;
+  background: $scrollbar-track;
+  backdrop-filter: blur(10px);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: $scrollbar-thumb
+  background: $scrollbar-thumb;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: $scrollbar-hover
+  background: $scrollbar-hover;
+}
+// 横向滚动条
+::-webkit-scrollbar-track:horizontal {
+  background: $scrollbar-track-horizontal;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background: $scrollbar-thumb-horizontal;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: $scrollbar-thumb-horizontal-hover;
 }
 
 a{

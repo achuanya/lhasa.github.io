@@ -7,8 +7,15 @@ $darkgray: rgb(67, 67, 67);
 $white: rgb(255, 255, 255);
 $black: rgb(0, 0, 0);
 $default: rgb(34, 34, 34);
-$scrollbar-thumb: #EEB8B8;
-$scrollbar-hover: #FADCDA;
+
+$scrollbar-track: rgba(255, 255, 255, 0.1);
+$scrollbar-thumb: rgba(255, 255, 255, 0.5);;
+$scrollbar-hover: rgba(255, 255, 255, 0.7);;
+
+$scrollbar-track-horizontal: rgba(255, 255, 255, 0.1);
+$scrollbar-thumb-horizontal: #9cf;
+$scrollbar-thumb-horizontal-hover :#7ab;
+
 @import 'navigation';
 @import 'post';
 @import 'running';
