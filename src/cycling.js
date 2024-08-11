@@ -33,6 +33,7 @@ function generateCalendar(activities, startDate, numWeeks) {
         dayContainer.appendChild(dateNumber);
 
         const activity = activities.find(activity => activity.activity_time === date.toISOString().split('T')[0]);
+        console.log(processedActivities);
         if (activity) processedActivities.push(activity);
 
         // 根据骑行距离设置球的大小

@@ -80,37 +80,6 @@ window.addEventListener('beforeunload', function (event) {
   document.getElementById('menu').checked = false;
 });
 
-// 年度条
-// function insertDynamicStyles() {
-//   var curYear = new Date().getFullYear();
-//   var startYear = Date.parse('01 Jan ' + curYear + ' 00:00:00');
-//   var endYear = Date.parse('31 Dec ' + curYear + ' 23:59:59');
-//   var yearProgress = (Date.now() - startYear) / (endYear - startYear) * 100;
-//   var widthProgress = yearProgress.toFixed(2) + '%';
-
-//   var styleElement = document.createElement('style');
-//   styleElement.type = 'text/css';
-
-//   var cssRules = `
-//       .page-header .page-title:before {
-//           width: ${widthProgress};
-//       }
-//       .page-header .page-title:after {
-//           left: ${widthProgress};
-//           content: "${parseInt(yearProgress)}%";
-//       }
-//   `;
-
-//   if (styleElement.styleSheet) {
-//       // IE
-//       styleElement.styleSheet.cssText = cssRules;
-//   } else {
-//       // 其他浏览器
-//       styleElement.appendChild(document.createTextNode(cssRules));
-//   }
-//   document.head.appendChild(styleElement);
-// }
-
 document.addEventListener('DOMContentLoaded', function (event) {
 
   // Img-previewer
@@ -149,8 +118,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
   disq.count();
   timeAgo();
-
-  // insertDynamicStyles()
 
   var curYear = new Date().getFullYear();
   var startYear = Date.parse('01 Jan ' + curYear + ' 00:00:00');
