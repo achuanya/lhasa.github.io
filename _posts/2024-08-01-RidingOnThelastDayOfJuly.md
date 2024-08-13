@@ -3,7 +3,7 @@ layout: post
 title: 七月最后一天骑行，有氧100公里
 date: 2024-08-01 01:37:01 +0800
 category: cycling
-thumb: ARTICLEPICTURES_PATH/8aaee2d611764e6819dd41df4788121.jpg
+thumb: ARTICLEPICTURES_PATH/8aaee2d611764e6819dd41df47881211.jpg
 tags: [骑行,公路车,有氧,长途]
 ---
 

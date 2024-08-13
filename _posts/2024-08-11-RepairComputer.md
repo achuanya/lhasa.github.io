@@ -3,7 +3,7 @@ layout: post
 title: 与时间抗衡：笔记本清灰换硅脂记
 date: 2024-08-11 20:19:01 +0800
 category: life
-thumb: ARTICLEPICTURES_PATH/20240811181912.jpg
+thumb: ARTICLEPICTURES_PATH/202408111819122.jpg
 tags: [清灰, 硅脂, 笔记本, 保养]
 ---
 
