@@ -471,7 +471,7 @@ body {
 /* Pagination */
 .pagination{
   &.loading {
-    background-image: url("/assets/svg/loading.svg");
+    background-image: url("/_includes/svg/loading.svg");
     width: 24px;
     height: 30px;
     margin: 20px auto;

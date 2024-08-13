@@ -42,7 +42,7 @@ disqus_api: https://disqus.lhasa.icu
 
 ARTICLEPICTURES_PATH: https://cos.lhasa.icu/ArticlePictures
 STYLEPICTURES_PATH: https://cos.lhasa.icu/StylePictures
-ASSETS_PATH: https://cos.lhasa.icu/assets
+DIST_PATH: https://cos.lhasa.icu/dist
 FONT_PATH: https://cos.lhasa.icu/font
 SVG_PATH: https://cos.lhasa.icu/svg
 

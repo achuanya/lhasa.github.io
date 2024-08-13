@@ -8,9 +8,10 @@ module.exports = {
     entry: {
         main: path.resolve(__dirname, 'src/main.js'),
         cycling: path.resolve(__dirname, 'src/cycling.js'),
+        'img-previewer': path.resolve(__dirname, 'src/img-previewer.js'),
     },
     output: {
-        path: path.resolve(__dirname, 'assets'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].min.js',
         publicPath: '/'
     },

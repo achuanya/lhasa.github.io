@@ -1,8 +1,5 @@
 var iDisqus = require('disqus-php-api');
 import './sass/main.scss';
-// Img-previewer https://github.com/yue1123/img-previewer
-import ImgPreviewer from'img-previewer'
-import 'img-previewer/dist/index.css'
 let timer;
 
 // 百度统计
@@ -80,25 +77,6 @@ window.addEventListener('beforeunload', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', function (event) {
-
-  // Img-previewer
-  if (document.querySelector('.post-content')) {
-    const a = new ImgPreviewer('.post-content', {
-      scrollbar: true,
-      ratio: 0.7,
-      imageZoom: {
-        step: 1
-      },
-      style: {
-        modalOpacity: 0.8
-      },
-      bubblingLevel: 1,
-      onHide() {
-        clearInterval(timer);
-      }
-    });
-  }
-
   // Disqus
   var disq = new iDisqus('comment', {
     forum: site.forum,

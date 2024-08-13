@@ -1,8 +1,11 @@
 https://lhasa.icu/sitemap.txt
 https://lhasa.icu/sitemap.xml
-https://cos.lhasa.icu/assets/main.min.js
-https://cos.lhasa.icu/assets/main.min.css
-https://cos.lhasa.icu/assets/img-previewer.min.js
+https://cos.lhasa.icu/dist/main.min.js
+https://cos.lhasa.icu/dist/main.min.css
+https://cos.lhasa.icu/dist/cycling.min.css
+https://cos.lhasa.icu/dist/cycling.min.js
+https://cos.lhasa.icu/dist/img-previewer.min.js
+https://cos.lhasa.icu/dist/img-previewer.min.css
 https://cos.lhasa.icu/font/highlight/highlight.min.js
 https://cos.lhasa.icu/font/highlight/a11y-light.min.css
 https://cos.lhasa.icu//StylePictures/avatar.jpg
@@ -124,7 +127,6 @@ https://lhasa.icu/search.json
 https://lhasa.icu/tags.json
 https://lhasa.icu/tags.html
 https://lhasa.icu/tech.html
-https://lhasa.icu/assets/css/style.css
 https://lhasa.icu/page2/
 https://lhasa.icu/page3/
 https://lhasa.icu/page4/
@@ -198,8 +200,6 @@ https://lhasa.icu/Programmer-development.html
 https://lhasa.icu/Ubuntu-set-up-sublime.html
 https://lhasa.icu/FormAutomationPlugin.html
 https://cos.lhasa.icu/ArticlePictures/Form-automation-plugin.png
-https://cos.lhasa.icu/assets/cycling.min.css
-https://cos.lhasa.icu/assets/cycling.min.js
 https://cos.lhasa.icu/ArticlePictures/3138bbfa27873a47be243177e9865ac.png
 https://cos.lhasa.icu/ArticlePictures/6ebf4b151477aacd7908d80dad937a91.png
 https://lhasa.icu/CyclingPage.html
