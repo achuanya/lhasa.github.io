@@ -36,6 +36,7 @@
     transition: opacity 0.5s ease;
     z-index: 1;
     white-space: nowrap;
+    border-bottom: 2px solid $date-underline-color;
 }
 
 .activity-indicator {

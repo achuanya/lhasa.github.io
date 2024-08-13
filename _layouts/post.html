@@ -9,7 +9,7 @@ layout: default
       {% if image contains site.ARTICLEPICTURES_PATH %}
         {% assign thumbSrc = image | split: '" ' | first %}
         {% assign imageSrc = thumbSrc | split: '?imageView' | first | remove: "_640v" | remove: "_640" %}
-        {% assign newImage = thumbSrc | prepend: '" data-url="' | prepend: thumbSrc | append: '" data-src="' | append: imageSrc %}
+        {% assign newImage = thumbSrc | append: '" data-src="' | append: imageSrc %}
         {% if thumbSrc contains site.ARTICLEPICTURES_PATH and newImage contains site.ARTICLEPICTURES_PATH %}
             {% assign content = content | replace: thumbSrc, newImage %}
         {% endif %}

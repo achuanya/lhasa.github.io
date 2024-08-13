@@ -17,10 +17,11 @@ function generateCalendar(activities, startDate, numWeeks) {
     });
 
     const todayStr = getChinaTime().toISOString().split('T')[0];
-    // 起始日期
     let currentDate = new Date(startDate);
+    currentDate.setUTCHours(0, 0, 0, 0);
 
     processedActivities = [];
+    let todayContainer = null;
 
     // 创建日历项的函数
     function createDayContainer(date, activities) {
@@ -29,7 +30,7 @@ function generateCalendar(activities, startDate, numWeeks) {
 
         const dateNumber = document.createElement('span');
         dateNumber.className = 'date-number';
-        dateNumber.innerText = date.getDate();
+        dateNumber.innerText = date.getUTCDate();
         dayContainer.appendChild(dateNumber);
 
         const activity = activities.find(activity => activity.activity_time === date.toISOString().split('T')[0]);
@@ -49,21 +50,37 @@ function generateCalendar(activities, startDate, numWeeks) {
         dayContainer.appendChild(ball);
 
         dayContainer.addEventListener('mouseenter', () => {
-            dateNumber.style.opacity = '1';
-            ball.style.opacity = '0';
+            if (date.toDateString() === new Date().toDateString()) {
+                dateNumber.style.opacity = '0';
+                ball.style.opacity = '1';
+            } else {
+                if (todayContainer) {
+                    todayContainer.querySelector('.date-number').style.opacity = '0';
+                    todayContainer.querySelector('.activity-indicator').style.opacity = '1';
+                }
+            }
         });
         dayContainer.addEventListener('mouseleave', () => {
-            dateNumber.style.opacity = '0';
-            ball.style.opacity = '1';
+            if (date.toDateString() === new Date().toDateString()) {
+                dateNumber.style.opacity = '1';
+                ball.style.opacity = '0';
+            } else {
+                if (todayContainer) {
+                    todayContainer.querySelector('.date-number').style.opacity = '1';
+                    todayContainer.querySelector('.activity-indicator').style.opacity = '0';
+                }
+            }
         });
 
-        // 今天日期和球的颜色
         if (date.toDateString() === new Date().toDateString()) {
+            // 记录今天的日期容器
+            todayContainer = dayContainer;
             dayContainer.classList.add('today');
-            ball.style.backgroundColor = '#2ea9df';
-            dateNumber.style.color = '#2ea9df';
+            ball.style.backgroundColor = '#242428';
+            dateNumber.style.color = '#242428';
+            dateNumber.style.opacity = '1';
+            ball.style.opacity = '0';
         }
-
         return dayContainer;
     }
 
@@ -80,11 +97,10 @@ function generateCalendar(activities, startDate, numWeeks) {
 
                 // 速度
                 await new Promise(resolve => setTimeout(resolve, 30));
-                currentDate.setDate(currentDate.getDate() + 1);
+                currentDate.setUTCDate(currentDate.getUTCDate() + 1);
             }
         }
     }
-
     displayCalendar().then(() => {
         generateBarChart();
         displayTotalActivities();
@@ -250,11 +266,10 @@ function createMessageBox() {
 
 // 获取起始时间
 function getStartDate(today, daysOffset) {
-    const currentDayOfWeek = today.getDay();
-    const daysToMonday = (currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1); 
+    const currentDayOfWeek = today.getUTCDay();
+    const daysToMonday = (currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1);
     const startDate = new Date(today);
-    startDate.setDate(today.getDate() - daysToMonday - daysOffset); 
-    startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)); 
+    startDate.setUTCDate(today.getUTCDate() - daysToMonday - daysOffset);
     return startDate;
 }
 

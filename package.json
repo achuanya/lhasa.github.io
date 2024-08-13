@@ -11,6 +11,7 @@
     "flowchart.js": "^1.11.3",
     "highlight.js": "^11.10.0",
     "img-previewer": "^2.1.7",
+    "lozad": "^1.16.0",
     "node-fetch": "^3.3.2",
     "pjax": "^0.2.8",
     "typocss": "^1.4.0",

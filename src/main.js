@@ -1,6 +1,5 @@
 var iDisqus = require('disqus-php-api');
 import './sass/main.scss';
-
 // Img-previewer https://github.com/yue1123/img-previewer
 import ImgPreviewer from'img-previewer'
 import 'img-previewer/dist/index.css'
@@ -134,8 +133,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
       style.styleSheet.cssText = '.page-header .page-title:before { width: ' + widthProgress + '; }' +
                                 '.page-header .page-title:after { left: ' + widthProgress + '; content: "' + parseInt(yearProgress) + '%"; }';
   } else {
-      style.appendChild(document.createTextNode('.page-header .page-title:before { width: ' + widthProgress + '; }' +
-                                                '.page-header .page-title:after { left: ' + widthProgress + '; content: "' + parseInt(yearProgress) + '%"; }'));
+      style.appendChild(document.createTextNode('.page-header .page-title:before { width: ' + widthProgress + '; }' + '.page-header .page-title:after { left: ' + widthProgress + '; content: "' + parseInt(yearProgress) + '%"; }'));
   }
 
   // 将 <style> 元素插入到 <head> 中
@@ -147,22 +145,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
     // console.log(imageArr);
     var image = {
       src: [],
-      url: [],
       thumb: [],
       title: [],
       coord: []
     };
+
     // 收集图片的相关信息
     for (var i = 0; i < imageArr.length; i++) {
       image.thumb[i] = imageArr[i].src;
       image.src[i] = imageArr[i].dataset.src;
-      image.url[i] = imageArr[i].dataset.url;
-      //new RegExp(site.img,'i').test(imageArr[i].src) ? imageArr[i].src.split(/_|\?/)[0] : imageArr[i].src;
     }
+    
     // 过滤出 jpg 图片
     image.jpg = image.src.filter(function (item) {
       return item.indexOf('.jpg') > -1 && new RegExp(site.img, 'i').test(item);
     });
+    
     // 为每张图片添加标题和相关事件
     [].forEach.call(imageArr, function (item, i) {
       image.title[i] = item.title || item.parentElement.textContent.trim() || item.alt;
@@ -179,88 +177,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
       if (new RegExp(site.img, 'i').test(image.src[i])) {
         imgdom.insertAdjacentHTML('afterend', '<figcaption class="post-figcaption">&#9650; ' + image.title[i] + '</figcaption>');
       }
-
       // imgdom.addEventListener('click', function () {
-
       // });
     })
-
-    // 获取图片的 EXIF 信息
-    var getExif = function (index) {
-      if (index < image.jpg.length) {
-        var item = image.jpg[index];
-        var xhrExif = new XMLHttpRequest();
-        xhrExif.open('GET', item + '?exif', true);
-        xhrExif.onreadystatechange = function () {
-          if (this.readyState == 4) {
-            if (this.status == 200) {
-              var data = JSON.parse(this.responseText);
-              var parseVal = function (odata) {
-                if (!!odata) {
-                  return odata.val;
-                } else {
-                  return '无';
-                }
-              }
-              if (!!data.DateTimeOriginal) {
-                var datetime = data.DateTimeOriginal.val.split(/\:|\s/);
-                var date = datetime[0] + '-' + datetime[1] + '-' + datetime[2] + ' ' + datetime[3] + ':' + datetime[4];
-                var make = parseVal(data.Make);
-                var model = parseVal(data.Model);
-                var fnum = parseVal(data.FNumber);
-                var extime = parseVal(data.ExposureTime);
-                var iso = parseVal(data.ISOSpeedRatings);
-                var flength = parseVal(data.FocalLength);
-                document.querySelector('.post-image[data-src="' + item + '"]').closest('.post-figure').dataset.exif = '时间: ' + date + ' 器材: ' + (model.indexOf(make) > -1 ? '' : make) + ' ' + model + ' 光圈: ' + fnum + ' 快门: ' + extime + ' 感光度: ' + iso + ' 焦距: ' + flength;
-              }
-              if (!!data.GPSLongitude) {
-                var olat = data.GPSLatitude.val.split(', ');
-                var olng = data.GPSLongitude.val.split(', ');
-                var lat = 0, lng = 0;
-                for (var e = 0; e < olat.length; e++) {
-                  lat += olat[e] / Math.pow(60, e);
-                  lng += olng[e] / Math.pow(60, e);
-                }
-                lat = data.GPSLatitudeRef && data.GPSLatitudeRef.val == 'S' ? -lat : lat;
-                lng = data.GPSLongitudeRef && data.GPSLongitudeRef.val == 'W' ? -lng : lng;
-                image.coord[index] = coordtransform.wgs84togcj02(lng, lat).join(',');
-              }
-            }
-            index++;
-            getExif(index);
-          }
-        }
-        xhrExif.send();
-      } else {
-        var xhrRegeo = new XMLHttpRequest();
-        xhrRegeo.open('GET', site.api + '/regeo.php?coords=' + image.coord.filter(function () { return true }).join('|'), true);
-        xhrRegeo.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            var data = JSON.parse(this.responseText);
-            if (data.info == 'OK') {
-              var address, city, dist, town;
-              for (var m = 0, n = 0; m < image.jpg.length; m++) {
-                address = data.regeocodes[n];
-                if (m in image.coord && !!address) {
-                  address = address.addressComponent;
-                  city = address.city || '';
-                  dist = address.district || '';
-                  town = address.township || '';
-                  document.querySelector('[data-src="' + image.jpg[m] + '"]').title = '摄于' + city + dist + town;
-                  n++;
-                }
-              }
-            }
-          }
-        }
-        xhrRegeo.send();
-      }
-    }
-
-    // 如果存在 jpg 图片，则获取其 EXIF 信息
-    if (image.jpg.length > 0) {
-      getExif(0);
-    }
 
     // 页面加载后为锚链接设置目标属性
     window.addEventListener('load', function () {
@@ -271,53 +190,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
         }
       })
     });
-
-    // 获取相关文章数据并显示随机相关文章
-    var postData;
-    var xhrPosts = new XMLHttpRequest();
-    xhrPosts.open('GET', '/posts.json', true);
-    xhrPosts.onreadystatechange = function () {
-      if (xhrPosts.readyState == 4 && xhrPosts.status == 200) {
-        postData = JSON.parse(xhrPosts.responseText);
-        randomPosts(relatedPosts(page.tags, page.category));
-      }
-    }
-    xhrPosts.send(null);
-
-    function relatedPosts(tags, cat) {
-      var posts = [];
-      var used = [];
-      postData.forEach(function (item, i) {
-        if (item.tags.some(function (tag) { return tags.indexOf(tag) > -1; }) && item.url != location.pathname) {
-          posts.push(item);
-          used.push(i);
-        }
-      })
-      while (posts.length < 5) {
-        var index = Math.floor(Math.random() * postData.length);
-        var item = postData[index];
-        if (used.indexOf(index) == '-1' && item.category == cat && item.url != location.pathname) {
-          posts.push(item);
-          used.push(index);
-        }
-      }
-      return posts;
-    }
-
-    function randomPosts(posts) {
-      var used = [];
-      var counter = 0;
-      var html = '';
-      while (counter < 5) {
-        var index = Math.floor(Math.random() * posts.length);
-        if (used.indexOf(index) == '-1') {
-          html += '<li class="post-extend-item"><a class="post-extend-link" href="' + posts[index].url + '" title="' + posts[index].title + '">' + posts[index].title + '</a></li>\n';
-          used.push(index);
-          counter++;
-        }
-      }
-      document.querySelector('#random-posts').insertAdjacentHTML('beforeend', html);
-    }
   }
 
   // 处理 archive.html 页面搜索功能
