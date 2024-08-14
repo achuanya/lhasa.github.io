@@ -23,7 +23,7 @@ function generateCalendar(activities, startDate, numWeeks) {
     processedActivities = [];
     let todayContainer = null;
 
-    // 创建日历项的函数
+    // 创建日历
     function createDayContainer(date, activities) {
         const dayContainer = document.createElement('div');
         dayContainer.className = 'day-container';
