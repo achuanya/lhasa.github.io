@@ -20,4 +20,4 @@ tags: [音乐]
 </script>
 <script src="{{ site.DIST_PATH}}/APlayer/APlayer.min.js"></script>
 <script src="{{ site.DIST_PATH}}/APlayer/Meting2.min.js"></script>
-<script async data-pjax src="{{ site.DIST_PATH}}/APlayer/music.js"></script>
+<script async src="{{ site.DIST_PATH}}/APlayer/music.js"></script>
