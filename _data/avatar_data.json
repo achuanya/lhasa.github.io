@@ -118,5 +118,10 @@
         "domainName": "https://geekinney.com",
         "name": "Geekinney's Blog",
         "avatar": "https://cos.lhasa.icu/LinksAvatar/geekinney.com.png"
+    },
+    {
+        "domainName": "https://kenengba.com",
+        "name": "可能吧",
+        "avatar": "https://cos.lhasa.icu/LinksAvatar/kenengba.com.jpeg"
     }
 ]
