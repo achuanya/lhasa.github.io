@@ -20,8 +20,4 @@ title: 订阅
     {% endfor %}
   </section>
 </section>
-
-<div class="comment-guestbook">
-  <div id="comment"></div>
-</div>
 {% include wechat.html %}
