@@ -33,3 +33,11 @@
 * 2024-02-06 引入Disqus评论系统，由洛杉矶VPS，Ningx反向代理
 * 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
 * 2024-07-22 Tencent Cloud COS再套一层CDN进行境内加速
+
+
+## LICENSE
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
