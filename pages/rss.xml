@@ -25,6 +25,9 @@ permalink: /rss.xml
             {{ post.content | split: '</p>' | first | strip_html | xml_escape }}
           {% endif %}
         </description>
+        <content type="html">
+          {{ post.content | xml_escape }}
+        </content>
         <enclosure url="{{ post.thumb | replace: 'ARTICLEPICTURES_PATH', site.ARTICLEPICTURES_PATH }}" type="image/jpeg" length="0" />
       </item>
     {% endfor %}

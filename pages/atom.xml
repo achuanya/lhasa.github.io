@@ -28,6 +28,9 @@ permalink: /atom.xml
           {{ post.content | split: '</p>' | first | strip_html | xml_escape }}
         {% endif %}
       </summary>
+      <content type="html">
+        {{ post.content | xml_escape }}
+      </content>
     </entry>
   {% endfor %}
 </feed>
