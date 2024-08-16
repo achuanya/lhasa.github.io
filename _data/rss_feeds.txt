@@ -21,3 +21,4 @@ https://blog.ursb.me/feed.xml
 https://www.loyhome.com/feed
 https://geekinney.com/index.xml
 http://feeds.kenengba.com/kenengbarss
+https://tcxx.info/feed
