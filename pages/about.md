@@ -13,8 +13,6 @@ tags: [关于, 博客, 游钓四方, blog]
 * Atom：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
 * Rss：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
 
-请使用Chrome、Firefox等现代浏览器浏览本博客，以免因为兼容性影响阅读体验。
-
 自 2018 年 8 月 31 日起，本站已运行 <span id="days"></span> 天，截至到今天，共写了博文 {{ site.posts.size }} 篇，计 {% assign count = 0 %}{% for post in site.posts %}{% assign single_count = post.content | strip_html | strip_newlines | remove: ' ' | size %}{% assign count = count | plus: single_count %}{% endfor %}{% if count > 10000 %}{{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}{% else %}{{ count }}{% endif %} 字。
 
 鄙人博客采用:<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh-hans" target="_blank">CC BY-NC-ND 4.0</a>，转载请务必注明出处，谢谢。
@@ -23,15 +21,9 @@ tags: [关于, 博客, 游钓四方, blog]
 
 ## 博主
 
+千禧年小孩，长途骑行小学生、野钓路亚、振出并继、古典乐、摇滚、布鲁斯、茶叶爱好者
+
 ![游钓四方的骑行照]({{ site.STYLEPICTURES_PATH}}/my-photo.jpg_640 "游钓四方的骑行照")
-
-长途骑行小学生、野钓路亚、振出并继、古典乐、茶叶爱好者
-
-- Email: <haibao1027@gmail.com>
-- Github：<a href="https://github.com/achuanya" target="_blank">achuanya</a>
-- 微信公众号：游钓四方的博客
-
-![游钓四方的微信公众号]({{ site.STYLEPICTURES_PATH}}/WechatPublicAccount.jpg "生活中从不缺少美，而是缺少发现美的眼睛")
 
 ## 博客进程
 
@@ -46,6 +38,8 @@ tags: [关于, 博客, 游钓四方, blog]
 * 2024-02-06 引入Disqus评论系统，由洛杉矶VPS，Ningx反向代理
 * 2024-02-11 CSS和JS由WebPack打包，字体进行了分包处理
 * 2024-07-22 Tencent Cloud COS再套一层CDN进行境内加速
+
+{% include wechat.html %}
 
 <script>
     var days = 0, daysMax = Math.floor((Date.now() / 1000 - {{ "2018-08-31" | date: "%s" }}) / (60 * 60 * 24));
