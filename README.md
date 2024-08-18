@@ -3,9 +3,9 @@
 </a>
 
 
-* 博客网址：<a href="https://lhasa.icu" target="_blank">https://lhasa.icu</a>
-* atom订阅：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
-* rss订阅：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
+* Blog：<a href="https://lhasa.icu" target="_blank">https://lhasa.icu</a>
+* Atom：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
+* Rss：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
 
 请使用Chrome、Firefox等现代浏览器浏览本博客，以免因为兼容性影响阅读体验。
 
