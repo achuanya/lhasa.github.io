@@ -5,7 +5,9 @@ title: 关于
 tags: [关于, 博客, 游钓四方, blog]
 ---
 
-<a href="https://996.icu" target="_blank"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
+<a href="https://996.icu" target="_blank">
+    <img src="https://cos.lhasa.icu/svg/link-996.icu-red.svg" alt="996.icu" />
+</a>
 
 * Blog：<a href="https://lhasa.icu" target="_blank">https://lhasa.icu</a>
 * Atom：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>

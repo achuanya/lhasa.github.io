@@ -1,3 +1,8 @@
+<a href="https://996.icu" target="_blank">
+    <img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" />
+</a>
+
+
 * 博客网址：<a href="https://lhasa.icu" target="_blank">https://lhasa.icu</a>
 * atom订阅：<a href="https://lhasa.icu/atom.xml" target="_blank">https://lhasa.icu/atom.xml</a>
 * rss订阅：<a href="https://lhasa.icu/rss.xml" target="_blank">https://lhasa.icu/rss.xml</a>
