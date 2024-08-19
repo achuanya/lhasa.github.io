@@ -126,7 +126,7 @@ function generateBarChart() {
         weekEnd.setDate(weekStart.getDate() + 6);
 
         const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
-        weeklyData[weekKey] = (weeklyData[weekKey] || 0) + convertToHours(activity.moving_time);
+        weeklyData[weekKey] = (weeklyData[weekKey] || 0) + parseFloat(activity.moving_time);
     });
 
     // 最大时间
@@ -175,12 +175,12 @@ function animateText(element, startValue, endValue, duration) {
     function update() {
         const elapsed = performance.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const currentValue = Math.floor(progress * endValue);
+        const currentValue = (progress * endValue).toFixed(2);
         element.innerText = `${currentValue}h`;
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
-            element.innerText = `${endValue.toFixed(1)}h`;
+            element.innerText = `${endValue.toFixed(2)}h`;
         }
     }
     update();
@@ -228,12 +228,6 @@ function getWeekStartDate(date) {
     const weekStart = new Date(date);
     weekStart.setDate(weekStart.getDate() + diff);
     return weekStart;
-}
-
-// 将JSON的时间数据转换为小时
-function convertToHours(moving_time) {
-    const [hours, minutes] = moving_time.split(':').map(Number);
-    return parseFloat((hours + (minutes / 60)).toFixed(2));
 }
 
 // 博客托管Github Pages需要中国时间
