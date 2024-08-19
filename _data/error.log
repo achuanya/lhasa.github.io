@@ -1008,3 +1008,5 @@
 
 [Mon Aug 19 19:09:2024] [Failed to parse RSS] http://weiwuhui.com/feed: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Mon Aug 19 19:09:2024] [Get RSS error] https://blog.pursuitus.com/feed: Attempt 3/3: Get "https://blog.pursuitus.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
