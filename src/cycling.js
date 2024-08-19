@@ -233,7 +233,7 @@ function getWeekStartDate(date) {
 // 将JSON的时间数据转换为小时
 function convertToHours(moving_time) {
     const [hours, minutes] = moving_time.split(':').map(Number);
-    return hours + (minutes / 60);
+    return parseFloat((hours + (minutes / 60)).toFixed(2));
 }
 
 // 博客托管Github Pages需要中国时间
