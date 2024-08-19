@@ -358,7 +358,7 @@ function setupBarInteractions(bar, messageBox, clickMessageBox, weeklyData) {
 ```
 
 ## cycling.scss
-骑行统计页面不会止步于此，接下来还会有很大的眼神改动，我提前把变量接口留好了，定义了一些主样式变量，SCSS模块化继承了一些基础样式，二次开发会轻松很多
+骑行统计页面不会止步于此，接下来还会有很大的延申改动，我提前把变量接口留好了，定义了一些主样式变量，SCSS模块化继承了一些基础样式，二次开发会轻松很多
 ```scss
 // 总次数和总距离字体
 $primary-color: #2ea9df;
