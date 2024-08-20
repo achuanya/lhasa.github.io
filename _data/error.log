@@ -1288,3 +1288,5 @@
 
 [Wed Aug 21 05:10:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 2/3: Failed to detect feed type
 
+[Wed Aug 21 05:11:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 3/3: Failed to detect feed type
+
