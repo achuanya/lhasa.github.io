@@ -1312,3 +1312,5 @@
 
 [Wed Aug 21 08:43:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 2/3: Failed to detect feed type
 
+[Wed Aug 21 08:43:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-08-21T00:43:25Z is after 2024-08-20T23:59:59Z
+
