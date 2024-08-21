@@ -1366,3 +1366,5 @@
 
 [Wed Aug 21 13:10:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-08-21T05:10:05Z is after 2024-08-20T23:59:59Z
 
+[Wed Aug 21 13:10:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 3/3: Get "https://blog.fooleap.org/atom.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-08-21T05:10:16Z is after 2024-08-20T23:59:59Z
+
