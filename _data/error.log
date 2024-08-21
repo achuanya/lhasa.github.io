@@ -1494,3 +1494,5 @@
 
 [Thu Aug 22 04:11:2024] [Parse RSS error] https://1900.live/rss.xml: Attempt 3/3: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Thu Aug 22 04:11:2024] [Failed to fetch RSS] https://blog.fooleap.org/atom.xml: Get "https://blog.fooleap.org/atom.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-08-21T20:11:10Z is after 2024-08-20T23:59:59Z
+
