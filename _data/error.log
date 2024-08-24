@@ -1628,3 +1628,5 @@
 
 [Sat Aug 24 04:11:2024] [Failed to parse RSS] https://1900.live/rss.xml: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Sat Aug 24 18:09:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 1/3: Get "https://ihaihe.cn/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
