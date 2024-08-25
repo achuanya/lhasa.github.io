@@ -1650,3 +1650,5 @@
 
 [Sun Aug 25 21:11:2024] [Parse RSS error] https://1900.live/rss.xml: Attempt 3/3: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Sun Aug 25 21:11:2024] [Failed to parse RSS] https://1900.live/rss.xml: XML syntax error on line 1: unexpected EOF in CDATA section
+
