@@ -1792,3 +1792,5 @@
 
 [Thu Aug 29 06:10:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 3/3: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Thu Aug 29 06:10:2024] [Failed to fetch RSS] https://www.shephe.com/feed: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
