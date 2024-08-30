@@ -1804,3 +1804,5 @@
 
 [Fri Aug 30 06:10:2024] [Failed to fetch RSS] https://stephenleng.com/cn/rss: Get "https://stephenleng.com/cn/feed/rss2/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Aug 30 14:14:2024] [Get RSS error] https://blog.yanqingshan.com/feed: Attempt 1/3: Get "https://blog.yanqingshan.com/feed": read tcp 10.1.0.171:42354->116.196.148.74:443: read: connection reset by peer
+
