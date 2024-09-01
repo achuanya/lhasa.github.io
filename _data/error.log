@@ -1962,3 +1962,5 @@
 
 [Mon Sep 2 06:10:2024] [Failed to parse RSS] https://oba.by/feed: Failed to detect feed type
 
+[Mon Sep 2 07:09:2024] [Parse RSS error] https://oba.by/feed: Attempt 1/3: Failed to detect feed type
+
