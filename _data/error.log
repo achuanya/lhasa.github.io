@@ -1922,3 +1922,5 @@
 
 [Sun Sep 1 16:12:2024] [Get RSS error] https://geekinney.com/index.xml: Attempt 1/3: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-09-01T08:12:18Z is after 2024-08-31T23:59:59Z
 
+[Sun Sep 1 16:12:2024] [Get RSS error] https://1900.live/rss.xml: Attempt 1/3: Get "https://1900.live/rss.xml": dial tcp 182.254.147.27:443: i/o timeout (Client.Timeout exceeded while awaiting headers)
+
