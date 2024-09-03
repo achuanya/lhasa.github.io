@@ -2202,3 +2202,5 @@
 
 [Tue Sep 3 17:11:2024] [Failed to fetch RSS] https://oba.by/feed: Get "https://oba.by/feed": tls: failed to verify certificate: x509: certificate is not valid for any names, but wanted to match oba.by
 
+[Tue Sep 3 17:11:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 3/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
