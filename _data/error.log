@@ -2328,3 +2328,5 @@
 
 [Wed Sep 4 07:11:2024] [Get RSS error] https://oba.by/feed: Attempt 2/3: Get "https://oba.by/feed": tls: failed to verify certificate: x509: certificate is not valid for any names, but wanted to match oba.by
 
+[Wed Sep 4 07:11:2024] [Parse RSS error] https://xyzbz.cn/feed: Attempt 2/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
