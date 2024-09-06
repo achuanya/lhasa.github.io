@@ -2442,3 +2442,5 @@
 
 [Fri Sep 6 14:14:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Sep 6 18:10:2024] [Parse RSS error] https://oba.by/feed: Attempt 1/3: Failed to detect feed type
+
