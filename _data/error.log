@@ -2434,3 +2434,5 @@
 
 [Fri Sep 6 11:12:2024] [Get RSS error] https://oba.by/feed: Attempt 2/3: Get "https://oba.by/feed": tls: failed to verify certificate: x509: certificate is not valid for any names, but wanted to match oba.by
 
+[Fri Sep 6 11:12:2024] [Get RSS error] https://oba.by/feed: Attempt 3/3: Get "https://oba.by/feed": tls: failed to verify certificate: x509: certificate is not valid for any names, but wanted to match oba.by
+
