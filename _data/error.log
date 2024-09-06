@@ -2480,3 +2480,5 @@
 
 [Fri Sep 6 22:09:2024] [Parse RSS error] https://oba.by/feed: Attempt 3/3: Failed to detect feed type
 
+[Fri Sep 6 22:09:2024] [Failed to parse RSS] https://oba.by/feed: Failed to detect feed type
+
