@@ -2418,3 +2418,5 @@
 
 [Fri Sep 6 08:46:2024] [Parse RSS error] https://blog.fooleap.org/atom.xml: Attempt 3/3: XML syntax error on line 1: unexpected EOF
 
+[Fri Sep 6 08:46:2024] [Failed to parse RSS] https://blog.fooleap.org/atom.xml: XML syntax error on line 1: unexpected EOF
+
