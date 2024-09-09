@@ -2770,3 +2770,5 @@
 
 [Tue Sep 10 00:12:2024] [Parse RSS error] https://oba.by/feed: Attempt 3/3: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Tue Sep 10 00:12:2024] [Failed to parse RSS] https://oba.by/feed: XML syntax error on line 1: unexpected EOF in CDATA section
+
