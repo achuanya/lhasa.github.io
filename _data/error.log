@@ -2758,3 +2758,5 @@
 
 [Mon Sep 9 18:11:2024] [Parse RSS error] https://limboy.me/index.xml: Attempt 1/3: Failed to detect feed type
 
+[Mon Sep 9 18:11:2024] [Parse RSS error] https://limboy.me/index.xml: Attempt 2/3: Failed to detect feed type
+
