@@ -2786,3 +2786,5 @@
 
 [Wed Sep 11 19:10:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 1/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Wed Sep 11 19:11:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 2/3: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
