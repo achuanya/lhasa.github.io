@@ -2942,3 +2942,5 @@
 
 [Sun Sep 15 07:09:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 3/3: Failed to detect feed type
 
+[Sun Sep 15 07:09:2024] [Failed to parse RSS] https://blog.pursuitus.com/feed: Failed to detect feed type
+
