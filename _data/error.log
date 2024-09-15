@@ -3002,3 +3002,5 @@
 
 [Sun Sep 15 14:14:2024] [Failed to parse RSS] https://blog.pursuitus.com/feed: Failed to detect feed type
 
+[Sun Sep 15 14:14:2024] [Failed to parse RSS] https://www.laruence.com/feed: XML syntax error on line 1: unexpected EOF
+
