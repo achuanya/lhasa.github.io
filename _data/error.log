@@ -3048,3 +3048,5 @@
 
 [Sun Sep 15 19:08:2024] [Failed to parse RSS] https://blog.pursuitus.com/feed: Failed to detect feed type
 
+[Sun Sep 15 19:08:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 3/3: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
