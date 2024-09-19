@@ -3520,3 +3520,5 @@
 
 [Thu Sep 19 20:19:2024] [Parse RSS error] https://www.laruence.com/feed: Attempt 2/3: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Thu Sep 19 20:19:2024] [Parse RSS error] https://www.laruence.com/feed: Attempt 3/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
