@@ -3510,3 +3510,5 @@
 
 [Thu Sep 19 17:11:2024] [Parse RSS error] https://1900.live/rss.xml: Attempt 3/3: Failed to detect feed type
 
+[Thu Sep 19 17:11:2024] [Failed to parse RSS] https://blog.zhheo.com/rss.xml: Failed to detect feed type
+
