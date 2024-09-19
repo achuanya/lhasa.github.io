@@ -3506,3 +3506,5 @@
 
 [Thu Sep 19 17:11:2024] [Parse RSS error] https://blog.zhheo.com/rss.xml: Attempt 2/3: Failed to detect feed type
 
+[Thu Sep 19 17:11:2024] [Get RSS error] https://ihaihe.cn/feed: Attempt 2/3: Get "https://ihaihe.cn/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
