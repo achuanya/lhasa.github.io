@@ -3594,3 +3594,5 @@
 
 [Sun Sep 22 06:09:2024] [Failed to parse RSS] https://xyzbz.cn/feed: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Sun Sep 22 06:10:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 3/3: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
