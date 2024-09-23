@@ -3626,3 +3626,5 @@
 
 [Tue Sep 24 06:10:2024] [Failed to parse RSS] https://www.shephe.com/feed: Failed to detect feed type
 
+[Tue Sep 24 07:09:2024] [Parse RSS error] https://www.shephe.com/feed: Attempt 1/3: Failed to detect feed type
+
