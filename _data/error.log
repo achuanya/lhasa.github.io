@@ -3636,3 +3636,5 @@
 
 [Tue Sep 24 10:13:2024] [Get RSS error] https://www.loyhome.com/feed: Attempt 1/3: Get "https://www.loyhome.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Wed Sep 25 05:09:2024] [Get RSS error] http://weiwuhui.com/feed: Attempt 1/3: Get "http://weiwuhui.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
