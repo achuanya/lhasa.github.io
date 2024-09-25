@@ -3642,3 +3642,5 @@
 
 [Wed Sep 25 11:18:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 1/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Wed Sep 25 17:11:2024] [Parse RSS error] http://weiwuhui.com/feed: Attempt 1/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
