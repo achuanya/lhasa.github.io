@@ -3,7 +3,7 @@ layout: post
 title: 十月份看完的第一本书
 date: 2024-10-03 20:31:01 +0800
 category: life
-thumb: ARTICLEPICTURES_PATH/1727957027013.jpg
+thumb: ARTICLEPICTURES_PATH/suibi.jpg
 tags: [读书, 沧浪之水]
 ---
 
