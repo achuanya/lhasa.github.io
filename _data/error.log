@@ -4040,3 +4040,5 @@
 
 [Wed Oct 9 16:14:2024] [Get RSS error] https://blog.yanqingshan.com/feed: Attempt 2/3: Get "https://blog.yanqingshan.com/feed": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-10-09T08:14:12Z is after 2024-10-08T14:13:06Z
 
+[Wed Oct 9 16:14:2024] [Get RSS error] https://blog.yanqingshan.com/feed: Attempt 3/3: Get "https://blog.yanqingshan.com/feed": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-10-09T08:14:23Z is after 2024-10-08T14:13:06Z
+
