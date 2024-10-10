@@ -4116,3 +4116,5 @@
 
 [Fri Oct 11 07:11:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 3/3: Get "https://www.shephe.com/feed": read tcp 10.1.0.40:41812->112.124.26.230:443: read: connection reset by peer
 
+[Fri Oct 11 07:11:2024] [Failed to fetch RSS] https://www.shephe.com/feed: Get "https://www.shephe.com/feed": read tcp 10.1.0.40:41812->112.124.26.230:443: read: connection reset by peer
+
