@@ -4114,3 +4114,5 @@
 
 [Fri Oct 11 07:10:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 2/3: Get "https://www.shephe.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Oct 11 07:11:2024] [Get RSS error] https://www.shephe.com/feed: Attempt 3/3: Get "https://www.shephe.com/feed": read tcp 10.1.0.40:41812->112.124.26.230:443: read: connection reset by peer
+
