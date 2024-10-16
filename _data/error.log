@@ -4184,3 +4184,5 @@
 
 [Wed Oct 16 23:11:2024] [Get RSS error] http://weiwuhui.com/feed: Attempt 1/3: Get "http://weiwuhui.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Thu Oct 17 05:10:2024] [Get RSS error] https://tcxx.info/feed: Attempt 1/3: Get "https://tcxx.info/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
