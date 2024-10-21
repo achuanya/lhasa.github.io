@@ -4268,3 +4268,5 @@
 
 [Mon Oct 21 22:11:2024] [Get RSS error] https://stephenleng.com/cn/rss: Attempt 3/3: Get "https://stephenleng.com/cn/feed/rss2/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Mon Oct 21 22:11:2024] [Failed to fetch RSS] https://stephenleng.com/cn/rss: Get "https://stephenleng.com/cn/feed/rss2/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
