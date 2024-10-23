@@ -4320,3 +4320,5 @@
 
 [Wed Oct 23 19:10:2024] [Parse RSS error] https://tcxx.info/feed: Attempt 3/3: Failed to detect feed type
 
+[Wed Oct 23 19:10:2024] [Failed to parse RSS] https://tcxx.info/feed: Failed to detect feed type
+
