@@ -4436,3 +4436,5 @@
 
 [Fri Nov 1 18:13:2024] [Failed to fetch RSS] https://oba.by/feed: Get "https://oba.by/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Nov 1 18:13:2024] [Failed to fetch RSS] https://blog.yanqingshan.com/feed: Get "https://blog.yanqingshan.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
