@@ -4422,3 +4422,5 @@
 
 [Fri Nov 1 06:10:2024] [Failed to parse RSS] https://xyzbz.cn/feed: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Fri Nov 1 18:12:2024] [Get RSS error] https://oba.by/feed: Attempt 1/3: Get "https://oba.by/feed": read tcp 10.1.0.169:45420->38.60.165.112:443: read: connection reset by peer
+
