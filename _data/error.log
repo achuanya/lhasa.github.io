@@ -4734,3 +4734,5 @@
 
 [Sun Nov 3 11:21:2024] [Get RSS error] https://blog.yanqingshan.com/feed: Attempt 2/3: Get "https://blog.yanqingshan.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Sun Nov 3 11:21:2024] [Failed to parse RSS] https://oba.by/feed: Failed to detect feed type
+
