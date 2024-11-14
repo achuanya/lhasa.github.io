@@ -5936,3 +5936,5 @@
 
 [Thu Nov 14 07:10:2024] [Get RSS error] https://wangpei.net/feed: Attempt 1/3: Get "https://wangpei.net/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Thu Nov 14 08:50:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 1/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
