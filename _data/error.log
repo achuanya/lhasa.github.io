@@ -5944,3 +5944,5 @@
 
 [Thu Nov 14 14:15:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": read tcp 10.1.0.141:51838->183.60.150.17:443: read: connection reset by peer
 
+[Thu Nov 14 19:09:2024] [Parse RSS error] https://xyzbz.cn/feed: Attempt 1/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
