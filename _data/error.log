@@ -5954,3 +5954,5 @@
 
 [Fri Nov 15 11:24:2024] [Get RSS error] http://weiwuhui.com/feed: Attempt 1/3: Get "http://weiwuhui.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Nov 15 15:11:2024] [Parse RSS error] http://weiwuhui.com/feed: Attempt 1/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
