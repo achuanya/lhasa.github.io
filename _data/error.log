@@ -5958,3 +5958,5 @@
 
 [Fri Nov 15 15:11:2024] [Parse RSS error] http://weiwuhui.com/feed: Attempt 2/3: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Fri Nov 15 15:11:2024] [Parse RSS error] http://weiwuhui.com/feed: Attempt 3/3: XML syntax error on line 1: unexpected EOF in CDATA section
+
