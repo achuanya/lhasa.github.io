@@ -6298,3 +6298,5 @@
 
 [Fri Nov 22 06:10:2024] [Failed to parse RSS] https://stephenleng.com/cn/rss: Failed to detect feed type
 
+[Fri Nov 22 06:10:2024] [Failed to parse RSS] https://xyzbz.cn/feed: XML syntax error on line 1: unexpected EOF in CDATA section
+
