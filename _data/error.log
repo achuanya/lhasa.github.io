@@ -6268,3 +6268,5 @@
 
 [Thu Nov 21 17:12:2024] [Failed to fetch RSS] https://blog.fooleap.org/atom.xml: Get "https://blog.fooleap.org/atom.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-11-21T09:12:45Z is after 2024-11-19T23:59:59Z
 
+[Fri Nov 22 04:12:2024] [Parse RSS error] https://stephenleng.com/cn/rss: Attempt 1/3: Failed to detect feed type
+
