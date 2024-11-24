@@ -6394,3 +6394,5 @@
 
 [Mon Nov 25 01:09:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 3/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Mon Nov 25 01:09:2024] [Failed to fetch RSS] https://blog.fooleap.org/atom.xml: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
