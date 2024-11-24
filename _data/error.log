@@ -6380,3 +6380,5 @@
 
 [Sun Nov 24 23:10:2024] [Failed to parse RSS] http://weiwuhui.com/feed: XML syntax error on line 1: unexpected EOF in CDATA section
 
+[Mon Nov 25 01:08:2024] [Parse RSS error] https://oba.by/feed: Attempt 1/3: Failed to detect feed type
+
