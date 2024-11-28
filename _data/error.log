@@ -6612,3 +6612,5 @@
 
 [Fri Nov 29 03:09:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": read tcp 10.1.1.7:41560->183.60.150.17:443: read: connection reset by peer
 
+[Fri Nov 29 05:10:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 1/3: Failed to detect feed type
+
