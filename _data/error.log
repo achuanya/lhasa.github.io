@@ -6596,3 +6596,5 @@
 
 [Thu Nov 28 15:12:2024] [Failed to parse RSS] https://ihaihe.cn/feed: Failed to detect feed type
 
+[Thu Nov 28 15:12:2024] [Failed to parse RSS] http://weiwuhui.com/feed: XML syntax error on line 1: unexpected EOF in CDATA section
+
