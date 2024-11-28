@@ -6556,3 +6556,5 @@
 
 [Thu Nov 28 00:13:2024] [Get RSS error] http://weiwuhui.com/feed: Attempt 1/3: Get "http://weiwuhui.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Thu Nov 28 08:53:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 1/3: Failed to detect feed type
+
