@@ -6676,3 +6676,5 @@
 
 [Fri Nov 29 21:22:2024] [Failed to fetch RSS] https://stephenleng.com/cn/rss: Get "https://stephenleng.com/cn/rss": dial tcp 142.171.77.148:443: connect: connection refused
 
+[Fri Nov 29 22:10:2024] [Parse RSS error] https://stephenleng.com/cn/rss: Attempt 1/3: Failed to detect feed type
+
