@@ -6752,3 +6752,5 @@
 
 [Sun Dec 1 11:10:2024] [Get RSS error] https://geekinney.com/index.xml: Attempt 1/3: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-01T03:10:10Z is after 2024-11-30T23:59:59Z
 
+[Sun Dec 1 11:10:2024] [Get RSS error] https://geekinney.com/index.xml: Attempt 2/3: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-01T03:10:21Z is after 2024-11-30T23:59:59Z
+
