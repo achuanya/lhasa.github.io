@@ -6776,3 +6776,5 @@
 
 [Sun Dec 1 13:11:2024] [Get RSS error] https://geekinney.com/index.xml: Attempt 3/3: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-01T05:11:37Z is after 2024-11-30T23:59:59Z
 
+[Sun Dec 1 13:11:2024] [Parse RSS error] https://oba.by/feed: Attempt 3/3: Failed to detect feed type
+
