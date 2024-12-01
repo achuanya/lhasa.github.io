@@ -6918,3 +6918,5 @@
 
 [Mon Dec 2 02:14:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 3/3: Failed to detect feed type
 
+[Mon Dec 2 02:14:2024] [Failed to parse RSS] https://ihaihe.cn/feed: Failed to detect feed type
+
