@@ -7002,3 +7002,5 @@
 
 [Mon Dec 2 13:12:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 3/3: Failed to detect feed type
 
+[Mon Dec 2 13:12:2024] [Failed to fetch RSS] https://geekinney.com/index.xml: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-02T05:12:32Z is after 2024-11-30T23:59:59Z
+
