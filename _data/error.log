@@ -7408,3 +7408,5 @@
 
 [Wed Dec 4 15:11:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 2/3: Failed to detect feed type
 
+[Wed Dec 4 15:11:2024] [Get RSS error] https://geekinney.com/index.xml: Attempt 2/3: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-04T07:11:46Z is after 2024-11-30T23:59:59Z
+
