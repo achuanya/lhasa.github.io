@@ -7358,3 +7358,5 @@
 
 [Wed Dec 4 08:55:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 2/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Wed Dec 4 08:55:2024] [Failed to fetch RSS] https://geekinney.com/index.xml: Get "https://geekinney.com/index.xml": tls: failed to verify certificate: x509: certificate has expired or is not yet valid: current time 2024-12-04T00:55:30Z is after 2024-11-30T23:59:59Z
+
