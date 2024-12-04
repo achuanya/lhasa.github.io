@@ -7458,3 +7458,5 @@
 
 [Wed Dec 4 20:21:2024] [Parse RSS error] https://blog.pursuitus.com/feed: Attempt 3/3: Failed to detect feed type
 
+[Wed Dec 4 20:21:2024] [Failed to parse RSS] https://blog.pursuitus.com/feed: Failed to detect feed type
+
