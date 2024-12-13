@@ -7688,3 +7688,5 @@
 
 [Fri Dec 13 14:16:2024] [Parse RSS error] https://1900.live/rss.xml: Attempt 3/3: XML syntax error on line 1: invalid UTF-8
 
+[Fri Dec 13 14:17:2024] [Failed to parse RSS] https://1900.live/rss.xml: XML syntax error on line 1: invalid UTF-8
+
