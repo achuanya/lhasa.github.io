@@ -7724,3 +7724,5 @@
 
 [Sun Dec 15 18:11:2024] [Get RSS error] https://limboy.me/index.xml: Attempt 2/3: Get "https://limboy.me/index.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Sun Dec 15 18:11:2024] [Failed to parse RSS] https://ihaihe.cn/feed: Failed to detect feed type
+
