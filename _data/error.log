@@ -7754,3 +7754,5 @@
 
 [Mon Dec 16 21:23:2024] [Parse RSS error] https://blog.fooleap.org/atom.xml: Attempt 3/3: XML syntax error on line 1: invalid UTF-8
 
+[Mon Dec 16 21:23:2024] [Failed to parse RSS] https://blog.fooleap.org/atom.xml: XML syntax error on line 1: invalid UTF-8
+
