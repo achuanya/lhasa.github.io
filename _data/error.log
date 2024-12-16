@@ -7732,3 +7732,5 @@
 
 [Mon Dec 16 07:10:2024] [Get RSS error] https://xyzbz.cn/feed: Attempt 1/3: Get "https://xyzbz.cn/feed/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Mon Dec 16 10:27:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 1/3: Failed to detect feed type
+
