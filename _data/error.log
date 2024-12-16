@@ -7758,3 +7758,5 @@
 
 [Tue Dec 17 00:13:2024] [Get RSS error] https://blog.yanqingshan.com/feed: Attempt 1/3: Get "https://blog.yanqingshan.com/feed": read tcp 10.1.0.132:60612->27.25.152.244:443: read: connection reset by peer
 
+[Tue Dec 17 00:14:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 1/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
