@@ -7840,3 +7840,5 @@
 
 [Sun Dec 22 19:07:2024] [Get RSS error] https://blog.fooleap.org/atom.xml: Attempt 1/3: Get "https://blog.fooleap.org/atom.xml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Sun Dec 22 20:17:2024] [Parse RSS error] https://ihaihe.cn/feed: Attempt 1/3: Failed to detect feed type
+
