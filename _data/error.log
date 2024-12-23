@@ -8012,3 +8012,5 @@
 
 [Mon Dec 23 21:18:2024] [Get RSS error] https://oba.by/feed: Attempt 2/3: Get "https://oba.by/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Mon Dec 23 21:19:2024] [Get RSS error] https://oba.by/feed: Attempt 3/3: Get "https://oba.by/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
