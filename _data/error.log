@@ -8136,3 +8136,5 @@
 
 [Tue Dec 24 13:11:2024] [Parse RSS error] https://wangpei.net/feed: Attempt 3/3: Failed to detect feed type
 
+[Tue Dec 24 13:11:2024] [Get RSS error] https://oba.by/feed: Attempt 2/3: Get "https://oba.by/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
