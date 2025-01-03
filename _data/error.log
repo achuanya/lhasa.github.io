@@ -9666,3 +9666,5 @@
 
 [Fri Jan 3 08:51:2025] [Get RSS error] https://oba.by/feed: Attempt 2/3: Get "https://oba.by/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Fri Jan 3 08:51:2025] [Failed to parse RSS] https://ihaihe.cn/feed: Failed to detect feed type
+
