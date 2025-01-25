@@ -1,0 +1,37 @@
+---
+layout: default
+permalink: /cycling.html
+title: 骑行
+---
+<div class="container">
+    <div id="totalActivities">
+        <div id="totalTitle" class="total-title"></div>
+        <div id="totalCount" class="total-count">
+            <span id="ridingTimeThisYearValue">0</span>
+            <div class="loading-spinner"></div>
+        </div>
+        <div id="totalLabel" class="total-label">骑行总公里数</div>
+        <div id="milesRiddenThisYear" class="total-distance">
+            <span id="milesRiddenThisYearValue">0</span>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+    <div id="calendar" class="calendar"></div>
+    <div class="sports">
+        <div class="icon-container">
+            <div class="icon-item">
+                <div class="road_bike_color"></div>
+                <div class="icon-svg">{% include svg/road_bike.svg %}</div>
+            </div>
+            <div class="icon-item running">
+                <div class="running_color"></div>
+                <div class="icon-svg running">{% include svg/running.svg %}</div>
+            </div>
+        </div>
+        <div id="barChart" class="bar-chart"></div>
+    </div>
+</div>
+<section class="post-list"></section>
+<nav class="pagination"></nav>
+<link rel="stylesheet" href="https://cos.lhasa.icu/dist/cycling.min.css">
+<script src="https://cos.lhasa.icu/dist/cycling.min.js"></script>

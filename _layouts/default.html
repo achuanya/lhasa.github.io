@@ -1,0 +1,65 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="en">
+    {% include head.html %}
+    <body>
+        {% include lantern.html %}
+        <div class="page-thumb">
+            <img src="{{ thumbnail }}" alt="{{ page.title }}"/>
+        </div>
+        {% include nav.html %}
+        <main class="page-main">
+            <header class="page-header">
+                <hgroup class="page-hgroup">
+                <h1 class="page-title ">
+                    <a class="page-title-link" href="{% if page.title %}{{ page.url }}{% else %}{{ site.home }}{% endif %}">
+                        {% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}
+                    </a>
+                    {% if page.url == '/archive.html' %}
+                    <div class="search-article">
+                        <input class="page-search-input" type="text" placeholder="搜索(Enter 全文搜索)"/>
+                    </div>
+                    {% endif %}
+                </h1>
+                    <h2 class="page-subtitle">
+                    {% if page.date %}
+                    <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%Y 年 %m 月 %d 日 %R" }}</time>
+                    {% elsif paginator
+                        or page.url == '/life.html'
+                        or page.url == '/cycling.html'
+                        or page.url == '/tech.html'
+                        or page.url == '/links.html'
+                        or page.url == '/about.html'
+                        or page.url == '/search.html'
+                        or page.url == '/archive.html'
+                        or page.url == '/guestbook.html'
+                    %}
+                        <div class="post-cats cf">
+                            <a class="post-cat-tag{% if paginator %} active{% endif %}" href="/">全部</a>
+                            <a class="post-cat-tag{% if page.url == '/life.html' %} active{% endif %}" href="/life.html">生活</a>
+                            <a class="post-cat-tag{% if page.url == '/cycling.html' %} active{% endif %}" href="/cycling.html">骑行</a>
+                            <a class="post-cat-tag{% if page.url == '/tech.html' %} active{% endif %}" href="/tech.html">技术</a>
+                            <a class="post-cat-tag{% if page.url == '/links.html' %} active{% endif %}" href="/links.html">订阅</a>
+                            <a class="post-cat-tag{% if page.url == '/about.html' %} active{% endif %}" href="/about.html">关于</a>
+                            <a class="post-cat-tag{% if page.url == '/guestbook.html' %} active{% endif %}" href="/guestbook.html">留言</a>
+                        </div>
+                    {% else %}
+                        {{ page.description }}
+                    {% endif %}
+                    </h2>
+                </hgroup>
+            </header>
+            <section class="page-content">
+                {{ content }}
+            </section>
+            <footer class="page-footer">
+              <small>&copy; 2018-{{ site.time | date: '%Y' }} | 
+                <a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2024046152号-1</a> | 
+                <a href="#" title="Click me now!" style="color:#2ea9df;font-weight:700;">Back To Top</a>
+            </small>
+            </footer>
+        </main>
+    </body>
+</html>

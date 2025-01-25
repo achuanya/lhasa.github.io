@@ -1,0 +1,22 @@
+<nav class="navigation">
+    <input class="navigation-toggle" type="checkbox" id="menu" />
+    <label class="navigation-avatar" for="menu"></label>
+    <label class="navigation-mask" for="menu"></label>
+    <ul class="navigation-list">
+        <li class="navigation-item {% if page.url == '/' %} current{% endif %}">
+            <a class="navigation-item-link" href="/" rel="noopener" title="点进去看文章列表">{% include svg/home.svg %}首页</a>
+        </li>
+        <li class="navigation-item{% if page.url == '/about.html' %} current{% endif %}">
+            <a class="navigation-item-link" href="/about.html" rel="noopener" title="我的简介">{% include svg/about.svg %}关于</a>
+        </li>
+        <li class="navigation-item{% if page.url == '/archive.html' %} current{% endif %}">
+            <a class="navigation-item-link" href="/archive.html" rel="noopener" title="往年总汇">{% include svg/archive.svg %}归档</a>
+        </li>
+        <li class="navigation-item{% if page.url == '/links.html' %} current{% endif %}">
+            <a class="navigation-item-link" href="/links.html" rel="noopener" title="我的订阅">{% include svg/link.svg %}订阅</a>
+        </li>
+        <li class="navigation-item{% if page.url == '/guestbook.html' %} current{% endif %}">
+            <a class="navigation-item-link" href="/guestbook.html" rel="noopener" title="牛逼的人都会说两句">{% include svg/comments.svg %}留言</a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,40 @@
+---
+layout: default
+---
+
+<section class="post-list">
+    {% for post in paginator.posts %}
+    {% assign thumbnail = post.thumb | replace: 'ARTICLEPICTURES_PATH', site.ARTICLEPICTURES_PATH %}
+    <article class="post-item">
+        <i class="post-item-thumb" data-src="{{ thumbnail }}" style="background-image:url({{ thumbnail }})"></i>
+        <section class="post-item-summary">
+            <h3 class="post-item-title">
+                <a class="post-item-link" href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}{% if imageSize > 30 and post.category == 'life' %}[{{ imageSize }}P]{% endif %}</a>
+            </h3>
+            <time class="post-item-date timeago" datetime="{{ post.date | date_to_xmlschema }}"></time>
+        </section>
+        <a class="post-item-comment" title="查看评论" data-disqus-url="{{ post.url }}" href="{{ post.url }}#comment"></a>
+    </article>
+    {% endfor %}
+</section>
+
+<nav class="pagination">
+    <ul class="pagination-list">
+    {% if paginator.next_page %}
+        <li class="pagination-item">
+            <a class="pagination-item-link" href="/page{{ paginator.next_page}}/">&laquo; 较旧文章</a></li>
+    {% else %}
+        <li class="pagination-item"></li>
+    {% endif %}
+        <li class="pagination-item">{{ paginator.page}} / {{ paginator.total_pages}}</li>
+    {% if paginator.previous_page %}
+        {% if paginator.previous_page == 1 %}
+        <li class="pagination-item"><a class="pagination-item-link" href="/">较新文章 &raquo;</a></li>
+        {% else %}
+        <li class="pagination-item"><a class="pagination-item-link" href="/page{{ paginator.previous_page}}/">较新文章 &raquo;</a></li>
+        {% endif %}
+    {% else %}
+        <li class="pagination-item"></li>
+    {% endif %}
+    </ul>
+</nav>

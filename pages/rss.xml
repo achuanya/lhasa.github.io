@@ -1,0 +1,35 @@
+---
+layout: null
+permalink: /rss.xml
+---
+
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ site.home }}</link>
+    <description>{{ site.description }}</description>
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
+    <ttl>60</ttl>
+    {% for post in site.posts %}
+      <item>
+        <title>{{ post.title }}</title>
+        <link>{{ site.home }}{{ post.url }}</link>
+        <guid isPermaLink="true">{{ site.home }}{{ post.url }}</guid>
+        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+        <description>
+          {% if post.description %}
+            {{ post.description | xml_escape }}
+          {% else %}
+            {{ post.content | split: '</p>' | first | strip_html | xml_escape }}
+          {% endif %}
+        </description>
+        <content type="html">
+          {{ post.content | xml_escape }}
+        </content>
+        <enclosure url="{{ post.thumb | replace: 'ARTICLEPICTURES_PATH', site.ARTICLEPICTURES_PATH }}" type="image/jpeg" length="0" />
+      </item>
+    {% endfor %}
+  </channel>
+</rss>

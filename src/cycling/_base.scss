@@ -1,0 +1,72 @@
+@charset "utf-8";
+@use 'colors' as *;
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 0px 10px 0px;
+}
+
+#totalActivities {
+    width: 215px;
+}
+
+.total-title {
+    font-size: 14px;
+    text-align: center;
+}
+
+.total-count, .total-distance {
+    text-align: center;
+    color: $primary-color;
+}
+
+.total-count {
+    font-size: 33px;
+}
+
+.total-distance {
+    font-size: 33px;
+}
+
+.total-label {
+    font-size: 14px;
+    text-align: center;
+}
+
+@keyframes growFromLeft {
+    from {
+        width: 0;
+    }
+    to {
+        width: var(--bar-width);
+    }
+}
+
+@keyframes slideInText {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 650px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #totalActivities,
+    #calendar,
+    .sports {
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+    }
+}

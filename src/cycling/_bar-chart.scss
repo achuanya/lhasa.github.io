@@ -1,0 +1,38 @@
+@charset "utf-8";
+@use 'colors' as *;
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 207px;
+    margin-top: 4px;
+}
+
+.bar-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.bar {
+    background-color: $cycling-color;
+    height: 16.8px;
+    transition: width 1s ease-out;
+    margin-top: 6px;
+    border: 1px solid $light-gray-border-color;
+    position: relative;
+}
+
+.cycling-kilometer {
+    font-size: 12px;
+    color: $gray-color;
+    position: absolute;
+    right: -63px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}

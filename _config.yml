@@ -1,0 +1,48 @@
+encoding: utf-8
+port: 8888
+host: 127.0.0.1
+
+title: 游钓四方的博客
+keywords: [游钓四方, 长途骑行, 台钓路亚, 提琴, 萨克斯, 古典乐, 茶叶爱好者]
+description: '钓五湖四海，交八方朋友'
+timezone: Asia/Shanghai
+
+exclude: [webpack.config.js, package.json, Gemfile, Gemfile.lock, src, node_modules]
+plugins:
+  - jekyll-paginate
+  - jemoji
+
+url: "https://lhasa.icu"
+baseurl: ""
+
+permalink: /:title.html
+highlighter: rouge
+
+markdown: kramdown
+kramdown: 
+  auto_ids:       true
+  auto_id_prefix: 'id-'
+  toc_levels:     '2,3'
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  
+emoji:
+    src: 'https://api.lhasa.icu'
+paginate: 10
+repository: achuanya/lhasa.github.io
+
+author: 
+  name: 游钓四方的博客
+  email: haibao1027@gmail.com
+
+nickname: 游钓四方_
+home: https://lhasa.icu
+api: https://api.lhasa.icu
+disqus_api: https://disqus.lhasa.icu
+
+ARTICLEPICTURES_PATH: https://cos.lhasa.icu/ArticlePictures
+STYLEPICTURES_PATH: https://cos.lhasa.icu/StylePictures
+DIST_PATH: https://cos.lhasa.icu/dist
+FONT_PATH: https://cos.lhasa.icu/font
+SVG_PATH: https://cos.lhasa.icu/svg
+
+tongji: '2f325d81a4b600b2b4be3c277d6fa88a'
