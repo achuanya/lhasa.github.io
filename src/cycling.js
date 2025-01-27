@@ -122,32 +122,49 @@ function generateBarChart() {
     const today = getChinaTime();
     const startDate = getStartDate(today, 21);
 
-    // 每周数据
+    // 创建所有周的时间范围
     const weeklyData = {};
+    let currentWeekStart = new Date(startDate);
+    currentWeekStart.setUTCHours(0, 0, 0, 0);
+
+    // 按周计算未来 4 周的日期范围
+    for (let i = 0; i < 4; i++) {
+        const weekStart = new Date(currentWeekStart);
+        const weekEnd = new Date(weekStart);
+        weekEnd.setUTCDate(weekStart.getUTCDate() + 6); // 一周结束日期为开始日期 +6 天
+        const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
+
+        weeklyData[weekKey] = 0; // 初始化每周骑行数据为 0
+        currentWeekStart.setUTCDate(currentWeekStart.getUTCDate() + 7); // 移动到下一周
+    }
 
     // 累加每周的骑行距离
     processedActivities.forEach(activity => {
         const activityDate = new Date(activity.activity_time);
-        const weekStart = getWeekStartDate(activityDate);
+        const weekStart = getWeekStartDate(activityDate); // 活动所在周的开始日期
         const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekStart.getDate() + 6);
+        weekEnd.setUTCDate(weekStart.getUTCDate() + 6);
 
         const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
-        weeklyData[weekKey] = (weeklyData[weekKey] || 0) + parseFloat(activity.riding_distance);
+        if (weeklyData[weekKey] !== undefined) {
+            weeklyData[weekKey] += parseFloat(activity.riding_distance);
+        }
     });
 
-    // 获取最大骑行距离
+    // 获取最大骑行距离（用于柱形图比例）
     const maxDistance = Math.max(...Object.values(weeklyData), 0);
 
     // 创建并显示每周的柱形图
     Object.keys(weeklyData).forEach(week => {
+        const distance = weeklyData[week]; // 当前周的骑行距离
         const barContainer = document.createElement('div');
         barContainer.className = 'bar-container';
 
         const bar = document.createElement('div');
         bar.className = 'bar';
+
         // 计算柱形图的宽度
-        const width = (weeklyData[week] / maxDistance) * 190;
+        const width = maxDistance > 0 ? (distance / maxDistance) * 190 : 0;
         bar.style.setProperty('--bar-width', `${width}px`);
 
         const distanceText = document.createElement('div');
@@ -172,8 +189,8 @@ function generateBarChart() {
 
         distanceText.style.opacity = '1';
         // 动态更新柱形图的数值
-        animateText(distanceText, 0, weeklyData[week], 1000, true);
-        setupBarInteractions(bar, messageBox, clickMessageBox, weeklyData[week]);
+        animateText(distanceText, 0, distance, 1000, true);
+        setupBarInteractions(bar, messageBox, clickMessageBox, distance);
     });
 }
 
@@ -200,21 +217,21 @@ function calculateTotalKilometers(activities) {
 }
 
 // 显示总活动数和总公里数
-function displayTotalActivities() {
+function displayTotalActivities(activities) {
     // 全年骑行时长
     const ridingTimeThisYear = document.getElementById('totalCount');
     // 全年骑行公里数
-    const milesRiddenThisYear  = document.getElementById('milesRiddenThisYear');
+    const milesRiddenThisYear = document.getElementById('milesRiddenThisYear');
     // 动态年标题《2025 骑行总时长》
     const totalTitleElement = document.getElementById('totalTitle');
 
     if (!ridingTimeThisYear || !milesRiddenThisYear || !totalTitleElement) return;
 
     const ridingTimeThisYearValue = ridingTimeThisYear.querySelector('#ridingTimeThisYearValue');
-    const milesRiddenThisYearValue = milesRiddenThisYear .querySelector('#milesRiddenThisYearValue');
+    const milesRiddenThisYearValue = milesRiddenThisYear.querySelector('#milesRiddenThisYearValue');
 
     const totalCountSpinner = ridingTimeThisYear.querySelector('.loading-spinner');
-    const milesRiddenThisYearSpinner = milesRiddenThisYear .querySelector('.loading-spinner');
+    const milesRiddenThisYearSpinner = milesRiddenThisYear.querySelector('.loading-spinner');
 
     totalCountSpinner.classList.add('active');
     milesRiddenThisYearSpinner.classList.add('active');
@@ -222,7 +239,8 @@ function displayTotalActivities() {
     const currentYear = new Date().getFullYear();
     totalTitleElement.textContent = `${currentYear} 骑行总时长`;
 
-    const filteredActivities = processedActivities.filter(activity => {
+    // 筛选全年活动数据
+    const filteredActivities = activities.filter(activity => {
         const activityYear = new Date(activity.activity_time).getFullYear();
         return activityYear === currentYear;
     });
@@ -232,10 +250,6 @@ function displayTotalActivities() {
         return total + parseFloat(activity.moving_time) || 0;
     }, 0);
 
-    // 活动天数
-    // const uniqueDays = new Set(filteredActivities.map(activity => activity.activity_time));
-    // const totalCount = uniqueDays.size;
-    
     // 计算全年总公里数
     const totalKilometers = calculateTotalKilometers(filteredActivities);
 
@@ -282,6 +296,9 @@ async function loadActivityData() {
     const activities = await loadActivityData();
     // 显示4周的日历
     generateCalendar(activities, startDate, 4);
+
+    // 显示全年骑行时长和公里数
+    displayTotalActivities(activities);
 })();
 
 // 创建消息框

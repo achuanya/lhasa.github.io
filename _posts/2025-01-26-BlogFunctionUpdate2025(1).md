@@ -9,17 +9,20 @@ tags: [技术, 骑行, update]
 
 由于郑州最近的雨夹雪天气，已经一周没有骑行了，实在憋得不行，给自己找点事做，今天中午下班时更新了一下博客
 
-## 更新详情
+## Update details
 
-- **移除了骑行页面的活动天数**  
-- **柱形图的宽度**不再由骑行时长来计算，而是由骑行公里数来计算显示
+- **修复了柱形图显示错位**
+- **移除了骑行页面的活动天数**
 - **新增了全年骑行总时长、全年骑行总公里数**
+- **柱形图的宽度**不再由骑行时长来计算，而是由骑行公里数来计算显示
 - **新增春节快乐红灯笼**（移动端不支持）
 - **移除 `node-sass` 包，由 `sass` 代替**
 
-## cycling.js 骑行页面
+## Fix Bugs：柱形图显示错位
+
+当前的柱形图仅为有骑行数据的周生成柱形图，导致柱形图与日历中的周对齐错位，所以即某周没有骑行数据时，柱形图也要生成一根柱子
+
 ```js
-// 生成柱形图
 function generateBarChart() {
     const barChartElement = document.getElementById('barChart');
     // 清空柱形图内容
@@ -28,32 +31,54 @@ function generateBarChart() {
     const today = getChinaTime();
     const startDate = getStartDate(today, 21);
 
-    // 每周数据
+    // 创建所有周的时间范围
     const weeklyData = {};
+    let currentWeekStart = new Date(startDate);
+    currentWeekStart.setUTCHours(0, 0, 0, 0);
+
+    // 按周计算未来 4 周的日期范围
+    for (let i = 0; i < 4; i++) {
+        const weekStart = new Date(currentWeekStart);
+        const weekEnd = new Date(weekStart);
+        // 一周结束日期为开始日期 +6 天
+        weekEnd.setUTCDate(weekStart.getUTCDate() + 6);
+        const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
+
+        // 初始化每周骑行数据为 0
+        weeklyData[weekKey] = 0;
+        // 移动到下一周
+        currentWeekStart.setUTCDate(currentWeekStart.getUTCDate() + 7);
+    }
 
     // 累加每周的骑行距离
     processedActivities.forEach(activity => {
         const activityDate = new Date(activity.activity_time);
+        // 活动所在周的开始日期
         const weekStart = getWeekStartDate(activityDate);
         const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekStart.getDate() + 6);
+        weekEnd.setUTCDate(weekStart.getUTCDate() + 6);
 
         const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
-        weeklyData[weekKey] = (weeklyData[weekKey] || 0) + parseFloat(activity.riding_distance);
+        if (weeklyData[weekKey] !== undefined) {
+            weeklyData[weekKey] += parseFloat(activity.riding_distance);
+        }
     });
 
-    // 获取最大骑行距离
+    // 获取最大骑行距离（用于柱形图比例）
     const maxDistance = Math.max(...Object.values(weeklyData), 0);
 
     // 创建并显示每周的柱形图
     Object.keys(weeklyData).forEach(week => {
+        // 当前周的骑行距离
+        const distance = weeklyData[week];
         const barContainer = document.createElement('div');
         barContainer.className = 'bar-container';
 
         const bar = document.createElement('div');
         bar.className = 'bar';
+
         // 计算柱形图的宽度
-        const width = (weeklyData[week] / maxDistance) * 190;
+        const width = maxDistance > 0 ? (distance / maxDistance) * 190 : 0;
         bar.style.setProperty('--bar-width', `${width}px`);
 
         const distanceText = document.createElement('div');
@@ -78,8 +103,8 @@ function generateBarChart() {
 
         distanceText.style.opacity = '1';
         // 动态更新柱形图的数值
-        animateText(distanceText, 0, weeklyData[week], 1000, true);
-        setupBarInteractions(bar, messageBox, clickMessageBox, weeklyData[week]);
+        animateText(distanceText, 0, distance, 1000, true);
+        setupBarInteractions(bar, messageBox, clickMessageBox, distance);
     });
 }
 
@@ -99,23 +124,27 @@ function animateText(element, startValue, endValue, duration, isDistance = false
     }
     update();
 }
+```
 
+## New：全年骑行总时长、全年骑行总公里数
+
+```js
 // 显示总活动数和总公里数
-function displayTotalActivities() {
+function displayTotalActivities(activities) {
     // 全年骑行时长
     const ridingTimeThisYear = document.getElementById('totalCount');
     // 全年骑行公里数
-    const milesRiddenThisYear  = document.getElementById('milesRiddenThisYear');
+    const milesRiddenThisYear = document.getElementById('milesRiddenThisYear');
     // 动态年标题《2025 骑行总时长》
     const totalTitleElement = document.getElementById('totalTitle');
 
     if (!ridingTimeThisYear || !milesRiddenThisYear || !totalTitleElement) return;
 
     const ridingTimeThisYearValue = ridingTimeThisYear.querySelector('#ridingTimeThisYearValue');
-    const milesRiddenThisYearValue = milesRiddenThisYear .querySelector('#milesRiddenThisYearValue');
+    const milesRiddenThisYearValue = milesRiddenThisYear.querySelector('#milesRiddenThisYearValue');
 
     const totalCountSpinner = ridingTimeThisYear.querySelector('.loading-spinner');
-    const milesRiddenThisYearSpinner = milesRiddenThisYear .querySelector('.loading-spinner');
+    const milesRiddenThisYearSpinner = milesRiddenThisYear.querySelector('.loading-spinner');
 
     totalCountSpinner.classList.add('active');
     milesRiddenThisYearSpinner.classList.add('active');
@@ -123,7 +152,8 @@ function displayTotalActivities() {
     const currentYear = new Date().getFullYear();
     totalTitleElement.textContent = `${currentYear} 骑行总时长`;
 
-    const filteredActivities = processedActivities.filter(activity => {
+    // 筛选全年活动数据
+    const filteredActivities = activities.filter(activity => {
         const activityYear = new Date(activity.activity_time).getFullYear();
         return activityYear === currentYear;
     });
@@ -133,10 +163,6 @@ function displayTotalActivities() {
         return total + parseFloat(activity.moving_time) || 0;
     }, 0);
 
-    // 活动天数
-    // const uniqueDays = new Set(filteredActivities.map(activity => activity.activity_time));
-    // const totalCount = uniqueDays.size;
-    
     // 计算全年总公里数
     const totalKilometers = calculateTotalKilometers(filteredActivities);
 
@@ -153,31 +179,21 @@ function displayTotalActivities() {
     }, 1000);
 }
 
-// 动态更新计数器
-function animateCount(element, totalValue, duration, intervalDuration, isDistance = false) {
-    const step = totalValue / (duration / intervalDuration);
-    let count = 0;
-    const interval = setInterval(() => {
-        count += step;
-        if (count >= totalValue) {
-            count = totalValue;
-            clearInterval(interval);
-        }
-        element.textContent = isDistance ? `${count.toFixed(2)} km` : `${count.toFixed(2)} h`;
-    }, intervalDuration);
+// 加载数据并生成日历
+(async function() {
+    const today = getChinaTime();
+    const startDate = getStartDate(today, 21);
 
-    // 在动画结束后，确保单位正确
-    setTimeout(() => {
-        if (isDistance) {
-            element.textContent = `${totalValue.toFixed(2)} km`;
-        } else {
-            element.textContent = `${totalValue.toFixed(2)} h`;
-        }
-    }, duration);
-}
+    const activities = await loadActivityData();
+    // 显示4周的日历
+    generateCalendar(activities, startDate, 4);
+
+    // 显示全年骑行时长和公里数
+    displayTotalActivities(activities);
+})();
 ```
 
-## 春节快乐红灯笼
+## New：春节快乐红灯笼
 两年前在冲浪时下载的，已经是第二次用了：
 ```css
 // default.html
@@ -187,7 +203,7 @@ include lantern.html
 @use 'lantern'
 ```
 
-## 移除 node-sass 包
+## Fix Bugs：移除 node-sass 包
 node-sass 是基于 LibSass 库构建的，而 LibSass 从 2019 年就停止了更新。所以，Sass 团队放弃了这个项目，重构了 sass（Dart 编写）
 
 ### sass 相对 node-sass 的优点
@@ -211,4 +227,4 @@ node-sass 是基于 LibSass 库构建的，而 LibSass 从 2019 年就停止了�
 
 ![Show][p1]{:.small}
 
-[p1]: {{ site.ARTICLEPICTURES_PATH }}/034707b468adcb3a43137b9718e2504.png
+[p1]: {{ site.ARTICLEPICTURES_PATH }}/89ffc8f51982841a4f04ce590446b07.png
