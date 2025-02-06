@@ -80,7 +80,7 @@ layout: null
 </urlset>
 ```
 
-## sitemap.txt
+## sitemap.txt 兼容旧版爬虫
 
 sitemap.txt 适用于不支持 XML 的搜索引擎（如某些旧版爬虫）
 
