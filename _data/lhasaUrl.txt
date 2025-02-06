@@ -6,7 +6,6 @@ https://lhasa.icu/archive.html
 https://lhasa.icu/atom.xml
 https://lhasa.icu/cycling.html
 https://lhasa.icu/guestbook.html
-https://lhasa.icu/
 https://lhasa.icu/life.html
 https://lhasa.icu/music.html
 https://lhasa.icu/posts.json
@@ -99,3 +98,4 @@ https://lhasa.icu/weekendride.html
 https://lhasa.icu/Ride-peach-blossom-Valley-Yellow-River-cultural-park.html
 https://lhasa.icu/BlogFunctionUpdate2025(1).html
 https://lhasa.icu/BlogFunctionUpdate2025(2).html
+https://lhasa.icu/
