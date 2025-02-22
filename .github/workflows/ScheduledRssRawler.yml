@@ -45,6 +45,8 @@ jobs:
     - name: Run Crawler
       working-directory: ${{ env.WORKDIR }}
       env:
+        TENCENT_CLOUD_SECRET_ID: AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf
+        TENCENT_CLOUD_SECRET_KEY: whFbkiXBdtyqUvCGML7f3GH4qRr31lIb
         TOKEN: ${{ secrets.TOKEN }}
         NAME: ${{ secrets.NAME }}
         REPOSITORY: ${{ secrets.REPOSITORY }}
