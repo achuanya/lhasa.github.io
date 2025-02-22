@@ -3,10 +3,10 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"io"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,6 +14,7 @@ import (
 	"sort"
 	"sync"
 	"time"
+
 	"golang.org/x/oauth2"
 	"github.com/google/go-github/v39/github"
 	"github.com/mmcdole/gofeed"
@@ -21,20 +22,12 @@ import (
 )
 
 const (
-	maxRetries    = 3
-	retryInterval = 10 * time.Second
-	cosURL        = "https://cos.lhasa.icu"
+	maxRetries     = 3						 // 最大重试次数
+	retryInterval  = 10 * time.Second		 // 最大间隔时间
+	maxConcurrency = 10						 // 并发控制
+	cosURL         = "https://cos.lhasa.icu" // 腾讯云 COS 的 URL
 )
 
-type Config struct {
-	GithubToken      string // GitHub API 令牌
-	GithubName       string // GitHub 用户名
-	GithubRepository string // GitHub 仓库名
-	SecretID		 string // 腾讯云 SecretID
-	SecretKey        string // 腾讯云 SecretKey
-}
-
-// 用于解析 avatar_data.json 文件的结构
 type Avatar struct {
 	Name   string `json:"name"`   // 用户名
 	Avatar string `json:"avatar"` // 头像 URL
@@ -50,15 +43,31 @@ type Article struct {
 	Avatar     string `json:"avatar"`     // 头像 URL
 }
 
-// 初始化并返回配置信息
-func initConfig() Config {
-	return Config{
-		SecretID:  os.Getenv("AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf"),
-		SecretKey: os.Getenv("whFbkiXBdtyqUvCGML7f3GH4qRr31lIb"),
-		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
-		GithubName:       "achuanya",         // GitHub 用户名
-		GithubRepository: "lhasa.github.io",  // GitHub 仓库名
+func initConfig() (*Config, error) {
+	config := &Config{
+		SecretID:         os.Getenv("TENCENT_CLOUD_SECRET_ID"),
+		SecretKey:        os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
+		GithubToken:      os.Getenv("TOKEN"),
+		GithubName:       os.Getenv("NAME"),
+		GithubRepository: os.Getenv("REPOSITORY"),
 	}
+
+	// 验证
+	required := map[string]string{
+		"TENCENT_CLOUD_SECRET_ID":  config.SecretID,
+		"TENCENT_CLOUD_SECRET_KEY": config.SecretKey,
+		"TOKEN":                    config.GithubToken,
+		"NAME":                     config.GithubName,
+		"REPOSITORY":               config.GithubRepository,
+	}
+
+	for k, v := range required {
+		if v == "" {
+			return nil, fmt.Errorf("%s is required", k)
+		}
+	}
+
+	return config, nil
 }
 
 // 清理 XML 内容中的非法字符
@@ -84,7 +93,7 @@ func parseTime(timeStr string) (time.Time, error) {
 	return time.Time{}, fmt.Errorf("unable to parse time: %s", timeStr)
 }
 
-// 将时间格式化为 "January 2, 2006"
+// 将时间格式化为 "Jnuary 2, 2006a"
 func formatTime(t time.Time) string {
 	return t.Format("January 2, 2006")
 }
@@ -95,147 +104,100 @@ func extractDomain(urlStr string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	domain := u.Hostname()
 	protocol := "https://"
 	if u.Scheme != "" {
 		protocol = u.Scheme + "://"
 	}
-	fullURL := protocol + domain
-
-	return fullURL, nil
+	return protocol + u.Hostname(), nil
 }
 
 // 获取当前的北京时间
 func getBeijingTime() time.Time {
-	beijingTimeZone := time.FixedZone("CST", 8*3600)
-	return time.Now().In(beijingTimeZone)
+	return time.Now().In(time.FixedZone("CST", 8*3600))
 }
 
-// 记录错误信息到 error.log 文件
-// func logError(config Config, message string) {
-// 	logMessage(config, message, "data/error.log")
-// }
+// 日志
+func logMessage(config *Config, message, fileName string) {
+	ctx := context.Background()
+	client := github.NewClient(oauth2.NewClient(
+		ctx, oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: config.GithubToken},
+	)))
 
-// // 记录信息到指定的文件
-// func logMessage(config Config, message string, fileName string) {
-// 	u, err := url.Parse(cosURL)
-// 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
-// 		Transport: &cos.AuthorizationTransport{
-// 			SecretID:  config.SecretID,
-// 			SecretKey: config.SecretKey,
-// 		},
-// 	})
+	filePath := "_data/" + fileName
+	content := []byte(fmt.Sprintf("[%s] %s\n", 
+	getBeijingTime().Format("2006-01-02 15:04:05"), message))
 
-// 	// 获取文件内容
-// 	resp, err := client.Object.Get(context.Background(), fileName, nil)
-// 	if err != nil {
-// 		// 如果文件不存在，创建一个新的空文件
-// 		if err.Error() == "Not Found" {
-// 			resp.Body = io.NopCloser(strings.NewReader("")) // 文件不存在时，创建一个空的响应体
-// 		} else {
-// 			fmt.Printf("Error fetching %s from COS: %v\n", fileName, err)
-// 			return
-// 		}
-// 	}
-// 	defer resp.Body.Close()
+	err := withRetry(ctx, func() error {
+		file, _, _, err := client.Repositories.GetContents(ctx, 
+			config.GithubName, config.GithubRepository, filePath, nil)
+			// 文件不存在则创建
+			if err != nil {
+				_, _, err = client.Repositories.CreateFile(ctx, 
+					config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+						Message: github.String("Create " + fileName),
+						Content: content,
+						Branch:  github.String("master"),
+					})
+				return err
+			}
 
-// 	// 读取现有内容
-// 	existingContent, err := io.ReadAll(resp.Body)
-// 	if err != nil {
-// 		fmt.Printf("Error reading content from %s: %v\n", fileName, err)
-// 		return
-// 	}
+			// 文件存在则追加内容
+			decoded, _ := file.GetContent()
+			newContent := append([]byte(decoded+"\n"), content...)
+			_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+				Message: github.String("Update " + fileName),
+				Content: newContent,
+				SHA:     file.SHA,
+				Branch:  github.String("master"),
+			})
+			return err
+		})
 
-// 	// 将新的日志信息追加到现有内容的末尾
-// 	newContent := string(existingContent) + message + "\n\n" // 追加日志
+	if err != nil {
+		fmt.Printf("Log error: %v\n", err)
+	}
+}
 
-// 	// 上传更新后的内容，确保是将内容追加到文件末尾
-// 	_, err = client.Object.Put(context.Background(), fileName, strings.NewReader(newContent), nil)
-// 	if err != nil {
-// 		fmt.Printf("Error uploading %s to COS: %v\n", fileName, err)
-// 		return
-// 	}
-
-// 	fmt.Printf("Successfully updated %s in COS\n", fileName)
-// }
-
-func logError(config Config, message string) {
+func logError(config *Config, message string) {
 	logMessage(config, message, "error.log")
 }
 
-// 记录信息到指定的文件
-func logMessage(config Config, message string, fileName string) {
-	ctx := context.Background()
-	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
-		AccessToken: config.GithubToken,
-	})))
-
-	filePath := "_data/" + fileName
-	fileContent := []byte(message + "\n\n")
-
-	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
-	if err != nil && resp.StatusCode == http.StatusNotFound {
-		_, _, err := client.Repositories.CreateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-			Message: github.String("Create " + fileName),
-			Content: fileContent,
-			Branch:  github.String("master"),
-		})
-		if err != nil {
-			fmt.Printf("error creating %s in GitHub: %v\n", fileName, err)
-		}
-		return
-	} else if err != nil {
-		fmt.Printf("error checking %s in GitHub: %v\n", fileName, err)
-		return
-	}
-
-	decodedContent, err := file.GetContent()
-	if err != nil {
-		fmt.Printf("error decoding %s content: %v\n", fileName, err)
-		return
-	}
-
-	updatedContent := append([]byte(decodedContent), fileContent...)
-
-	_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-		Message: github.String("Update " + fileName),
-		Content: updatedContent,
-		SHA:     github.String(*file.SHA),
-		Branch:  github.String("master"),
-	})
-	if err != nil {
-		fmt.Printf("error updating %s in GitHub: %v\n", fileName, err)
-	}
-}
-
-// 从腾讯云 COS 获取 JSON 文件内容
-func fetchFileFromCOS(config Config, filePath string) (string, error) {
-	u, err := url.Parse(cosURL)
-	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+// COS客户端初始化
+func newCOSClient(config *Config) *cos.Client {
+	u, _ := url.Parse(cosURL)
+	return cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
 		Transport: &cos.AuthorizationTransport{
 			SecretID:  config.SecretID,
 			SecretKey: config.SecretKey,
 		},
 	})
+}
 
-	// 获取文件内容
-	resp, err := client.Object.Get(context.Background(), filePath, nil)
-	if err != nil {
-		return "", fmt.Errorf("error fetching file %s from COS: %v", filePath, err)
-	}
-	defer resp.Body.Close()
+// 从腾讯云 COS 获取 JSON 文件
+func fetchFileFromCOS(config *Config, filePath string) (string, error) {
+	client := newCOSClient(config)
+	var content string
 
-	// 读取文件内容
-	content, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf("error reading content from %s: %v", filePath, err)
-	}
+	err := withRetry(context.Background(), func() error {
+		// 获取文件内容
+		resp, err := client.Object.Get(context.Background(), filePath, nil)
+		if err != nil {
+			return err
+		}
+		defer resp.Body.Close()
 
-	return string(content), nil
+		// 读取文件内容
+		data, _ := io.ReadAll(resp.Body)
+		content = string(data)
+		return nil
+	})
+
+	return content, err
 }
 
 // 从腾讯云 COS 获取头像配置
-func loadAvatarsFromCOS(config Config) (map[string]string, error) {
+func loadAvatars(config *Config) (map[string]string, error) {
 	content, err := fetchFileFromCOS(config, "data/avatar_data.json")
 	if err != nil {
 		return nil, err
@@ -255,251 +217,182 @@ func loadAvatarsFromCOS(config Config) (map[string]string, error) {
 }
 
 // 从 RSS 列表中抓取最新的文章，并按发布时间排序
-func fetchRSS(config Config, feeds []string) ([]Article, error) {
-	var articles []Article
-	var mu sync.Mutex     // 用于保证并发安全
-	var wg sync.WaitGroup // 用于等待所有 goroutine 完成
+func fetchRSS(config *Config, feeds []string) ([]Article, error) {
+	var (
+		articles []Article
+		mu       sync.Mutex
+		wg       sync.WaitGroup
+		sem      = make(chan struct{}, maxConcurrency)
+	)
 
-	avatars, err := loadAvatarsFromCOS(config)
+	// 获取头像配置
+	avatars, err := loadAvatars(config)
 	if err != nil {
-		logError(config, fmt.Sprintf("[%s] [Load avatars error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
+		logError(config, fmt.Sprintf("Load avatars error: %v", err))
 		return nil, err
 	}
 
+	// 创建 RSS 解析器
 	fp := gofeed.NewParser()
 	httpClient := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: 10 * time.Second
 	}
 
 	for _, feedURL := range feeds {
 		wg.Add(1)
-		go func(feedURL string) {
+		go func(url string) {
 			defer wg.Done()
-			var resp *http.Response
-			var bodyString string
-			var fetchErr error
+			sem <- struct{}{}
+			defer func() { <-sem }()
 
-			for i := 0; i < maxRetries; i++ {
-				resp, fetchErr = httpClient.Get(feedURL)
-				if fetchErr == nil {
-					bodyBytes := new(bytes.Buffer)
-					bodyBytes.ReadFrom(resp.Body)
-					bodyString = bodyBytes.String()
-					resp.Body.Close()
-					break
+			var (
+				bodyString string
+				feed       *gofeed.Feed
+			)
+
+			// 重试机制获取
+			if err := withRetry(context.Background(), func() error {
+				resp, err := httpClient.Get(url)
+				if err != nil {
+					return err
 				}
-				logError(config, fmt.Sprintf("[%s] [Get RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, fetchErr))
-				time.Sleep(retryInterval)
-			}
+				defer resp.Body.Close()
 
-			if fetchErr != nil {
-				logError(config, fmt.Sprintf("[%s] [Failed to fetch RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, fetchErr))
+				data, _ := io.ReadAll(resp.Body)
+				bodyString = cleanXMLContent(string(data))
+				return nil
+			}); err != nil {
+				logError(config, fmt.Sprintf("Failed to fetch RSS: %s (%v)", url, err))
 				return
 			}
 
-			cleanBody := cleanXMLContent(bodyString)
-
-			var feed *gofeed.Feed
-			var parseErr error
-			for i := 0; i < maxRetries; i++ {
-				feed, parseErr = fp.ParseString(cleanBody)
-				if parseErr == nil {
-					break
+			// 重试机制解析
+			if err := withRetry(context.Background(), func() error {
+				f, err := fp.ParseString(bodyString)
+				if err != nil {
+					return err
 				}
-				logError(config, fmt.Sprintf("[%s] [Parse RSS error] %s: Attempt %d/%d: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, i+1, maxRetries, parseErr))
-				time.Sleep(retryInterval)
-			}
-
-			if parseErr != nil {
-				logError(config, fmt.Sprintf("[%s] [Failed to parse RSS] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), feedURL, parseErr))
+				feed = f
+				return nil
+			}); err != nil {
+				logError(config, fmt.Sprintf("Failed to parse RSS: %s (%v)", url, err))
 				return
 			}
 
-			mainSiteURL := feed.Link
-			domainName, err := extractDomain(mainSiteURL)
-			if err != nil {
-				logError(config, fmt.Sprintf("[%s] [Extract domain error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), mainSiteURL, err))
-				domainName = "unknown"
+			if len(feed.Items) == 0 {
+				return
+			}
+
+			domain, _ := extractDomain(feed.Link)
+			item := feed.Items[0]
+			published, _ := parseTime(item.Published)
+			if item.Updated != "" {
+				published, _ = parseTime(item.Updated)
+			}
+
+			// 名称映射
+			nameMapping := map[string]string{
+				"obaby@mars":                   	  "obaby",
+				"青山小站 | 一个在帝都搬砖的新时代农民工": "青山小站",
+				"Homepage on Miao Yu | 于淼":          "于淼",
+				"Homepage on Yihui Xie | 谢益辉":      "谢益辉",
 			}
 
 			name := feed.Title
-			avatarURL := avatars[name]
-			if avatarURL == "" {
-				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
+			if mapped, ok := nameMapping[name]; ok {
+				name = mapped
 			}
 
-			if len(feed.Items) > 0 {
-				item := feed.Items[0]
-
-				publishedTime, err := parseTime(item.Published)
-				if err != nil && item.Updated != "" {
-					publishedTime, err = parseTime(item.Updated)
-				}
-
-				if err != nil {
-					logError(config, fmt.Sprintf("[%s] [Getting article time error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), item.Title, err))
-					publishedTime = time.Now()
-				}
-
-				originalName := feed.Title
-				nameMapping := map[string]string{
-					"obaby@mars": "obaby",
-					"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
-					"Homepage on Miao Yu | 于淼":    "于淼",
-					"Homepage on Yihui Xie | 谢益辉": "谢益辉",
-				}
-
-				validNames := make(map[string]struct{})
-				for key := range nameMapping {
-					validNames[key] = struct{}{}
-				}
-
-				_, valid := validNames[originalName]
-				if !valid {
-					for key := range validNames {
-						if key == originalName {
-							logError(config, fmt.Sprintf("[%s] [Name mapping not found] %s", getBeijingTime().Format("Mon Jan 2 15:04:2006"), originalName))
-							break
-						}
-					}
-				} else {
-					name = nameMapping[originalName]
-				}
-
-				mu.Lock()
-				articles = append(articles, Article{
-					DomainName: domainName,
-					Name:       name,
-					Title:      item.Title,
-					Link:       item.Link,
-					Avatar:     avatarURL,
-					Date:       formatTime(publishedTime),
-				})
-				mu.Unlock()
-			}
+			mu.Lock()
+			articles = append(articles, Article{
+				DomainName: domain,
+				Name:       name,
+				Title:      item.Title,
+				Link:       item.Link,
+				Date:       formatTime(published),
+				Avatar:     avatars[name],
+			})
+			mu.Unlock()
 		}(feedURL)
 	}
 
 	wg.Wait()
+
+	// 根据时间排序
 	sort.Slice(articles, func(i, j int) bool {
-		date1, _ := time.Parse("January 2, 2006", articles[i].Date)
-		date2, _ := time.Parse("January 2, 2006", articles[j].Date)
-		return date1.After(date2)
+		ti, _ := time.Parse("January 2, 2006", articles[i].Date)
+		tj, _ := time.Parse("January 2, 2006", articles[j].Date)
+		return ti.After(tj)
 	})
 
 	return articles, nil
 }
 
 // 将爬虫抓取的数据保存到腾讯云 COS
-func saveToCOS(config Config, data []Article) error {
-	u, err := url.Parse(cosURL)
-	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
-		Transport: &cos.AuthorizationTransport{
-			SecretID:  config.SecretID,
-			SecretKey: config.SecretKey,
-		},
-	})
+func saveToCOS(config *Config, data []Article) error {
+	client := newCOSClient(config)
 
 	// 十年之约
-	manualArticles := []Article{
-		{
-			DomainName: "https://foreverblog.cn",
-			Name:       "十年之约",
-			Title:      "穿梭虫洞-随机访问十年之约友链博客",
-			Link:       "https://foreverblog.cn/go.html",
-			Date:       "January 01, 2000",
-			Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
-		},
-	}
-	data = append(data, manualArticles...)
+	data = append(data, Article{
+		DomainName: "https://foreverblog.cn",
+		Name:       "十年之约",
+		Title:      "穿梭虫洞-随机访问十年之约友链博客",
+		Link:       "https://foreverblog.cn/go.html",
+		Date:       "January 01, 2000",
+		Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
+	})
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		return fmt.Errorf("error marshaling data to JSON: %v", err)
+		return fmt.Errorf("marshal error: %v", err)
 	}
 
 	// 上传文件到 COS
-	filePath := "data/rss_data.json"
-	_, err = client.Object.Put(context.Background(),filePath, bytes.NewReader(jsonData), nil)
-	if err != nil {
-		return fmt.Errorf("error uploading data to COS: %v", err)
-	}
-
-	return nil
+	return withRetry(context.Background(), func() error {
+		_, err := client.Object.Put(context.Background(), "data/rss_data.json", bytes.NewReader(jsonData), nil)
+		return err
+	})
 }
 
 // 从腾讯云 COS 获取 RSS 文件
-func readFeedsFromCOS(config Config) ([]string, error) {
-	u, err := url.Parse(cosURL)
-	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
-		Transport: &cos.AuthorizationTransport{
-			SecretID:  config.SecretID,
-			SecretKey: config.SecretKey,
-		},
-	})
-
-	// 文件路径
-	filePath := "data/rss_feeds.txt"
-
-	// 获取文件内容
-	resp, err := client.Object.Get(context.Background(), filePath, nil)
+func readFeedsFromCOS(config *Config) ([]string, error) {
+	content, err := fetchFileFromCOS(config, "data/rss_feeds.txt")
 	if err != nil {
-		errMsg := fmt.Sprintf("Error fetching %s from COS: %v", filePath, err)
-		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
-		return nil, fmt.Errorf(errMsg)
-	}
-	defer resp.Body.Close()
-
-	// 读取文件内容
-	content, err := io.ReadAll(resp.Body)
-	if err != nil {
-		errMsg := fmt.Sprintf("Error reading content from %s: %v", filePath, err)
-		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
-		return nil, fmt.Errorf(errMsg)
+		return nil, err
 	}
 
-	// 解析 RSS 文件内容
 	var feeds []string
-	scanner := bufio.NewScanner(bytes.NewReader(content))
-
+	scanner := bufio.NewScanner(bytes.NewReader([]byte(content)))
 	for scanner.Scan() {
 		feeds = append(feeds, scanner.Text())
 	}
-
-	if err := scanner.Err(); err != nil {
-		errMsg := fmt.Sprintf("Error reading RSS file content: %v", err)
-		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
-		return nil, fmt.Errorf(errMsg)
-	}
-
 	return feeds, nil
 }
 
 func main() {
-	config := initConfig()
+	config, err := initConfig()
 
-	// 从 GitHub 仓库中读取 RSS feeds 列表
-	rssFeeds, err := readFeedsFromCOS(config)
 	if err != nil {
-		logError(config, fmt.Sprintf("[%s] [Read RSS feeds error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
-		fmt.Printf("Error reading RSS feeds from GitHub: %v\n", err)
+		fmt.Printf("Configuration error: %v\n", err)
+		os.Exit(1)
+	}
+
+	feeds, err := readFeedsFromCOS(config)
+	if err != nil {
+		logError(config, fmt.Sprintf("Read feeds error: %v", err))
 		return
 	}
 
-	// 抓取 RSS feeds
-	articles, err := fetchRSS(config, rssFeeds)
+	articles, err := fetchRSS(config, feeds)
 	if err != nil {
-		logError(config, fmt.Sprintf("[%s] [Fetch RSS error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
-		fmt.Printf("Error fetching RSS feeds: %v\n", err)
+		logError(config, fmt.Sprintf("Fetch RSS error: %v", err))
 		return
 	}
 
-	// 将抓取的数据保存到腾讯云 COS
-	err = saveToCOS(config, articles)
-	if err != nil {
-		logError(config, fmt.Sprintf("[%s] [Save data to COS error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
-		fmt.Printf("Error saving data to GitHub: %v\n", err)
+	if err := saveToCOS(config, articles); err != nil {
+		logError(config, fmt.Sprintf("Save to COS error: %v", err))
 		return
 	}
+
 	fmt.Println("Stop writing code and go ride a road bike now!")
 }

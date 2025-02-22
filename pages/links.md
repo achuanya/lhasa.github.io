@@ -5,7 +5,6 @@ title: 订阅
 ---
 <section class="page-content">
   <section class="post-list">
-
   </section>
 </section>
 {% include wechat.html %}
@@ -26,7 +25,7 @@ title: 订阅
               <h3 class="post-item-title">
                 <a class="post-item-link" href="${post.link}" title="${post.title}" target="_blank">${post.title}</a>
               </h3>
-              <time class="post-item-date timeago" datetime="${new Date(post.date).toISOString()}">${new Date(post.date).toLocaleDateString()}</time>
+              <time class="post-item-date timeago" datetime="${post.date}">${post.date}</time>
               <address class="post-item-date links-name">${post.name}</address>
             </section>
           `;
