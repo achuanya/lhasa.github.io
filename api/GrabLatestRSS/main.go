@@ -53,8 +53,8 @@ type Article struct {
 // 初始化并返回配置信息
 func initConfig() Config {
 	return Config{
-		SecretID:  os.Getenv("AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf"),
-		SecretKey: os.Getenv("whFbkiXBdtyqUvCGML7f3GH4qRr31lIb"),
+		SecretID:  os.Getenv("TENCENT_CLOUD_SECRET_ID"),
+		SecretKey: os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
 		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
 		GithubName:       "achuanya",         // GitHub 用户名
 		GithubRepository: "lhasa.github.io",  // GitHub 仓库名
