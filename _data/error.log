@@ -5,3 +5,5 @@
 [Sat Feb 22 16:20:2025] [Parse RSS error] https://wangpei.net/feed: Attempt 2/3: Failed to detect feed type
 
 
+
+[2025-02-22 22:53:06] Failed to parse RSS: https://wangpei.net/feed (Failed to detect feed type)
