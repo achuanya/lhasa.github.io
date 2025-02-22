@@ -209,6 +209,7 @@ func logMessage(config Config, message string, fileName string) {
 	}
 }
 
+
 // 从腾讯云 COS 获取 JSON 文件内容
 func fetchFileFromCOS(config Config, filePath string) (string, error) {
 	u, err := url.Parse(cosURL)
