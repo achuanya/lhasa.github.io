@@ -123,15 +123,27 @@ func formatTime(t time.Time) string {
 
 // 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
+	// u, err := url.Parse(urlStr)
+	// if err != nil {
+	// 	return "", err
+	// }
+	// protocol := "https://"
+	// if u.Scheme != "" {
+	// 	protocol = u.Scheme + "://"
+	// }
+	// return protocol + u.Hostname(), nil
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
+	domain := u.Hostname()
 	protocol := "https://"
 	if u.Scheme != "" {
 		protocol = u.Scheme + "://"
 	}
-	return protocol + u.Hostname(), nil
+	fullURL := protocol + domain
+
+	return fullURL, nil
 }
 
 // 获取当前的北京时间
