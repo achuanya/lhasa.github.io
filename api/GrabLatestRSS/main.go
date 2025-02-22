@@ -53,29 +53,13 @@ type Article struct {
 
 func initConfig() (*Config, error) {
 	config := &Config{
-		SecretID:         os.Getenv("TENCENT_CLOUD_SECRET_ID"),
-		SecretKey:        os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
-		GithubToken:      os.Getenv("TOKEN"),
-		GithubName:       os.Getenv("NAME"),
-		GithubRepository: os.Getenv("REPOSITORY"),
+		SecretID:  		  os.Getenv("TENCENT_CLOUD_SECRET_ID"),
+		SecretKey: 		  os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
+		GithubToken:      os.Getenv("TOKEN"), 		// GitHub API 令牌
+		GithubName:       os.Getenv("NAME"),        // GitHub 用户名
+		GithubRepository: os.Getenv("REPOSITORY"),	// GitHub 仓库名
 	}
 
-	// 验证
-	required := map[string]string{
-		"TENCENT_CLOUD_SECRET_ID":  config.SecretID,
-		"TENCENT_CLOUD_SECRET_KEY": config.SecretKey,
-		"TOKEN":                    config.GithubToken,
-		"NAME":                     config.GithubName,
-		"REPOSITORY":               config.GithubRepository,
-	}
-
-	for k, v := range required {
-		if v == "" {
-			return nil, fmt.Errorf("%s is required", k)
-		}
-	}
-
-	return config, nil
 }
 
 // 重试机制
