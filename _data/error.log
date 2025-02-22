@@ -12,3 +12,11 @@
 [2025-02-23 00:13:51] Failed to parse RSS: https://www.loyhome.com/feed (Failed to detect feed type)
 
 [2025-02-23 00:13:50] Failed to parse RSS: https://wangpei.net/feed (Failed to detect feed type)
+
+[2025-02-23 00:37:19] Failed to parse RSS: https://tcxx.info/feed (Failed to detect feed type)
+
+[2025-02-23 00:37:19] Failed to parse RSS: https://www.loyhome.com/feed (Failed to detect feed type)
+
+[2025-02-23 00:37:29] Failed to parse RSS: https://blog.fooleap.org/atom.xml (XML syntax error on line 1: unexpected EOF)
+
+[2025-02-23 00:37:19] Failed to parse RSS: https://wangpei.net/feed (Failed to detect feed type)
