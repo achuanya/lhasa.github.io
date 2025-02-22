@@ -28,6 +28,10 @@ jobs:
 
     - name: Run Go program
       env:
+        TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
+        TENCENT_CLOUD_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
         TOKEN: ${{ secrets.TOKEN }}
+        NAME: ${{ secrets.NAME }}
+        REPOSITORY: ${{ secrets.REPOSITORY }}
       run: ./main
       working-directory: ./api/GrabLatestRSS
