@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"io"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -13,21 +14,24 @@ import (
 	"sort"
 	"sync"
 	"time"
-
+	"strings"
 	"github.com/google/go-github/v39/github"
 	"github.com/mmcdole/gofeed"
-	"golang.org/x/oauth2"
+	"github.com/tencentyun/cos-go-sdk-v5"
 )
 
 const (
 	maxRetries    = 3                // 最大重试次数
 	retryInterval = 10 * time.Second // 重试间隔时间
+	cosURL        = "https://cos.lhasa.icu" // 腾讯云 COS 自定义域名
 )
 
 type Config struct {
 	GithubToken      string // GitHub API 令牌
 	GithubName       string // GitHub 用户名
 	GithubRepository string // GitHub 仓库名
+	SecretID		 string // 腾讯云 SecretID
+	SecretKey        string // 腾讯云 SecretKey
 }
 
 // 用于解析 avatar_data.json 文件的结构
@@ -46,19 +50,15 @@ type Article struct {
 	Avatar     string `json:"avatar"`     // 头像 URL
 }
 
-func initCosClient() *cos.Client {
-	secretID := os.Getenv("TENCENT_CLOUD_SECRET_ID")
-	secretKey := os.Getenv("TENCENT_CLOUD_SECRET_KEY")
-	bucketURL := "cos.lhasa.icu"
-
-	u, _ := url.Parse("https://" + bucketURL)
-	c := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
-		Transport: &cos.AuthorizationTransport{
-			SecretID:  secretID,
-			SecretKey: secretKey,
-		},
-	})
-	return c
+// 初始化并返回配置信息
+func initConfig() Config {
+	return Config{
+		SecretID:  os.Getenv("AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf"),
+		SecretKey: os.Getenv("whFbkiXBdtyqUvCGML7f3GH4qRr31lIb"),
+		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
+		GithubName:       "achuanya",         // GitHub 用户名
+		GithubRepository: "lhasa.github.io",  // GitHub 仓库名
+	}
 }
 
 // 清理 XML 内容中的非法字符
@@ -112,6 +112,54 @@ func getBeijingTime() time.Time {
 }
 
 // 记录错误信息到 error.log 文件
+// func logError(config Config, message string) {
+// 	logMessage(config, message, "data/error.log")
+// }
+
+// 记录信息到指定的文件
+// func logMessage(config Config, message string, fileName string) {
+// 	u, err := url.Parse(cosURL)
+// 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+// 		Transport: &cos.AuthorizationTransport{
+// 			SecretID:  config.SecretID,
+// 			SecretKey: config.SecretKey,
+// 		},
+// 	})
+
+// 	// 获取文件内容
+// 	resp, err := client.Object.Get(context.Background(), fileName, nil)
+// 	if err != nil {
+// 		// 如果文件不存在，创建一个新的空文件
+// 		if err.Error() == "Not Found" {
+// 			resp.Body = io.NopCloser(strings.NewReader("")) // 文件不存在时，创建一个空的响应体
+// 		} else {
+// 			fmt.Printf("Error fetching %s from COS: %v\n", fileName, err)
+// 			return
+// 		}
+// 	}
+// 	defer resp.Body.Close()
+
+// 	// 读取现有内容
+// 	existingContent, err := io.ReadAll(resp.Body)
+// 	if err != nil {
+// 		fmt.Printf("Error reading content from %s: %v\n", fileName, err)
+// 		return
+// 	}
+
+// 	// 将新的日志信息追加到现有内容的末尾
+// 	newContent := string(existingContent) + message + "\n\n" // 追加日志
+
+// 	// 上传更新后的内容，确保是将内容追加到文件末尾
+// 	_, err = client.Object.Put(context.Background(), fileName, strings.NewReader(newContent), nil)
+// 	if err != nil {
+// 		fmt.Printf("Error uploading %s to COS: %v\n", fileName, err)
+// 		return
+// 	}
+
+// 	fmt.Printf("Successfully updated %s in COS\n", fileName)
+// }
+
+// 记录错误信息到 error.log 文件
 func logError(config Config, message string) {
 	logMessage(config, message, "error.log")
 }
@@ -161,32 +209,35 @@ func logMessage(config Config, message string, fileName string) {
 	}
 }
 
-// 从 GitHub 仓库中获取 JSON 文件内容
-func fetchFileFromGitHub(config Config, filePath string) (string, error) {
-	ctx := context.Background()
-	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
-		AccessToken: config.GithubToken,
-	})))
+// 从腾讯云 COS 获取 JSON 文件内容
+func fetchFileFromCOS(config Config, filePath string) (string, error) {
+	u, err := url.Parse(cosURL)
+	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  config.SecretID,
+			SecretKey: config.SecretKey,
+		},
+	})
 
-	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
+	// 获取文件内容
+	resp, err := client.Object.Get(context.Background(), filePath, nil)
 	if err != nil {
-		if resp.StatusCode == http.StatusNotFound {
-			return "", fmt.Errorf("file not found: %s", filePath)
-		}
-		return "", fmt.Errorf("error fetching file %s from GitHub: %v", filePath, err)
+		return "", fmt.Errorf("error fetching file %s from COS: %v", filePath, err)
+	}
+	defer resp.Body.Close()
+
+	// 读取文件内容
+	content, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("error reading content from %s: %v", filePath, err)
 	}
 
-	content, err := file.GetContent()
-	if err != nil {
-		return "", fmt.Errorf("error decoding file %s content: %v", filePath, err)
-	}
-
-	return content, nil
+	return string(content), nil
 }
 
-// 从 GitHub 仓库中读取头像配置
-func loadAvatarsFromGitHub(config Config) (map[string]string, error) {
-	content, err := fetchFileFromGitHub(config, "_data/avatar_data.json")
+// 从腾讯云 COS 获取头像配置
+func loadAvatarsFromCOS(config Config) (map[string]string, error) {
+	content, err := fetchFileFromCOS(config, "data/avatar_data.json")
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +261,7 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	var mu sync.Mutex     // 用于保证并发安全
 	var wg sync.WaitGroup // 用于等待所有 goroutine 完成
 
-	avatars, err := loadAvatarsFromGitHub(config)
+	avatars, err := loadAvatarsFromCOS(config)
 	if err != nil {
 		logError(config, fmt.Sprintf("[%s] [Load avatars error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
 		return nil, err
@@ -340,13 +391,17 @@ func fetchRSS(config Config, feeds []string) ([]Article, error) {
 	return articles, nil
 }
 
-// 将爬虫抓取的数据保存到 GitHub
-func saveToGitHub(config Config, data []Article) error {
-	ctx := context.Background()
-	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
-		AccessToken: config.GithubToken,
-	})))
+// 将爬虫抓取的数据保存到腾讯云 COS
+func saveToCOS(config Config, data []Article) error {
+	u, err := url.Parse(cosURL)
+	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  config.SecretID,
+			SecretKey: config.SecretKey,
+		},
+	})
 
+	// 十年之约
 	manualArticles := []Article{
 		{
 			DomainName: "https://foreverblog.cn",
@@ -357,70 +412,56 @@ func saveToGitHub(config Config, data []Article) error {
 			Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
 		},
 	}
-
 	data = append(data, manualArticles...)
+
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		return err
+		return fmt.Errorf("error marshaling data to JSON: %v", err)
 	}
 
-	filePath := "_data/rss_data.json"
-	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
-	if err != nil && resp.StatusCode == http.StatusNotFound {
-		_, _, err := client.Repositories.CreateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-			Message: github.String("Create rss_data.json"),
-			Content: jsonData,
-			Branch:  github.String("master"),
-		})
-		if err != nil {
-			return fmt.Errorf("error creating rss_data.json in GitHub: %v", err)
-		}
-		return nil
-	} else if err != nil {
-		return fmt.Errorf("error checking rss_data.json in GitHub: %v", err)
-	}
-
-	_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-		Message: github.String("Update rss_data.json"),
-		Content: jsonData,
-		SHA:     github.String(*file.SHA),
-		Branch:  github.String("master"),
-	})
+	// 上传文件到 COS
+	filePath := "data/rss_data.json"
+	_, err = client.Object.Put(context.Background(),filePath, bytes.NewReader(jsonData), nil)
 	if err != nil {
-		return fmt.Errorf("error updating rss_data.json in GitHub: %v", err)
+		return fmt.Errorf("error uploading data to COS: %v", err)
 	}
 
 	return nil
 }
 
-// 从 GitHub 仓库中获取 RSS 文件
-func readFeedsFromGitHub(config Config) ([]string, error) {
-	ctx := context.Background()
-	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{
-		AccessToken: config.GithubToken,
-	})))
+// 从腾讯云 COS 获取 RSS 文件
+func readFeedsFromCOS(config Config) ([]string, error) {
+	u, err := url.Parse(cosURL)
+	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  config.SecretID,
+			SecretKey: config.SecretKey,
+		},
+	})
 
-	filePath := "_data/rss_feeds.txt"
-	file, _, resp, err := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
-	if err != nil && resp.StatusCode == http.StatusNotFound {
-		errMsg := fmt.Sprintf("Error: %s not found in GitHub repository", filePath)
-		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
-		return nil, fmt.Errorf(errMsg)
-	} else if err != nil {
-		errMsg := fmt.Sprintf("Error fetching %s from GitHub: %v", filePath, err)
-		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
-		return nil, fmt.Errorf(errMsg)
-	}
+	// 文件路径
+	filePath := "data/rss_feeds.txt"
 
-	content, err := file.GetContent()
+	// 获取文件内容
+	resp, err := client.Object.Get(context.Background(), filePath, nil)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error decoding %s content: %v", filePath, err)
+		errMsg := fmt.Sprintf("Error fetching %s from COS: %v", filePath, err)
+		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
+		return nil, fmt.Errorf(errMsg)
+	}
+	defer resp.Body.Close()
+
+	// 读取文件内容
+	content, err := io.ReadAll(resp.Body)
+	if err != nil {
+		errMsg := fmt.Sprintf("Error reading content from %s: %v", filePath, err)
 		logError(config, fmt.Sprintf("[%s] [Read RSS file error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), errMsg))
 		return nil, fmt.Errorf(errMsg)
 	}
 
+	// 解析 RSS 文件内容
 	var feeds []string
-	scanner := bufio.NewScanner(bytes.NewReader([]byte(content)))
+	scanner := bufio.NewScanner(bytes.NewReader(content))
 
 	for scanner.Scan() {
 		feeds = append(feeds, scanner.Text())
@@ -439,7 +480,7 @@ func main() {
 	config := initConfig()
 
 	// 从 GitHub 仓库中读取 RSS feeds 列表
-	rssFeeds, err := readFeedsFromGitHub(config)
+	rssFeeds, err := readFeedsFromCOS(config)
 	if err != nil {
 		logError(config, fmt.Sprintf("[%s] [Read RSS feeds error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
 		fmt.Printf("Error reading RSS feeds from GitHub: %v\n", err)
@@ -454,10 +495,10 @@ func main() {
 		return
 	}
 
-	// 将抓取的数据保存到 GitHub 仓库
-	err = saveToGitHub(config, articles)
+	// 将抓取的数据保存到腾讯云 COS
+	err = saveToCOS(config, articles)
 	if err != nil {
-		logError(config, fmt.Sprintf("[%s] [Save data to GitHub error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
+		logError(config, fmt.Sprintf("[%s] [Save data to COS error] %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), err))
 		fmt.Printf("Error saving data to GitHub: %v\n", err)
 		return
 	}
