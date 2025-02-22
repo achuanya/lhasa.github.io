@@ -123,11 +123,18 @@ func formatTime(t time.Time) string {
 
 // 从 URL 中提取域名，并添加 https:// 前缀
 func extractDomain(urlStr string) (string, error) {
-    u, err := url.Parse(urlStr)
-    if err != nil {
-        return "", err
-    }
-    return u.Hostname(), nil
+	u, err := url.Parse(urlStr)
+	if err != nil {
+		return "", err
+	}
+	domain := u.Hostname()
+	protocol := "https://"
+	if u.Scheme != "" {
+		protocol = u.Scheme + "://"
+	}
+	fullURL := protocol + domain
+
+	return fullURL, nil
 }
 
 // 获取当前的北京时间
@@ -216,7 +223,7 @@ func fetchFileFromCOS(config *Config, filePath string) (string, error) {
 }
 
 // 从腾讯云 COS 获取头像配置
-func loadAvatars(config *Config) (map[string]string, error) {
+func loadAvatarsFromCOS(config *Config) (map[string]string, error) {
 	content, err := fetchFileFromCOS(config, "data/avatar_data.json")
 	if err != nil {
 		return nil, err
@@ -229,18 +236,8 @@ func loadAvatars(config *Config) (map[string]string, error) {
 
 	// 将数据转换为以 domainName 为键的 map
 	avatarMap := make(map[string]string)
-	// for _, a := range avatars {
-	// 	avatarMap[a.Name] = a.Avatar
-	// }
-
-	// ChatGPT
 	for _, a := range avatars {
-		// 从 domainName 中提取出域名部分
-		u, err := url.Parse(a.DomainName)
-		if err != nil {
-			continue
-		}
-		avatarMap[u.Hostname()] = a.Avatar
+		avatarMap[a.Name] = a.Avatar
 	}
 
 	return avatarMap, nil
@@ -255,8 +252,8 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 		sem      = make(chan struct{}, maxConcurrency)
 	)
 
-	// 通过域名加载头像配置
-	avatars, err := loadAvatars(config)
+	// 获取头像配置
+	avatars, err := loadAvatarsFromCOS(config)
 	if err != nil {
 		logError(config, fmt.Sprintf("Load avatars error: %v", err))
 		return nil, err
@@ -280,7 +277,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				feed       *gofeed.Feed
 			)
 
-			// 重试机制获取RSS
+			// 重试机制获取
 			if err := withRetry(context.Background(), func() error {
 				resp, err := httpClient.Get(url)
 				if err != nil {
@@ -296,7 +293,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				return
 			}
 
-			// 重试机制解析RSS
+			// 重试机制解析
 			if err := withRetry(context.Background(), func() error {
 				f, err := fp.ParseString(bodyString)
 				if err != nil {
@@ -313,16 +310,20 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				return
 			}
 
-			// 从 RSS Link 中提取域名
-			domain, _ := extractDomain(feed.Link)
-
-			// 获取头像 URL，通过域名直接映射
-			avatarURL, exists := avatars[domain]
-			if !exists {
-				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png" // 设置默认头像
+			mainSiteURL := feed.Link
+			domainName, err := extractDomain(mainSiteURL)
+			if err != nil {
+				logError(config, fmt.Sprintf("[%s] [Extract domain error] %s: %v", getBeijingTime().Format("Mon Jan 2 15:04:2006"), mainSiteURL, err))
+				domainName = "unknown"
 			}
 
-			// 获取文章发布时间
+			name := feed.Title
+			avatarURL := avatars[name]
+			if avatarURL == "" {
+				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
+			}
+
+			// domain, _ := extractDomain(feed.Link)
 			item := feed.Items[0]
 			published, _ := parseTime(item.Published)
 			if item.Updated != "" {
@@ -337,20 +338,18 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				"Homepage on Yihui Xie | 谢益辉":      "谢益辉",
 			}
 
-			name := feed.Title
 			if mapped, ok := nameMapping[name]; ok {
 				name = mapped
 			}
 
 			mu.Lock()
 			articles = append(articles, Article{
-				DomainName: domain,
+				DomainName: domainName,
 				Name:       name,
 				Title:      item.Title,
 				Link:       item.Link,
 				Date:       formatTime(published),
-				// Avatar:     avatars[name],
-				Avatar:     avatars[name],
+				Avatar:     avatarURL,
 			})
 			mu.Unlock()
 		}(feedURL)
