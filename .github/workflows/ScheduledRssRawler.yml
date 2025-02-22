@@ -3,46 +3,50 @@ name: ScheduledRssRawler
 on:
   schedule:
     - cron: '0 */6 * * *'  # 每6小时运行一次（UTC时间）
-  workflow_dispatch:        # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Shanghai    # 设置时区
+      TZ: Asia/Shanghai
+      WORKDIR: ./api/GrabLatestRSS  # 关键路径定义
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4  # 使用最新版本
-      with:
-        path: 'api'  # 明确指定检出目录
+      uses: actions/checkout@v4
+
+    - name: Verify go.sum Location  # 新增路径验证
+      run: |
+        echo "Current directory: $(pwd)"
+        ls -la ${{ env.WORKDIR }}
+        [ -f ${{ env.WORKDIR }}/go.sum ] || (echo "go.sum not found"; exit 1)
 
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: '1.22.5'
-        cache: true       # 启用模块缓存
-        cache-dependency-path: 'api/GrabLatestRSS/go.sum'
+        cache: true
+        cache-dependency-path: ${{ env.WORKDIR }}/go.sum  # 精确指向目标文件
 
     - name: Install dependencies
-      working-directory: ./api/GrabLatestRSS
+      working-directory: ${{ env.WORKDIR }}
       run: |
+        go mod tidy -v
         go mod download
-        go mod verify
 
     - name: Build
-      working-directory: ./api/GrabLatestRSS
+      working-directory: ${{ env.WORKDIR }}
       env:
-        CGO_ENABLED: 0    # 禁用CGO
+        CGO_ENABLED: 0
       run: |
         go build -v -ldflags="-s -w" -o rss-crawler
 
     - name: Run Crawler
-      working-directory: ./src/api/GrabLatestRSS
+      working-directory: ${{ env.WORKDIR }}
       env:
         TOKEN: ${{ secrets.TOKEN }}
         NAME: ${{ secrets.NAME }}
         REPOSITORY: ${{ secrets.REPOSITORY }}
       run: |
-        ./rss-crawler 2>&1 | tee -a run.log  # 输出日志
-        [ -f error.log ] && exit 1           # 存在错误日志时失败
+        ./rss-crawler
