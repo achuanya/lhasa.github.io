@@ -11,3 +11,5 @@
 [2025-02-22 22:53:08] Failed to parse RSS: https://www.loyhome.com/feed (Failed to detect feed type)
 
 [2025-02-22 22:53:06] Failed to parse RSS: https://tcxx.info/feed (Failed to detect feed type)
+
+[2025-02-22 22:53:49] Save to COS error: PUT https://cos.lhasa.icu/data/rss_data.json: 403 SignatureDoesNotMatch(Message: The Signature you specified is invalid., RequestId: NjdiOWU0ZjJfYmQ2YzE0MGJfNTY4MF81ZTVkYzBh, TraceId: OGVmYzZiMmQzYjA2OWNhODk0NTRkMTBiOWVmMDAxODc0OWRkZjk0ZDM1NmI1M2E2MTRlY2MzZDhmNmI5MWI1OTQyYWVlY2QwZTk2MDVmZDQ3MmI2Y2I4ZmI5ZmM4ODFjYjI1YzQxNmFjNWQwYTBhMGJiZjM5OWVkMTYzMzE0ZWU=)
