@@ -94,3 +94,5 @@
 
 [Sat Feb 22 22:19:2025] [Parse RSS error] https://tcxx.info/feed: Attempt 3/3: Failed to detect feed type
 
+[Sat Feb 22 22:19:2025] [Failed to parse RSS] https://tcxx.info/feed: Failed to detect feed type
+
