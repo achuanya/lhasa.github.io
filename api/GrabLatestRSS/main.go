@@ -227,9 +227,20 @@ func loadAvatars(config *Config) (map[string]string, error) {
 		return nil, err
 	}
 
+	// 将数据转换为以 domainName 为键的 map
 	avatarMap := make(map[string]string)
+	// for _, a := range avatars {
+	// 	avatarMap[a.Name] = a.Avatar
+	// }
+
+	// ChatGPT
 	for _, a := range avatars {
-		avatarMap[a.Name] = a.Avatar
+		// 从 domainName 中提取出域名部分
+		u, err := url.Parse(a.DomainName)
+		if err != nil {
+			continue
+		}
+		avatarMap[u.Hostname()] = a.Avatar
 	}
 
 	return avatarMap, nil
@@ -244,7 +255,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 		sem      = make(chan struct{}, maxConcurrency)
 	)
 
-	// 获取头像配置
+	// 通过域名加载头像配置
 	avatars, err := loadAvatars(config)
 	if err != nil {
 		logError(config, fmt.Sprintf("Load avatars error: %v", err))
@@ -269,7 +280,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				feed       *gofeed.Feed
 			)
 
-			// 重试机制获取
+			// 重试机制获取RSS
 			if err := withRetry(context.Background(), func() error {
 				resp, err := httpClient.Get(url)
 				if err != nil {
@@ -285,7 +296,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				return
 			}
 
-			// 重试机制解析
+			// 重试机制解析RSS
 			if err := withRetry(context.Background(), func() error {
 				f, err := fp.ParseString(bodyString)
 				if err != nil {
@@ -302,7 +313,16 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				return
 			}
 
+			// 从 RSS Link 中提取域名
 			domain, _ := extractDomain(feed.Link)
+
+			// 获取头像 URL，通过域名直接映射
+			avatarURL, exists := avatars[domain]
+			if !exists {
+				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png" // 设置默认头像
+			}
+
+			// 获取文章发布时间
 			item := feed.Items[0]
 			published, _ := parseTime(item.Published)
 			if item.Updated != "" {
@@ -329,7 +349,8 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				Title:      item.Title,
 				Link:       item.Link,
 				Date:       formatTime(published),
-				Avatar:     avatars[name],
+				// Avatar:     avatars[name],
+				Avatar:     avatarURL,
 			})
 			mu.Unlock()
 		}(feedURL)
