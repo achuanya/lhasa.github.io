@@ -25,7 +25,7 @@ const (
 	maxRetries     = 3						 // 最大重试次数
 	retryInterval  = 10 * time.Second		 // 最大间隔时间
 	maxConcurrency = 10						 // 并发控制
-	cosURL         = "https://cos.lhasa.icu" // 腾讯云 COS 的 URL
+	cosURL         = "https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/data/rss_data.json" // 腾讯云 COS 的 URL
 )
 
 type Config struct {
@@ -60,6 +60,22 @@ func initConfig() (*Config, error) {
 		GithubRepository: os.Getenv("REPOSITORY"),	// GitHub 仓库名
 	}
 
+	// 验证
+	required := map[string]string{
+		"TENCENT_CLOUD_SECRET_ID":  config.SecretID,
+		"TENCENT_CLOUD_SECRET_KEY": config.SecretKey,
+		"TOKEN":                    config.GithubToken,
+		"NAME":                     config.GithubName,
+		"REPOSITORY":               config.GithubRepository,
+	}
+
+	for k, v := range required {
+		if v == "" {
+			return nil, fmt.Errorf("%s is required", k)
+		}
+	}
+
+	return config, nil
 }
 
 // 重试机制
