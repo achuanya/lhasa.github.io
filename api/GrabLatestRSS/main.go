@@ -53,8 +53,8 @@ type Article struct {
 
 func initConfig() (*Config, error) {
 	config := &Config{
-		SecretID:         os.Getenv("TENCENT_CLOUD_SECRET_ID"),
-		SecretKey:        os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
+		SecretID:         os.Getenv("AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf"),
+		SecretKey:        os.Getenv("whFbkiXBdtyqUvCGML7f3GH4qRr31lIb"),
 		GithubToken:      os.Getenv("TOKEN"),
 		GithubName:       os.Getenv("NAME"),
 		GithubRepository: os.Getenv("REPOSITORY"),
