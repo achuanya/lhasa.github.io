@@ -78,6 +78,22 @@ func initConfig() (*Config, error) {
 	return config, nil
 }
 
+// 重试机制
+func withRetry(ctx context.Context, fn func() error) error {
+	var err error
+	for i := 0; i < maxRetries; i++ {
+		if err = fn(); err == nil {
+			return nil
+		}
+		select {
+		case <-time.After(retryInterval):
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}
+	return err
+}
+
 // 清理 XML 内容中的非法字符
 func cleanXMLContent(content string) string {
 	re := regexp.MustCompile(`[\x00-\x1F\x7F-\x9F]`)
