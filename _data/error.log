@@ -72,3 +72,5 @@
 
 [Sat Feb 22 20:39:2025] [Failed to parse RSS] https://www.loyhome.com/feed: Failed to detect feed type
 
+[Sat Feb 22 21:22:2025] [Parse RSS error] https://www.loyhome.com/feed: Attempt 1/3: Failed to detect feed type
+
