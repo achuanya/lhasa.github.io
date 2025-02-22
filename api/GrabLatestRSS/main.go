@@ -46,13 +46,19 @@ type Article struct {
 	Avatar     string `json:"avatar"`     // 头像 URL
 }
 
-// 初始化并返回配置信息
-func initConfig() Config {
-	return Config{
-		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
-		GithubName:       "achuanya",         // GitHub 用户名
-		GithubRepository: "lhasa.github.io",  // GitHub 仓库名
-	}
+func initCosClient() *cos.Client {
+	secretID := os.Getenv("TENCENT_CLOUD_SECRET_ID")
+	secretKey := os.Getenv("TENCENT_CLOUD_SECRET_KEY")
+	bucketURL := "cos.lhasa.icu"
+
+	u, _ := url.Parse("https://" + bucketURL)
+	c := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  secretID,
+			SecretKey: secretKey,
+		},
+	})
+	return c
 }
 
 // 清理 XML 内容中的非法字符
