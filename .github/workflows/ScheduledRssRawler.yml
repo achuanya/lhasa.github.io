@@ -2,7 +2,7 @@ name: ScheduledRssRawler
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # 每6小时运行一次（UTC时间）
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
-      WORKDIR: ./api/GrabLatestRSS  # 关键路径定义
+      WORKDIR: ./api/GrabLatestRSS
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Verify go.sum Location  # 新增路径验证
+    - name: Verify go.sum Location
       run: |
         echo "Current directory: $(pwd)"
         ls -la ${{ env.WORKDIR }}
@@ -27,7 +27,7 @@ jobs:
       with:
         go-version: '1.22.5'
         cache: true
-        cache-dependency-path: ${{ env.WORKDIR }}/go.sum  # 精确指向目标文件
+        cache-dependency-path: ${{ env.WORKDIR }}/go.sum
 
     - name: Install dependencies
       working-directory: ${{ env.WORKDIR }}
@@ -45,8 +45,8 @@ jobs:
     - name: Run Crawler
       working-directory: ${{ env.WORKDIR }}
       env:
-        TENCENT_CLOUD_SECRET_ID: AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf
-        TENCENT_CLOUD_SECRET_KEY: whFbkiXBdtyqUvCGML7f3GH4qRr31lIb
+        TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
+        TENCENT_CLOUD_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
         TOKEN: ${{ secrets.TOKEN }}
         NAME: ${{ secrets.NAME }}
         REPOSITORY: ${{ secrets.REPOSITORY }}
