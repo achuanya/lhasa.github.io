@@ -2,36 +2,49 @@ name: ScheduledRssRawler
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *'  # 每6小时运行一次（UTC时间）
+  workflow_dispatch:        # 允许手动触发
 
 jobs:
-  build:
+  crawl:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai    # 设置时区
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # 使用最新版本
+      with:
+        path: 'src'  # 明确指定检出目录
 
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: '1.22.5'
+        cache: true       # 启用模块缓存
+        cache-dependency-path: 'src/api/GrabLatestRSS/go.sum'
 
     - name: Install dependencies
-      run: go mod tidy
-      working-directory: ./api/GrabLatestRSS
+      working-directory: ./src/api/GrabLatestRSS
+      run: |
+        go mod download
+        go mod verify
 
     - name: Build
-      run: go build -o main
-      working-directory: ./api/GrabLatestRSS
+      working-directory: ./src/api/GrabLatestRSS
+      env:
+        CGO_ENABLED: 0    # 禁用CGO
+      run: |
+        go build -v -ldflags="-s -w" -o rss-crawler
 
-    - name: Run Go program
+    - name: Run Crawler
+      working-directory: ./src/api/GrabLatestRSS
       env:
         TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
         TENCENT_CLOUD_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
         TOKEN: ${{ secrets.TOKEN }}
         NAME: ${{ secrets.NAME }}
         REPOSITORY: ${{ secrets.REPOSITORY }}
-      run: ./main
-      working-directory: ./api/GrabLatestRSS
+      run: |
+        ./rss-crawler 2>&1 | tee -a run.log  # 输出日志
+        [ -f error.log ] && exit 1           # 存在错误日志时失败
