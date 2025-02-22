@@ -25,7 +25,7 @@ const (
 	maxRetries     = 3						 // 最大重试次数
 	retryInterval  = 10 * time.Second		 // 最大间隔时间
 	maxConcurrency = 10						 // 并发控制
-	cosURL         = "https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/data/rss_data.json" // 腾讯云 COS 的 URL
+	cosURL         = "https://cos.lhasa.icu/data/rss_data.json" // 腾讯云 COS 的 URL
 )
 
 type Config struct {
