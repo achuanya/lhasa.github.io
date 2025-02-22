@@ -14,16 +14,16 @@ import (
 	"sort"
 	"sync"
 	"time"
-	"strings"
+	"golang.org/x/oauth2"
 	"github.com/google/go-github/v39/github"
 	"github.com/mmcdole/gofeed"
 	"github.com/tencentyun/cos-go-sdk-v5"
 )
 
 const (
-	maxRetries    = 3                // 最大重试次数
-	retryInterval = 10 * time.Second // 重试间隔时间
-	cosURL        = "https://cos.lhasa.icu" // 腾讯云 COS 自定义域名
+	maxRetries    = 3
+	retryInterval = 10 * time.Second
+	cosURL        = "https://cos.lhasa.icu"
 )
 
 type Config struct {
@@ -53,8 +53,8 @@ type Article struct {
 // 初始化并返回配置信息
 func initConfig() Config {
 	return Config{
-		SecretID:  os.Getenv("TENCENT_CLOUD_SECRET_ID"),
-		SecretKey: os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
+		SecretID:  os.Getenv("AKIDvuhN0UyOdgjhT2OWRFrFPM5NYXTHvNdf"),
+		SecretKey: os.Getenv("whFbkiXBdtyqUvCGML7f3GH4qRr31lIb"),
 		GithubToken:      os.Getenv("TOKEN"), // 从环境变量中获取 GitHub API 令牌
 		GithubName:       "achuanya",         // GitHub 用户名
 		GithubRepository: "lhasa.github.io",  // GitHub 仓库名
@@ -116,7 +116,7 @@ func getBeijingTime() time.Time {
 // 	logMessage(config, message, "data/error.log")
 // }
 
-// 记录信息到指定的文件
+// // 记录信息到指定的文件
 // func logMessage(config Config, message string, fileName string) {
 // 	u, err := url.Parse(cosURL)
 // 	client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
@@ -159,7 +159,6 @@ func getBeijingTime() time.Time {
 // 	fmt.Printf("Successfully updated %s in COS\n", fileName)
 // }
 
-// 记录错误信息到 error.log 文件
 func logError(config Config, message string) {
 	logMessage(config, message, "error.log")
 }
@@ -208,7 +207,6 @@ func logMessage(config Config, message string, fileName string) {
 		fmt.Printf("error updating %s in GitHub: %v\n", fileName, err)
 	}
 }
-
 
 // 从腾讯云 COS 获取 JSON 文件内容
 func fetchFileFromCOS(config Config, filePath string) (string, error) {
