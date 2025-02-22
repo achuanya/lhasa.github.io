@@ -25,7 +25,7 @@ const (
 	maxRetries     = 3						 // 最大重试次数
 	retryInterval  = 10 * time.Second		 // 最大间隔时间
 	maxConcurrency = 10						 // 并发控制
-	cosURL         = "https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/data/rss_data.json" // 腾讯云 COS 的 URL
+	cosURL         = "https://cos.Lhasa.icu/data/rss_data.json" // 腾讯云 COS 的 URL
 )
 
 type Config struct {
@@ -41,7 +41,6 @@ type Avatar struct {
 	Avatar string `json:"avatar"` // 头像 URL
 }
 
-// 爬虫抓取的数据结构
 type Article struct {
 	DomainName string `json:"domainName"` // 域名
 	Name       string `json:"name"`       // 博客名称
@@ -55,9 +54,9 @@ func initConfig() (*Config, error) {
 	config := &Config{
 		SecretID:  		  os.Getenv("TENCENT_CLOUD_SECRET_ID"),
 		SecretKey: 		  os.Getenv("TENCENT_CLOUD_SECRET_KEY"),
-		GithubToken:      os.Getenv("TOKEN"), 		// GitHub API 令牌
-		GithubName:       os.Getenv("NAME"),        // GitHub 用户名
-		GithubRepository: os.Getenv("REPOSITORY"),	// GitHub 仓库名
+		GithubToken:      os.Getenv("TOKEN"),
+		GithubName:       os.Getenv("NAME"),
+		GithubRepository: os.Getenv("REPOSITORY"),
 	}
 
 	// 验证
