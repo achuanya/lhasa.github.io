@@ -28,6 +28,14 @@ const (
 	cosURL         = "https://cos.lhasa.icu" // 腾讯云 COS 的 URL
 )
 
+type Config struct {
+	SecretID         string		 // 腾讯云 SecretID
+	SecretKey        string		 // 腾讯云 SecretKey
+	GithubToken      string		 // GitHub API 令牌
+	GithubName       string		 // GitHub 用户名
+	GithubRepository string		 // GitHub 仓库名
+}
+
 type Avatar struct {
 	Name   string `json:"name"`   // 用户名
 	Avatar string `json:"avatar"` // 头像 URL
