@@ -84,3 +84,5 @@
 
 [Sat Feb 22 21:22:2025] [Failed to parse RSS] https://www.loyhome.com/feed: Failed to detect feed type
 
+[Sat Feb 22 21:23:2025] [Get RSS error] https://www.laruence.com/feed: Attempt 3/3: Get "https://www.laruence.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
