@@ -350,7 +350,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				Link:       item.Link,
 				Date:       formatTime(published),
 				// Avatar:     avatars[name],
-				Avatar:     avatarURL,
+				Avatar:     avatars[name],
 			})
 			mu.Unlock()
 		}(feedURL)
