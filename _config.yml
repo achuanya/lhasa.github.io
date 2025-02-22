@@ -12,6 +12,9 @@ plugins:
   - jekyll-paginate
   - jemoji
 
+external_data:
+  rss_data: "https://cos.lhasa.icu/data/rss_data.json"
+
 url: "https://lhasa.icu"
 baseurl: ""
 
