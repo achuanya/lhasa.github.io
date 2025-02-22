@@ -235,7 +235,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 	// 创建 RSS 解析器
 	fp := gofeed.NewParser()
 	httpClient := &http.Client{
-		Timeout: 10 * time.Second
+		Timeout: 10 * time.Second,
 	}
 
 	for _, feedURL := range feeds {
