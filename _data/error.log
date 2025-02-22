@@ -76,3 +76,5 @@
 
 [Sat Feb 22 21:22:2025] [Get RSS error] https://www.laruence.com/feed: Attempt 1/3: Get "https://www.laruence.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
+[Sat Feb 22 21:22:2025] [Parse RSS error] https://tcxx.info/feed: Attempt 2/3: Failed to detect feed type
+
