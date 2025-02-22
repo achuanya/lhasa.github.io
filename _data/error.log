@@ -38,3 +38,5 @@
 [2025-02-23 01:05:24] Failed to parse RSS: https://wangpei.net/feed (Failed to detect feed type)
 
 [2025-02-23 01:05:25] Failed to parse RSS: https://www.loyhome.com/feed (Failed to detect feed type)
+
+[2025-02-23 01:05:57] Save to COS error: PUT https://cos.lhasa.icu/data/rss_data.json: 403 SignatureDoesNotMatch(Message: The Signature you specified is invalid., RequestId: NjdiYTAzZWJfNTIyOTY4MDlfNDU4Nl8yZmQ2OTdi, TraceId: OGVmYzZiMmQzYjA2OWNhODk0NTRkMTBiOWVmMDAxODc0OWRkZjk0ZDM1NmI1M2E2MTRlY2MzZDhmNmI5MWI1OTQyYWVlY2QwZTk2MDVmZDQ3MmI2Y2I4ZmI5ZmM4ODFjYjI1YzQxNmFjNWQwYTBhMGJiZjM5OWVkMTYzMzE0ZWU=)
