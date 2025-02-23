@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sort"
 	"regexp"
 	"strconv"
 	"strings"
@@ -406,7 +407,7 @@ func (p *RSSProcessor) processFeed(ctx context.Context, feedURL string) (*Articl
 }
 
 func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error {
-	// 添加十年之约入口
+	// 十年之约
 	articles = append(articles, Article{
 		DomainName: "https://foreverblog.cn",
 		Name:       "十年之约",
@@ -416,16 +417,19 @@ func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error 
 		Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
 	})
 
-	// 按日期倒序排序（最新在前）
+	// 按日期倒序排序 最新在前
 	sort.Slice(articles, func(i, j int) bool {
-		t1, _ := time.Parse("January 2, 2006", articles[i].Date)
-		t2, _ := time.Parse("January 2, 2006", articles[j].Date)
+		t1, err1 := time.Parse("January 2, 2006", articles[i].Date)
+		t2, err2 := time.Parse("January 2, 2006", articles[j].Date)
 
-		// 处理解析错误（错误时间视为更早）
-		if err1 != nil { t1 = time.Time{} }
-		if err2 != nil { t2 = time.Time{} }
-
-		return t1.After(t2) // 降序排列
+		// 处理解析错误 错误时间视为更早
+        if err1 != nil {
+            t1 = time.Time{}
+        }
+        if err2 != nil {
+            t2 = time.Time{}
+        }
+        return t1.After(t2)
 	})
 
 	jsonData, err := json.Marshal(articles)
