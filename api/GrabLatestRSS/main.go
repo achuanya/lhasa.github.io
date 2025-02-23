@@ -121,20 +121,34 @@ func formatTime(t time.Time) string {
 	return t.Format("January 2, 2006")
 }
 
-// 从 URL 中提取域名，并添加 https:// 前缀
+// 提取域名
 func extractDomain(urlStr string) (string, error) {
+	// u, err := url.Parse(urlStr)
+	// if err != nil {
+	// 	return "", err
+	// }
+	// domain := u.Hostname()
+	// protocol := "https://"
+	// if u.Scheme != "" {
+	// 	protocol = u.Scheme + "://"
+	// }
+	// fullURL := protocol + domain
+
+	// return fullURL, nil
+
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
 	}
-	domain := u.Hostname()
-	protocol := "https://"
-	if u.Scheme != "" {
-		protocol = u.Scheme + "://"
+	
+	// 自动补全协议头
+	if u.Scheme == "" {
+		u.Scheme = "https"
 	}
-	fullURL := protocol + domain
+	
+	// 返回标准化域名（包含协议）
+	return fmt.Sprintf("%s://%s", u.Scheme, u.Hostname()), nil
 
-	return fullURL, nil
 }
 
 // 获取当前的北京时间
@@ -277,7 +291,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				feed       *gofeed.Feed
 			)
 
-			// 重试机制获取
+			// 重试机制获取 RSS 数据
 			if err := withRetry(context.Background(), func() error {
 				resp, err := httpClient.Get(url)
 				if err != nil {
@@ -293,7 +307,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 				return
 			}
 
-			// 重试机制解析
+			// 重试机制解析 RSS 数据
 			if err := withRetry(context.Background(), func() error {
 				f, err := fp.ParseString(bodyString)
 				if err != nil {
