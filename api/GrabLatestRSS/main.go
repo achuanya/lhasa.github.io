@@ -501,7 +501,7 @@ func logWorker() {
 			// if len(msgs) > 0 {
 				logToGithub(msgs, fileName)
 				// delete(batch, fileName)
-			}
+			// }
 		}
 	}
 
