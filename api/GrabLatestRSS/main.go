@@ -477,16 +477,12 @@ func extractDomain(urlStr string) (string, error) {
 //      日志系统
 // ========================
 func logAsync(level, message, fileName string) {
-	shutdownWG.Add(1)
-	go func() {
-        defer shutdownWG.Done() // 确保协程退出时释放
-		logChan <- logMessage{level, message, fileName}
-		// logChan <- logMessage{
-		// 	level:    level,
-		// 	message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
-		// 	fileName: fileName,
-		// }
-    }()
+    shutdownWG.Add(1) // 每个日志消息 +1
+    logChan <- logMessage{
+        level:    level,
+        message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
+        fileName: fileName,
+    }
 }
 
 func logWorker() {
@@ -495,10 +491,12 @@ func logWorker() {
 	defer ticker.Stop()
 
 	flush := func() {
-		// 最终刷新剩余日志
 		for fileName, msgs := range batch {
-			logToGithub(msgs, fileName)  // 确保传递两个参数
-			delete(batch, fileName)      // 清理已处理的条目
+			// 发送日志到 GitHub
+			logToGithub(msgs, fileName)
+			// 释放计数器（每条日志对应一次 Done）
+			shutdownWG.Add(-len(msgs))
+			delete(batch, fileName)
 		}
 	}
 
@@ -510,10 +508,10 @@ func logWorker() {
 				return
 			}
 			batch[msg.fileName] = append(batch[msg.fileName], msg.message)
-			if len(batch[msg.fileName]) >= 50 {
-				logToGithub(batch[msg.fileName], msg.fileName)
-				delete(batch, msg.fileName)
-			}
+            // 批量达到 50 条时立即刷新
+            if len(batch[msg.fileName]) >= 50 {
+                flush()
+            }
 		case <-ticker.C:
 			flush()
 		}
@@ -521,8 +519,6 @@ func logWorker() {
 }
 
 func logToGithub(messages []string, fileName string) {
-    defer shutdownWG.Done()
-
     config, err := initConfig()
     if err != nil || config.GithubToken == "" {
         return
