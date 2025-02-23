@@ -205,7 +205,7 @@ func (p *RSSProcessor) Run(ctx context.Context) error {
 	if err != nil {
         return err
     }
-	
+
     articles, errs := p.fetchAllRSS(ctx, feeds)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
@@ -276,14 +276,11 @@ func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
 }
 
 func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Article, []error) {
-	var (
+    var (
         articles []Article
         errs     []error
         mutex    sync.Mutex
     )
-	
-	ctx, cancel := context.WithCancel(ctx)
-    defer cancel()
 
     feedChan := make(chan string, len(feeds))
     var wg sync.WaitGroup
@@ -293,24 +290,25 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
         wg.Add(1)
         go func() {
             defer wg.Done()
-            for {
-                select {
-                case url, ok := <-feedChan:
-                    if !ok { return }
-                    // 处理逻辑
-                case <-ctx.Done():
-                    return
+            for url := range feedChan {
+                article, err := p.processFeed(ctx, url)
+                
+                mutex.Lock()
+                if err != nil {
+                    errs = append(errs, err)
+                } else {
+                    articles = append(articles, *article)
                 }
+                mutex.Unlock()
             }
         }()
     }
 
     // 分发任务
-    go func() {
-        for _, feed := range feeds {
-            feedChan <- feed
-        }
-    }()
+    for _, feed := range feeds {
+        feedChan <- feed
+    }
+    close(feedChan)
 
     wg.Wait()
     return articles, errs
@@ -554,10 +552,10 @@ func logToGithub(messages []string, fileName string) {
 	}
 
 	_, _, err = client.Repositories.UpdateFile(ctx,
-		config.GithubName, config.GithubRepository, filePath, &opts)
+		config.GithubName, config.GithubRepository, fileName, &opts)
 
 	if err != nil {
-		fmt.Printf("⚠️ 日志写入失败: %v\n", err)
+		fmt.Printf("日志写入失败: %v\n", err)
 	}
 }
 
