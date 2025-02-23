@@ -28,6 +28,18 @@ const (
 	cosURL         = "https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/data/rss_data.json" // 腾讯云 COS URL
 )
 
+// 全局日志缓存
+var (
+	errorLogCache []string            // 错误日志缓存
+	errorLogLock  sync.Mutex          // 缓存锁
+	logCache      map[string][]string // 其他日志缓存（按文件名分类）
+	logCacheLock  sync.Mutex          // 日志缓存锁
+)
+
+func init() {
+	logCache = make(map[string][]string)
+}
+
 type Config struct {
 	SecretID         string		 // 腾讯云 SecretID
 	SecretKey        string		 // 腾讯云 SecretKey
@@ -147,51 +159,105 @@ func getBeijingTime() time.Time {
 	return time.Now().In(time.FixedZone("CST", 8*3600))
 }
 
+// 正常
 // 日志
-func logMessage(config *Config, message, fileName string) {
+// func logMessage(config *Config, message, fileName string) {
+// 	ctx := context.Background()
+// 	client := github.NewClient(oauth2.NewClient(
+// 		ctx, oauth2.StaticTokenSource(
+// 			&oauth2.Token{AccessToken: config.GithubToken},
+// 	)))
+
+// 	filePath := "_data/" + fileName
+// 	content := []byte(fmt.Sprintf("[%s] %s\n", 
+// 	getBeijingTime().Format("2006-01-02 15:04:05"), message))
+
+// 	err := withRetry(ctx, func() error {
+// 		file, _, _, err := client.Repositories.GetContents(ctx, 
+// 			config.GithubName, config.GithubRepository, filePath, nil)
+// 			// 文件不存在则创建
+// 			if err != nil {
+// 				_, _, err = client.Repositories.CreateFile(ctx, 
+// 					config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+// 						Message: github.String("Create " + fileName),
+// 						Content: content,
+// 						Branch:  github.String("master"),
+// 					})
+// 				return err
+// 			}
+
+// 			// 文件存在则追加内容
+// 			decoded, _ := file.GetContent()
+// 			newContent := append([]byte(decoded+"\n"), content...)
+// 			_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+// 				Message: github.String("Update " + fileName),
+// 				Content: newContent,
+// 				SHA:     file.SHA,
+// 				Branch:  github.String("master"),
+// 			})
+// 			return err
+// 		})
+
+// 	if err != nil {
+// 		fmt.Printf("Log error: %v\n", err)
+// 	}
+// }
+
+// 统一日志写入
+func logMessages(config *Config, messages []string, fileName string) {
 	ctx := context.Background()
 	client := github.NewClient(oauth2.NewClient(
 		ctx, oauth2.StaticTokenSource(
 			&oauth2.Token{AccessToken: config.GithubToken},
-	)))
+		)))
 
 	filePath := "_data/" + fileName
-	content := []byte(fmt.Sprintf("[%s] %s\n", 
-	getBeijingTime().Format("2006-01-02 15:04:05"), message))
+	content := []byte(strings.Join(messages, "\n") + "\n")
 
 	err := withRetry(ctx, func() error {
-		file, _, _, err := client.Repositories.GetContents(ctx, 
+		file, _, _, err := client.Repositories.GetContents(ctx,
 			config.GithubName, config.GithubRepository, filePath, nil)
-			// 文件不存在则创建
-			if err != nil {
-				_, _, err = client.Repositories.CreateFile(ctx, 
-					config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-						Message: github.String("Create " + fileName),
-						Content: content,
-						Branch:  github.String("master"),
-					})
-				return err
-			}
+		
+		// 文件不存在则创建
+		if err != nil {
+			_, _, err = client.Repositories.CreateFile(ctx,
+				config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+					Message: github.String("Batch update " + fileName),
+					Content: content,
+					Branch:  github.String("master"),
+				})
+			return err
+		}
 
-			// 文件存在则追加内容
-			decoded, _ := file.GetContent()
-			newContent := append([]byte(decoded+"\n"), content...)
-			_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
-				Message: github.String("Update " + fileName),
+		// 文件存在则追加内容
+		decoded, _ := file.GetContent()
+		newContent := append([]byte(decoded+"\n"), content...)
+		_, _, err = client.Repositories.UpdateFile(ctx,
+			config.GithubName, config.GithubRepository, filePath, &github.RepositoryContentFileOptions{
+				Message: github.String("Batch update " + fileName),
 				Content: newContent,
 				SHA:     file.SHA,
 				Branch:  github.String("master"),
 			})
-			return err
-		})
+		return err
+	})
 
 	if err != nil {
-		fmt.Printf("Log error: %v\n", err)
+		fmt.Printf("Final log write error: %v\n", err)
 	}
 }
 
+// 正常
+// func logError(config *Config, message string) {
+// 	logMessage(config, message, "error.log")
+// }
+
+// 错误日志记录（缓存模式）
 func logError(config *Config, message string) {
-	logMessage(config, message, "error.log")
+	errorLogLock.Lock()
+	defer errorLogLock.Unlock()
+	errorLogCache = append(errorLogCache, fmt.Sprintf("[%s] %s",
+		getBeijingTime().Format("2006-01-02 15:04:05"), message))
 }
 
 // COS客户端初始化
@@ -203,28 +269,43 @@ func newCOSClient(config *Config) *cos.Client {
 			SecretKey: config.SecretKey,
 		},
 	})
+	logError(config, fmt.Sprintf("COS client initialized for bucket: %s", u.Host))
+	return client
 }
 
 // 从腾讯云 COS 获取 JSON 文件
 func fetchFileFromCOS(config *Config, filePath string) (string, error) {
 	client := newCOSClient(config)
 	var content string
+	var lastErr error
 
 	err := withRetry(context.Background(), func() error {
 		// 获取文件内容
 		resp, err := client.Object.Get(context.Background(), filePath, nil)
 		if err != nil {
+			lastErr = fmt.Errorf("COS GET %s: %w", filePath, err)
 			return err
 		}
 		defer resp.Body.Close()
 
 		// 读取文件内容
 		data, _ := io.ReadAll(resp.Body)
+		if err != nil {
+			lastErr = fmt.Errorf("Read body %s: %w", filePath, err)
+			return lastErr
+		}
 		content = string(data)
 		return nil
 	})
-
-	return content, err
+	if err != nil {
+		logError(config, fmt.Sprintf("Failed to fetch %s after %d retries: %v",
+			filePath, maxRetries, lastErr))
+		return "", err
+	}
+	
+	logError(config, fmt.Sprintf("Successfully fetched %s (%d bytes)", 
+		filePath, len(content)))
+	return content, nil
 }
 
 // 从腾讯云 COS 获取头像
@@ -371,8 +452,6 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 
 // 将爬虫抓取的数据保存到腾讯云 COS
 func saveToCOS(config *Config, data []Article) error {
-	client := newCOSClient(config)
-
 	// 十年之约
 	data = append(data, Article{
 		DomainName: "https://foreverblog.cn",
@@ -385,14 +464,44 @@ func saveToCOS(config *Config, data []Article) error {
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {
+		logError(config, fmt.Sprintf("JSON marshal error: %v", err))
 		return fmt.Errorf("marshal error: %v", err)
 	}
 
-	// 上传文件到 COS
-	return withRetry(context.Background(), func() error {
-		_, err := client.Object.Put(context.Background(), "data/rss_data.json", bytes.NewReader(jsonData), nil)
+	client := newCOSClient(config)
+
+	// 重试上传
+	var lastErr error
+	err = withRetry(context.Background(), func() error {
+		startTime := time.Now()
+		_, err := client.Object.Put(
+			context.Background(),
+			"data/rss_data.json",
+			bytes.NewReader(jsonData),
+			nil,
+		)
+		
+		// 记录单次上传结果
+		if err != nil {
+			lastErr = fmt.Errorf("COS PUT error: %w", err)
+			logError(config, fmt.Sprintf("Upload attempt failed: %v", lastErr))
+		} else {
+			logError(config, fmt.Sprintf("Upload succeeded in %v", time.Since(startTime)))
+		}
 		return err
 	})
+
+	// 最终结果处理
+	if err != nil {
+		finalErr := fmt.Errorf("failed after %d retries: %w", maxRetries, lastErr)
+		logError(config, fmt.Sprintf("Final upload failure: %v", finalErr))
+		return finalErr
+	}
+
+	// 成功日志（记录数据量）
+	logError(config, fmt.Sprintf("Successfully uploaded %d articles (%d bytes)", 
+		len(data), len(jsonData)))
+	return nil
 }
 
 // 从腾讯云 COS 获取 RSS 文件
@@ -411,29 +520,66 @@ func readFeedsFromCOS(config *Config) ([]string, error) {
 }
 
 func main() {
-	config, err := initConfig()
+	// 最终日志写入处理
+	defer func() {
+		// 仅当存在错误日志时写入
+		if len(errorLogCache) > 0 {
+			logMessages(config, errorLogCache, "error.log")
+		}
+	}()
 
+	// 初始化配置
+	config, err := initConfig()
 	if err != nil {
+		errorLogCache = append(errorLogCache, 
+			fmt.Sprintf("[INIT ERROR] %v", err))
 		fmt.Printf("Configuration error: %v\n", err)
-		os.Exit(1)
+		return
 	}
 
+	// 从COS读取RSS订阅列表
 	feeds, err := readFeedsFromCOS(config)
 	if err != nil {
-		logError(config, fmt.Sprintf("Read feeds error: %v", err))
+		logError(config, fmt.Sprintf("读取订阅列表失败: %v", err))
+		return
+	}
+	logError(config, fmt.Sprintf("成功加载 %d 个订阅源", len(feeds)))
+
+
+	// 抓取RSS数据
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
+	
+	var articles []Article
+	done := make(chan struct{})
+	go func() {
+		articles, err = fetchRSS(config, feeds)
+		close(done)
+	}()
+
+	select {
+	case <-done:
+		// 正常完成
+	case <-ctx.Done():
+		logError(config, "RSS抓取超时，已终止")
 		return
 	}
 
-	articles, err := fetchRSS(config, feeds)
 	if err != nil {
-		logError(config, fmt.Sprintf("Fetch RSS error: %v", err))
+		logError(config, fmt.Sprintf("抓取RSS失败: %v", err))
 		return
 	}
+	logError(config, fmt.Sprintf("成功抓取 %d 篇文章", len(articles)))
 
+	// 保存到COS
+	startSave := time.Now()
 	if err := saveToCOS(config, articles); err != nil {
-		logError(config, fmt.Sprintf("Save to COS error: %v", err))
+		logError(config, fmt.Sprintf("保存到COS失败: %v", err))
 		return
 	}
+	logError(config, fmt.Sprintf("数据保存完成，耗时 %v", time.Since(startSave)))
 
+	// 爬虫报告
+	logError(config, fmt.Sprintf("流程完成，共处理 %d 篇文章", len(articles)))
 	fmt.Println("Stop writing code and go ride a road bike now!")
 }
