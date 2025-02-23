@@ -269,6 +269,7 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
 		errMu    sync.Mutex
 		wg       sync.WaitGroup
 		feedChan = make(chan string, len(feeds))
+	)
 	
 	// 创建工作池
 	for i := 0; i < p.config.MaxConcurrency; i++ {
