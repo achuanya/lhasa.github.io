@@ -122,8 +122,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// 等待日志写入完成
-	shutdownWG.Wait()
+	close(logChan)		// 关闭日志通道
+	shutdownWG.Wait()	// 等待日志写入完成
 	fmt.Println("任务完成，去享受骑行吧！")
 }
 
@@ -262,6 +262,9 @@ func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
 }
 
 func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Article, []error) {
+	ctx, cancel := context.WithCancel(ctx)
+    defer cancel() // 确保上下文取消
+
 	var (
 		articles []Article
 		errs     []error
@@ -293,7 +296,7 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
 		}()
 	}
 
-	// 分发任务
+	// 分发任务后立即关闭通道
 	for _, feed := range feeds {
 		select {
 		case feedChan <- feed:
@@ -303,7 +306,6 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
 		}
 	}
 	close(feedChan)
-	wg.Wait()
 
 	// 排序结果
 	sort.Slice(articles, func(i, j int) bool {
@@ -312,6 +314,8 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
 		return ti.After(tj)
 	})
 
+	// 等待工作池退出
+	wg.Wait()
 	return articles, errs
 }
 
@@ -492,10 +496,11 @@ func logWorker() {
 	defer ticker.Stop()
 
 	flush := func() {
+		// 最终刷新剩余日志
 		for fileName, msgs := range batch {
-			if len(msgs) > 0 {
+			// if len(msgs) > 0 {
 				logToGithub(msgs, fileName)
-				delete(batch, fileName)
+				// delete(batch, fileName)
 			}
 		}
 	}
