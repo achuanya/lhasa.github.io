@@ -123,19 +123,6 @@ func formatTime(t time.Time) string {
 
 // 提取域名
 func extractDomain(urlStr string) (string, error) {
-	// u, err := url.Parse(urlStr)
-	// if err != nil {
-	// 	return "", err
-	// }
-	// domain := u.Hostname()
-	// protocol := "https://"
-	// if u.Scheme != "" {
-	// 	protocol = u.Scheme + "://"
-	// }
-	// fullURL := protocol + domain
-
-	// return fullURL, nil
-
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return "", err
