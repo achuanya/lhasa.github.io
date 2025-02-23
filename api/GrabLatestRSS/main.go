@@ -264,12 +264,12 @@ func logError(config *Config, message string) {
 // COS客户端初始化
 func newCOSClient(config *Config) *cos.Client {
 	u, _ := url.Parse(cosURL)
-	return cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
-		Transport: &cos.AuthorizationTransport{
-			SecretID:  config.SecretID,
-			SecretKey: config.SecretKey,
-		},
-	})
+    client := cos.NewClient(&cos.BaseURL{BucketURL: u}, &http.Client{
+        Transport: &cos.AuthorizationTransport{
+            SecretID:  config.SecretID,
+            SecretKey: config.SecretKey,
+        },
+    })
 	logError(config, fmt.Sprintf("COS client initialized for bucket: %s", u.Host))
 	return client
 }
@@ -522,21 +522,15 @@ func readFeedsFromCOS(config *Config) ([]string, error) {
 
 func main() {
 	var config *Config
-	// 最终日志写入处理
     defer func() {
-        if len(errorLogCache) > 0 {
-            // 传递当前config到闭包
-            if config != nil {
-                logMessages(config, errorLogCache, "error.log")
-            } else {
-                fmt.Println("无法写入日志：配置未初始化")
-            }
+        if len(errorLogCache) > 0 && config != nil {
+            logMessages(config, errorLogCache, "error.log")
         }
     }()
 
 	// 初始化配置
-	var err error
-	config, err := initConfig()
+    var err error
+    config, err = initConfig()
     if err != nil {
         errorLogCache = append(errorLogCache, fmt.Sprintf("配置初始化失败: %v", err))
         fmt.Println(err)
@@ -550,7 +544,6 @@ func main() {
 		return
 	}
 	logError(config, fmt.Sprintf("成功加载 %d 个订阅源", len(feeds)))
-
 
 	// 抓取RSS数据
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
