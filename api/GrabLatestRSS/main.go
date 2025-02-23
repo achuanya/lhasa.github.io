@@ -492,10 +492,9 @@ func logWorker() {
 
 	flush := func() {
 		// 最终刷新剩余日志
-		for _, msgs := range batch {
-			for _, msgs := range batch {
-				logToGithub(msgs, fileName)
-			}
+		for fileName, msgs := range batch {
+			logToGithub(msgs, fileName)  // 确保传递两个参数
+			delete(batch, fileName)      // 清理已处理的条目
 		}
 	}
 
