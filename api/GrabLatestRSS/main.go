@@ -229,28 +229,47 @@ func fetchFileFromCOS(config *Config, filePath string) (string, error) {
 
 // 从腾讯云 COS 获取头像
 func loadAvatarsFromCOS(config *Config) (map[string]string, error) {
+	// content, err := fetchFileFromCOS(config, "data/avatar_data.json")
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// var avatars []Avatar
+	// if err := json.Unmarshal([]byte(content), &avatars); err != nil {
+	// 	return nil, err
+	// }
+
+	// // 将数据转换为以 domainName 为键的 map
+	// avatarMap := make(map[string]string)
+	// // for _, a := range avatars {
+	// // 	avatarMap[a.Name] = a.Avatar
+	// // }
+	// for _, a := range avatarData {
+	// 	// 解析标准化域名作为键
+	// 	if domain, err := extractDomain(a.DomainName); err == nil {
+	// 		avatarMap[domain] = a.Avatar
+	// 	}
+	// }
+
+	// return avatarMap, nil
+
 	content, err := fetchFileFromCOS(config, "data/avatar_data.json")
 	if err != nil {
 		return nil, err
 	}
 
-	var avatars []Avatar
-	if err := json.Unmarshal([]byte(content), &avatars); err != nil {
+	var avatarData []AvatarData
+	if err := json.Unmarshal([]byte(content), &avatarData); err != nil {
 		return nil, err
 	}
 
-	// 将数据转换为以 domainName 为键的 map
 	avatarMap := make(map[string]string)
-	// for _, a := range avatars {
-	// 	avatarMap[a.Name] = a.Avatar
-	// }
 	for _, a := range avatarData {
 		// 解析标准化域名作为键
 		if domain, err := extractDomain(a.DomainName); err == nil {
 			avatarMap[domain] = a.Avatar
 		}
 	}
-
 	return avatarMap, nil
 }
 
