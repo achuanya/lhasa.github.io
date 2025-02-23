@@ -11,7 +11,6 @@ import (
 	"net/url"
 	"os"
 	"regexp"
-	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -201,8 +200,12 @@ func (p *RSSProcessor) Close() {
 }
 
 func (p *RSSProcessor) Run(ctx context.Context) error {
-    // 所有网络操作添加 ctx 控制
+    // 所有网络操作添加 ctx 控制，只调用一次获取feeds
     feeds, err := p.getFeeds(ctx)
+	if err != nil {
+        return err
+    }
+	
     articles, errs := p.fetchAllRSS(ctx, feeds)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
@@ -214,13 +217,13 @@ func (p *RSSProcessor) Run(ctx context.Context) error {
 	}
 
 	// 获取订阅列表
-	feeds, err := p.getFeeds(ctx)
+	feeds, err = p.getFeeds(ctx)
 	if err != nil {
 		return fmt.Errorf("获取订阅列表失败: %w", err)
 	}
 
 	// 并发抓取数据
-	articles, errs := p.fetchAllRSS(ctx, feeds)
+	articles, errs = p.fetchAllRSS(ctx, feeds)
 	if len(errs) > 0 {
 		logAsync("WARN", fmt.Sprintf("共发生 %d 个错误", len(errs)), "warnings.log")
 	}
@@ -273,7 +276,13 @@ func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
 }
 
 func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Article, []error) {
-    ctx, cancel := context.WithCancel(ctx)
+	var (
+        articles []Article
+        errs     []error
+        mutex    sync.Mutex
+    )
+	
+	ctx, cancel := context.WithCancel(ctx)
     defer cancel()
 
     feedChan := make(chan string, len(feeds))
@@ -298,13 +307,8 @@ func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Artic
 
     // 分发任务
     go func() {
-        defer close(feedChan) // 确保通道关闭
         for _, feed := range feeds {
-            select {
-            case feedChan <- feed:
-            case <-ctx.Done():
-                return
-            }
+            feedChan <- feed
         }
     }()
 
@@ -490,8 +494,8 @@ func logWorker() {
 
 	flush := func() {
 		// 最终刷新剩余日志
-		for fileName, msgs := range batch {
-			for fileName, msgs := range batch {
+		for _, msgs := range batch {
+			for _, msgs := range batch {
 				logToGithub(msgs, fileName)
 			}
 		}
