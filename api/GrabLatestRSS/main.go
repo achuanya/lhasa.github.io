@@ -474,15 +474,19 @@ func extractDomain(urlStr string) (string, error) {
 }
 
 // ========================
-//      日志系统实现
+//      日志系统
 // ========================
 func logAsync(level, message, fileName string) {
 	shutdownWG.Add(1)
-	logChan <- logMessage{
-		level:    level,
-		message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
-		fileName: fileName,
-	}
+	go func() {
+        defer shutdownWG.Done() // 确保协程退出时释放
+		logChan <- logMessage{level, message, fileName}
+		// logChan <- logMessage{
+		// 	level:    level,
+		// 	message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
+		// 	fileName: fileName,
+		// }
+    }()
 }
 
 func logWorker() {
@@ -517,45 +521,54 @@ func logWorker() {
 }
 
 func logToGithub(messages []string, fileName string) {
-	defer shutdownWG.Done()
+    defer shutdownWG.Done()
 
-	config, err := initConfig()
-	if err != nil || config.GithubToken == "" {
-		return
-	}
+    config, err := initConfig()
+    if err != nil || config.GithubToken == "" {
+        return
+    }
 
-	ctx := context.Background()
-	client := github.NewClient(oauth2.NewClient(ctx,
-		oauth2.StaticTokenSource(&oauth2.Token{AccessToken: config.GithubToken})))
+    ctx := context.Background()
+    client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{AccessToken: config.GithubToken})))
+    filePath := "_data/" + fileName
+    content := strings.Join(messages, "\n") + "\n"
 
-	filePath := "_data/" + fileName
-	content := strings.Join(messages, "\n") + "\n"
+    // 重试逻辑（最多3次）
+    maxRetries := 3
+    for retry := 0; retry < maxRetries; retry++ {
+        file, _, _, _ := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
 
-	// 获取现有内容
-	var opts github.RepositoryContentFileOptions
-	file, _, _, err := client.Repositories.GetContents(ctx,
-		config.GithubName, config.GithubRepository, filePath, nil)
+        var opts github.RepositoryContentFileOptions
+        if file == nil {
+            opts = github.RepositoryContentFileOptions{
+                Message: github.String("创建日志文件: " + fileName),
+                Content: []byte(content),
+            }
+        } else {
+            currentContent, _ := file.GetContent()
+            opts = github.RepositoryContentFileOptions{
+                Message: github.String("更新日志: " + fileName),
+                Content: []byte(currentContent + "\n" + content),
+                SHA:     file.SHA,
+            }
+        }
 
-	if err == nil && file != nil {
-		decoded, _ := file.GetContent()
-		opts = github.RepositoryContentFileOptions{
-			Message: github.String("日志追加: " + fileName),
-			Content: []byte(decoded + "\n" + content),
-			SHA:     file.SHA,
-		}
-	} else {
-		opts = github.RepositoryContentFileOptions{
-			Message: github.String("创建日志文件: " + fileName),
-			Content: []byte(content),
-		}
-	}
+        _, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &opts)
+        if err == nil {
+            return // 成功则退出
+        }
 
-	_, _, err = client.Repositories.UpdateFile(ctx,
-		config.GithubName, config.GithubRepository, fileName, &opts)
+        // 处理 409 冲突错误
+        if githubErr, ok := err.(*github.ErrorResponse); ok && githubErr.Response.StatusCode == http.StatusConflict {
+            time.Sleep(500 * time.Millisecond) // 等待后重试
+            continue
+        }
 
-	if err != nil {
-		fmt.Printf("日志写入失败: %v\n", err)
-	}
+        // 其他错误直接退出
+        fmt.Printf("日志写入失败: %v\n", err)
+        return
+    }
+    fmt.Printf("经过 %d 次重试仍失败: %v\n", maxRetries, err)
 }
 
 // ========================
