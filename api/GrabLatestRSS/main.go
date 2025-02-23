@@ -223,7 +223,7 @@ func fetchFileFromCOS(config *Config, filePath string) (string, error) {
 	return content, err
 }
 
-// 从腾讯云 COS 获取头像配置
+// 从腾讯云 COS 获取头像
 func loadAvatarsFromCOS(config *Config) (map[string]string, error) {
 	content, err := fetchFileFromCOS(config, "data/avatar_data.json")
 	if err != nil {
@@ -237,8 +237,14 @@ func loadAvatarsFromCOS(config *Config) (map[string]string, error) {
 
 	// 将数据转换为以 domainName 为键的 map
 	avatarMap := make(map[string]string)
-	for _, a := range avatars {
-		avatarMap[a.Name] = a.Avatar
+	// for _, a := range avatars {
+	// 	avatarMap[a.Name] = a.Avatar
+	// }
+	for _, a := range avatarData {
+		// 解析标准化域名作为键
+		if domain, err := extractDomain(a.DomainName); err == nil {
+			avatarMap[domain] = a.Avatar
+		}
 	}
 
 	return avatarMap, nil
@@ -253,7 +259,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 		sem      = make(chan struct{}, maxConcurrency)
 	)
 
-	// 获取头像配置
+	// 获取头像配置（使用标准化域名作为键）
 	avatars, err := loadAvatarsFromCOS(config)
 	if err != nil {
 		logError(config, fmt.Sprintf("Load avatars error: %v", err))
@@ -262,9 +268,7 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 
 	// 创建 RSS 解析器
 	fp := gofeed.NewParser()
-	httpClient := &http.Client{
-		Timeout: 10 * time.Second,
-	}
+	httpClient := &http.Client{Timeout: 10 * time.Second,}
 
 	for _, feedURL := range feeds {
 		wg.Add(1)
@@ -319,7 +323,12 @@ func fetchRSS(config *Config, feeds []string) ([]Article, error) {
 			}
 
 			name := feed.Title
-			avatarURL := avatars[name]
+			// avatarURL := avatars[name]
+			// if avatarURL == "" {
+			// 	avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
+			// }
+
+			avatarURL := avatars[domainName]
 			if avatarURL == "" {
 				avatarURL = "https://cos.lhasa.icu/LinksAvatar/default.png"
 			}
