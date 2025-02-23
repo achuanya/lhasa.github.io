@@ -124,11 +124,28 @@ func main() {
 		logAsync("ERROR", err.Error(), "error.log")
 	}
 
-	close(logChan)		// 关闭日志通道
-	shutdownWG.Wait()	// 等待剩余日志写入
+    // 同步写入最终日志
+    logSync("INFO", "程序正常退出", "system.log")
 
-	// 确认资源释放
-	logAsync("INFO", "程序正常退出", "system.log")
+    // 安全关闭日志通道
+    logChanMu.Lock()
+    logChanClosed = true
+    close(logChan)
+    logChanMu.Unlock()
+
+    // 带超时的等待
+    done := make(chan struct{})
+    go func() {
+        shutdownWG.Wait()
+        close(done)
+    }()
+
+    select {
+    case <-done:
+        fmt.Println("日志处理完成")
+    case <-time.After(30 * time.Second):
+        fmt.Println("警告：日志处理超时")
+    }
 
 	fmt.Println("任务完成，去享受骑行吧！")
 }
@@ -560,8 +577,16 @@ func logToGithub(messages []string, fileName string) {
             continue
         }
 
-        // 其他错误直接退出
-        fmt.Printf("日志写入失败: %v\n", err)
+		if err != nil {
+			errorMsg := fmt.Sprintf("日志写入失败: %v", err)
+			fmt.Println(errorMsg) // 控制台输出
+			
+			// 尝试将错误写入本地文件
+			if f, err := os.OpenFile("fallback_error.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); err == nil {
+				defer f.Close()
+				f.WriteString(errorMsg + "\n")
+			}
+		}
         return
     }
     fmt.Printf("经过 %d 次重试仍失败: %v\n", maxRetries, err)
