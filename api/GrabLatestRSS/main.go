@@ -521,22 +521,27 @@ func readFeedsFromCOS(config *Config) ([]string, error) {
 }
 
 func main() {
+	var config *Config
 	// 最终日志写入处理
-	defer func() {
-		// 仅当存在错误日志时写入
-		if len(errorLogCache) > 0 {
-			logMessages(config, errorLogCache, "error.log")
-		}
-	}()
+    defer func() {
+        if len(errorLogCache) > 0 {
+            // 传递当前config到闭包
+            if config != nil {
+                logMessages(config, errorLogCache, "error.log")
+            } else {
+                fmt.Println("无法写入日志：配置未初始化")
+            }
+        }
+    }()
 
 	// 初始化配置
+	var err error
 	config, err := initConfig()
-	if err != nil {
-		errorLogCache = append(errorLogCache, 
-			fmt.Sprintf("[INIT ERROR] %v", err))
-		fmt.Printf("Configuration error: %v\n", err)
-		return
-	}
+    if err != nil {
+        errorLogCache = append(errorLogCache, fmt.Sprintf("配置初始化失败: %v", err))
+        fmt.Println(err)
+        return
+    }
 
 	// 从COS读取RSS订阅列表
 	feeds, err := readFeedsFromCOS(config)
