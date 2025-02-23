@@ -50,5 +50,6 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
         NAME: ${{ secrets.NAME }}
         REPOSITORY: ${{ secrets.REPOSITORY }}
+        COSURL: ${{ secrets.COSURL }}
       run: |
         ./rss-crawler
