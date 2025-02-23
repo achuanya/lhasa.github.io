@@ -416,7 +416,19 @@ func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error 
 		Avatar:     "https://cos.lhasa.icu/LinksAvatar/foreverblog.cn.png",
 	})
 
-	jsonData, err := json.MarshalIndent(articles, "", "  ")
+	// 按日期倒序排序（最新在前）
+	sort.Slice(articles, func(i, j int) bool {
+		t1, _ := time.Parse("January 2, 2006", articles[i].Date)
+		t2, _ := time.Parse("January 2, 2006", articles[j].Date)
+
+		// 处理解析错误（错误时间视为更早）
+		if err1 != nil { t1 = time.Time{} }
+		if err2 != nil { t2 = time.Time{} }
+
+		return t1.After(t2) // 降序排列
+	})
+
+	jsonData, err := json.Marshal(articles)
 	if err != nil {
 		return fmt.Errorf("JSON序列化失败: %w", err)
 	}
