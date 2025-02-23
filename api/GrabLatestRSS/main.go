@@ -36,12 +36,8 @@ type Config struct {
 	GithubRepository string		 // GitHub 仓库名
 }
 
-type Avatar struct {
-	Name   string `json:"name"`   // 用户名
-	Avatar string `json:"avatar"` // 头像 URL
-}
-
 // 解析头像数据
+// 如果用 Article 解析 avatar_data.json，会导致 domainName 字段丢失
 type AvatarData struct {
 	DomainName string `json:"domainName"` // 标准化的博客域名
 	Name       string `json:"name"`		  // avatar_data.json 自选订阅数据
@@ -51,7 +47,7 @@ type AvatarData struct {
 // 抓取的爬虫数据
 type Article struct {
 	DomainName string `json:"domainName"` // 域名
-	Name       string `json:"name"`       // 博客名称
+	Name       string `json:"name"`       // 博客名称（经过处理后用于显示名称）
 	Title      string `json:"title"`      // 文章标题
 	Link       string `json:"link"`       // 文章链接
 	Date       string `json:"date"`       // 格式化后的文章发布时间
