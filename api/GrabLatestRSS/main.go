@@ -41,6 +41,12 @@ type Avatar struct {
 	Avatar string `json:"avatar"` // 头像 URL
 }
 
+type AvatarData struct {
+	DomainName string `json:"domainName"`
+	Name       string `json:"name"`
+	Avatar     string `json:"avatar"`
+}
+
 type Article struct {
 	DomainName string `json:"domainName"` // 域名
 	Name       string `json:"name"`       // 博客名称
