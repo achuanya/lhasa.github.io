@@ -52,15 +52,17 @@ var (
 
 	// 名称映射表
 	nameMapping = map[string]string{
-		"obaby@mars":                     "obaby",
+		"obaby@mars":                         "obaby",
 		"青山小站 | 一个在帝都搬砖的新时代农民工": "青山小站",
-		"Homepage on Miao Yu | 于淼":      "于淼",
-		"Homepage on Yihui Xie | 谢益辉":  "谢益辉",
+		"Homepage on Miao Yu | 于淼":          "于淼",
+		"Homepage on Yihui Xie | 谢益辉":      "谢益辉",
 	}
 
-	logChan    = make(chan logMessage, 1000)  // 异步日志通道
-	errorChan  = make(chan error, 100)        // 错误收集通道
-	shutdownWG sync.WaitGroup                 // 优雅关闭等待组
+	logChanMu     sync.Mutex     				 // 通道操作互斥锁
+    logChanClosed bool          				 // 通道关闭状态标志
+	logChan       = make(chan logMessage, 1000)  // 异步日志通道
+	errorChan     = make(chan error, 100)        // 错误收集通道
+	shutdownWG    sync.WaitGroup                 // 优雅关闭等待组
 )
 
 // ========================
@@ -124,9 +126,6 @@ func main() {
 		logAsync("ERROR", err.Error(), "error.log")
 	}
 
-    // 同步写入最终日志
-    logSync("INFO", "程序正常退出", "system.log")
-
     // 安全关闭日志通道
     logChanMu.Lock()
     logChanClosed = true
@@ -146,8 +145,6 @@ func main() {
     case <-time.After(30 * time.Second):
         fmt.Println("警告：日志处理超时")
     }
-
-	fmt.Println("任务完成，去享受骑行吧！")
 }
 
 // ========================
@@ -494,7 +491,14 @@ func extractDomain(urlStr string) (string, error) {
 //      日志系统
 // ========================
 func logAsync(level, message, fileName string) {
-    shutdownWG.Add(1) // 每个日志消息 +1
+    logChanMu.Lock()
+    defer logChanMu.Unlock()
+    
+    if logChanClosed {
+        return // 通道已关闭时不发送
+    }
+    
+    shutdownWG.Add(1)
     logChan <- logMessage{
         level:    level,
         message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
