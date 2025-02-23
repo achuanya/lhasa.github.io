@@ -1,0 +1,15 @@
+
+[2025-02-23 10:50:03] COS client initialized for bucket: lhasa-1253887673.cos.ap-shanghai.myqcloud.com
+[2025-02-23 10:50:04] Successfully fetched data/rss_feeds.txt (746 bytes)
+[2025-02-23 10:50:04] 成功加载 24 个订阅源
+[2025-02-23 10:50:04] COS client initialized for bucket: lhasa-1253887673.cos.ap-shanghai.myqcloud.com
+[2025-02-23 10:50:05] Successfully fetched data/avatar_data.json (4477 bytes)
+[2025-02-23 10:50:35] Failed to parse RSS: https://tcxx.info/feed (Failed to detect feed type)
+[2025-02-23 10:50:36] Failed to parse RSS: https://www.loyhome.com/feed (Failed to detect feed type)
+[2025-02-23 10:50:37] Failed to parse RSS: https://wangpei.net/feed (Failed to detect feed type)
+[2025-02-23 10:50:37] 成功抓取 21 篇文章
+[2025-02-23 10:50:37] COS client initialized for bucket: lhasa-1253887673.cos.ap-shanghai.myqcloud.com
+[2025-02-23 10:50:37] Upload succeeded in 310.74039ms
+[2025-02-23 10:50:37] Successfully uploaded 22 articles (5457 bytes)
+[2025-02-23 10:50:37] 数据保存完成，耗时 310.880801ms
+[2025-02-23 10:50:37] 流程完成，共处理 21 篇文章
