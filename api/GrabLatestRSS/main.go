@@ -202,7 +202,7 @@ func (p *RSSProcessor) Close() {
 func (p *RSSProcessor) Run(ctx context.Context) error {
     // 所有网络操作添加 ctx 控制
     feeds, err := p.getFeeds(ctx)
-    articles, errs := p.fetchAllRSS(ctx, feeds)
+    articles, errs = p.fetchAllRSS(ctx, feeds)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
@@ -219,7 +219,7 @@ func (p *RSSProcessor) Run(ctx context.Context) error {
 	}
 
 	// 并发抓取数据
-	articles, errs := p.fetchAllRSS(ctx, feeds)
+	articles, errs = p.fetchAllRSS(ctx, feeds)
 	if len(errs) > 0 {
 		logAsync("WARN", fmt.Sprintf("共发生 %d 个错误", len(errs)), "warnings.log")
 	}
