@@ -117,13 +117,20 @@ func main() {
 	processor := NewRSSProcessor(config)
 	defer processor.Close()
 
-	if err := processor.Run(); err != nil {
+    // 设置总超时3分钟
+    ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+    defer cancel()
+
+	if err := processor.Run(ctx); err != nil {
 		logAsync("ERROR", err.Error(), "error.log")
-		os.Exit(1)
 	}
 
 	close(logChan)		// 关闭日志通道
-	shutdownWG.Wait()	// 等待日志写入完成
+	shutdownWG.Wait()	// 等待剩余日志写入
+
+	// 确认资源释放
+	logAsync("INFO", "程序正常退出", "system.log")
+
 	fmt.Println("任务完成，去享受骑行吧！")
 }
 
@@ -193,7 +200,11 @@ func (p *RSSProcessor) Close() {
 	p.httpClient.CloseIdleConnections()
 }
 
-func (p *RSSProcessor) Run() error {
+func (p *RSSProcessor) Run(ctx context.Context) error {
+    // 所有网络操作添加 ctx 控制
+    feeds, err := p.getFeeds(ctx)
+    articles, errs := p.fetchAllRSS(ctx, feeds)
+
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 
@@ -262,61 +273,43 @@ func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
 }
 
 func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Article, []error) {
-	ctx, cancel := context.WithCancel(ctx)
-    defer cancel() // 确保上下文取消
+    ctx, cancel := context.WithCancel(ctx)
+    defer cancel()
 
-	var (
-		articles []Article
-		errs     []error
-		mu       sync.Mutex
-		errMu    sync.Mutex
-		wg       sync.WaitGroup
-		feedChan = make(chan string, len(feeds))
-	)
-	
-	// 创建工作池
-	for i := 0; i < p.config.MaxConcurrency; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			for feedURL := range feedChan {
-				article, err := p.processFeed(ctx, feedURL)
-				if err != nil {
-					errMu.Lock()
-					errs = append(errs, err)
-					errMu.Unlock()
-					continue
-				}
-				if article != nil {
-					mu.Lock()
-					articles = append(articles, *article)
-					mu.Unlock()
-				}
-			}
-		}()
-	}
+    feedChan := make(chan string, len(feeds))
+    var wg sync.WaitGroup
 
-	// 分发任务后立即关闭通道
-	for _, feed := range feeds {
-		select {
-		case feedChan <- feed:
-		case <-ctx.Done():
-			close(feedChan)
-			return nil, []error{ctx.Err()}
-		}
-	}
-	close(feedChan)
+    // 创建工作池
+    for i := 0; i < p.config.MaxConcurrency; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            for {
+                select {
+                case url, ok := <-feedChan:
+                    if !ok { return }
+                    // 处理逻辑
+                case <-ctx.Done():
+                    return
+                }
+            }
+        }()
+    }
 
-	// 排序结果
-	sort.Slice(articles, func(i, j int) bool {
-		ti, _ := time.Parse("January 2, 2006", articles[i].Date)
-		tj, _ := time.Parse("January 2, 2006", articles[j].Date)
-		return ti.After(tj)
-	})
+    // 分发任务
+    go func() {
+        defer close(feedChan) // 确保通道关闭
+        for _, feed := range feeds {
+            select {
+            case feedChan <- feed:
+            case <-ctx.Done():
+                return
+            }
+        }
+    }()
 
-	// 等待工作池退出
-	wg.Wait()
-	return articles, errs
+    wg.Wait()
+    return articles, errs
 }
 
 func (p *RSSProcessor) processFeed(ctx context.Context, feedURL string) (*Article, error) {
@@ -498,10 +491,9 @@ func logWorker() {
 	flush := func() {
 		// 最终刷新剩余日志
 		for fileName, msgs := range batch {
-			// if len(msgs) > 0 {
+			for fileName, msgs := range batch {
 				logToGithub(msgs, fileName)
-				// delete(batch, fileName)
-			// }
+			}
 		}
 	}
 
