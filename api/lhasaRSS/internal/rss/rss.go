@@ -148,21 +148,22 @@ func PrintRunSummary(summary *RunSummary) {
 	if summary == nil {
 		return
 	}
-
 	logger.LogAsync("INFO", "本次运行完成！")
-
 	logger.LogAsync("INFO", fmt.Sprintf("总计需要处理的 RSS 数量：%d", summary.TotalRSS))
-	logger.LogAsync("INFO", fmt.Sprintf("成功：%d, 失败：%d（解析失败：%d）", summary.SuccessCount, summary.FailCount, summary.ParseFailCount))
-	logger.LogAsync("INFO", fmt.Sprintf("找不到头像：%d, 使用默认头像：%d", summary.MissingAvatar, summary.DefaultAvatar))
+	logger.LogAsync("INFO", fmt.Sprintf("成功：%d, 失败：%d（解析失败：%d）",
+		summary.SuccessCount, summary.FailCount, summary.ParseFailCount))
+	logger.LogAsync("INFO", fmt.Sprintf("找不到头像：%d, 使用默认头像：%d",
+		summary.MissingAvatar, summary.DefaultAvatar))
 
 	if len(summary.FailedList) > 0 {
-		logger.LogAsync("INFO", "【失败的 RSS】")
+		logger.LogAsync("INFO", "本次运行的【失败明细】如下：")
 		for _, f := range summary.FailedList {
+			// f 本身是类似"抓取失败(http://xxx): some error..."
 			logger.LogAsync("INFO", " - "+f)
 		}
 	}
-
 	logger.LogAsync("INFO", fmt.Sprintf("本次执行总耗时：%v", summary.Elapsed))
+	logger.LogAsync("INFO", "程序执行结束。")
 }
 
 // ========================================

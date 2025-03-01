@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"time"
 
-	"lhasaRSS/internal/logger"
 	"net/url"
 )
 
@@ -38,8 +37,6 @@ func WithRetry[T any](ctx context.Context, maxRetries int, baseInterval time.Dur
 		if lastErr == nil {
 			return result, nil
 		}
-
-		logger.LogAsync("WARN", fmt.Sprintf("重试 %d/%d: %v", i, maxRetries, lastErr))
 
 		if i < maxRetries {
 			select {

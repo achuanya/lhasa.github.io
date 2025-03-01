@@ -53,16 +53,10 @@ func CloseLogger() {
 
 // LogAsync 写异步日志，带级别过滤
 func LogAsync(level, message string) {
-	// 先看是否应该记录该级别
-	if !shouldLog(level) {
-		return
-	}
-
 	wg.Add(1)
 	t := time.Now().Format("2006-01-02 15:04:05")
-	// 你想要什么格式，这里随意
-	formatted := fmt.Sprintf("[%s] [%s] %s", t, level, message)
-	logChan <- formatted
+	// 可以去掉中括号，或自行决定格式
+	logChan <- fmt.Sprintf("[%s] [%s] %s", t, level, message)
 }
 
 // LogPanic 用于在 recover() 时记录 panic

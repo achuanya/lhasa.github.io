@@ -34,7 +34,9 @@ jobs:
           go mod download
 
       - name: Ensure logs folder
-        run: mkdir -p logs
+        run: |
+          cd api/lhasaRSS
+          mkdir -p logs
 
       - name: Build
         run: |
@@ -47,16 +49,16 @@ jobs:
           chmod +x myapp
           ./myapp
 
-      - name: Debug logs
+      - name: Upload logs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhasaRSS
+          path: api/lhasaRSS/logs
+
+      - name: 
         run: |
           echo "======== Listing logs folder ========"
           ls -l logs || echo "No logs folder found"
           echo ""
           echo "======== Printing logs content ========"
           cat logs/*.log || echo "No log files found"
-
-      - name: Upload logs artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-logs
-          path: api/lhasaRSS/logs
