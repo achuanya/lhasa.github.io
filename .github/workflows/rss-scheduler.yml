@@ -44,6 +44,14 @@ jobs:
           chmod +x myapp
           ./myapp
 
+      - name: Debug logs
+        run: |
+          echo "======== Listing logs folder ========"
+          ls -l logs || echo "No logs folder found"
+          echo ""
+          echo "======== Printing logs content ========"
+          cat logs/*.log || echo "No log files found"
+
       - name: Upload logs artifact
         uses: actions/upload-artifact@v4
         with:
