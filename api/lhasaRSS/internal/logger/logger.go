@@ -4,79 +4,88 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 	"sync"
 	"time"
-
-	"runtime/debug"
 )
 
 var (
-	logChan       = make(chan string, 2000) // 日志消息通道
-	wg            sync.WaitGroup            // 用于等待日志写入完成
-	logFile       *os.File                  // 当前日志文件句柄
-	logFileMu     sync.Mutex                // 并发写文件互斥锁
-	currentLogDay string                    // 当前日志文件对应的日期（yyyy-mm-dd）
+	// 可通过修改 LogLevel = "DEBUG"/"INFO"/"WARN"/"ERROR" 来控制日志输出的粒度
+	LogLevel      = "INFO"
+	logChan       = make(chan string, 2000)
+	wg            sync.WaitGroup
+	logFile       *os.File
+	logFileMu     sync.Mutex
+	currentLogDay string
+	levelPriority = map[string]int{"DEBUG": 1, "INFO": 2, "WARN": 3, "ERROR": 4}
 )
 
-// InitLogger 初始化日志系统：
-// 1. 创建 logs 文件夹
-// 2. 删除 7 天前的日志
-// 3. 打开当天日志文件
-// 4. 启动写日志的协程
+// InitLogger 初始化日志系统
 func InitLogger() error {
+	// 1. 创建 logs 文件夹
 	if err := os.MkdirAll("logs", 0755); err != nil {
-		return err
+		return fmt.Errorf("创建logs文件夹失败: %v", err)
 	}
-
-	// 删除 7 天前的日志
+	// 2. 删除 7 天前日志
 	if err := cleanOldLogs(7); err != nil {
-		return err
+		return fmt.Errorf("清理旧日志失败: %v", err)
 	}
-
-	// 打开当天文件
+	// 3. 打开当天日志文件
 	if err := openLogFileForToday(); err != nil {
-		return err
+		return fmt.Errorf("打开日志文件失败: %v", err)
 	}
-
-	// 启动消费日志的协程
+	// 4. 启动日志写入协程
 	go logWorker()
-
 	return nil
 }
 
-// CloseLogger 关闭日志通道，等待所有日志写入后再关闭文件
+// CloseLogger 关闭通道，等待剩余日志写完，关闭文件
 func CloseLogger() {
 	close(logChan)
 	wg.Wait()
 	logFileMu.Lock()
-	defer logFileMu.Unlock()
 	if logFile != nil {
 		logFile.Close()
 		logFile = nil
 	}
+	logFileMu.Unlock()
 }
 
-// LogAsync 异步写日志
+// LogAsync 写异步日志，带级别过滤
 func LogAsync(level, message string) {
-	// 加一个等待计数，保证在 CloseLogger 时能够等待它写完
+	// 先看是否应该记录该级别
+	if !shouldLog(level) {
+		return
+	}
+
 	wg.Add(1)
 	t := time.Now().Format("2006-01-02 15:04:05")
-	logChan <- fmt.Sprintf("[%s] [%s] %s", t, level, message)
+	// 你想要什么格式，这里随意
+	formatted := fmt.Sprintf("[%s] [%s] %s", t, level, message)
+	logChan <- formatted
 }
 
-// LogPanic 用于在 `recover()` 时写入 panic 相关的日志和堆栈
+// LogPanic 用于在 recover() 时记录 panic
 func LogPanic(r interface{}) {
-	LogAsync("PANIC", fmt.Sprintf("panic: %v\n%s", r, debug.Stack()))
+	LogAsync("ERROR", fmt.Sprintf("panic: %v\n%s", r, debug.Stack()))
 }
 
-// logWorker 从通道读取日志内容并写入文件
-func logWorker() {
-	defer func() {
-		// 协程结束前，尽量写完剩余内容
-		flushAllLogs()
-	}()
+// 判断是否需要记录某个级别的日志
+func shouldLog(level string) bool {
+	if levelPriority[level] >= levelPriority[LogLevel] {
+		return true
+	}
+	return false
+}
 
-	ticker := time.NewTicker(3 * time.Second) // 3 秒节流一次
+// ----------------------
+// 以下是内部实现
+// ----------------------
+
+func logWorker() {
+	defer flushAllLogs()
+
+	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -87,27 +96,21 @@ func logWorker() {
 			}
 			writeLog(msg)
 		case <-ticker.C:
-			// 定期检查日期是否变更
 			rotateIfNeeded()
 		}
 	}
 }
 
-// writeLog 写单条日志到文件
 func writeLog(msg string) {
 	logFileMu.Lock()
 	defer logFileMu.Unlock()
-
 	if logFile == nil {
-		// 理论上不会出现，但加一下保护
 		return
 	}
-
 	_, _ = logFile.WriteString(msg + "\n")
 	wg.Done()
 }
 
-// flushAllLogs 将通道内剩余日志全部写完
 func flushAllLogs() {
 	for {
 		select {
@@ -122,25 +125,21 @@ func flushAllLogs() {
 	}
 }
 
-// rotateIfNeeded 如果日期变了，就切换到新日志文件
 func rotateIfNeeded() {
 	today := time.Now().Format("2006-01-02")
-
+	if currentLogDay == today {
+		return
+	}
+	// 日期变了就重新打开文件
 	logFileMu.Lock()
 	defer logFileMu.Unlock()
-
-	if currentLogDay != today {
-		// 先关闭旧文件
-		if logFile != nil {
-			logFile.Close()
-			logFile = nil
-		}
-		// 再打开新文件
-		_ = openLogFileForToday()
+	if logFile != nil {
+		logFile.Close()
+		logFile = nil
 	}
+	_ = openLogFileForToday()
 }
 
-// openLogFileForToday 根据当前日期打开（或创建）对应日志文件
 func openLogFileForToday() error {
 	today := time.Now().Format("2006-01-02")
 	filename := filepath.Join("logs", today+".log")
@@ -149,30 +148,26 @@ func openLogFileForToday() error {
 	if err != nil {
 		return err
 	}
-
 	logFile = f
 	currentLogDay = today
 	return nil
 }
 
-// cleanOldLogs 清理 N 天前的日志文件
 func cleanOldLogs(days int) error {
 	entries, err := os.ReadDir("logs")
 	if err != nil {
 		return err
 	}
-
 	threshold := time.Now().AddDate(0, 0, -days)
-	for _, entry := range entries {
-		if entry.IsDir() {
+	for _, e := range entries {
+		if e.IsDir() {
 			continue
 		}
-		name := entry.Name()
-		// 例如 2025-03-01.log
+		name := e.Name()
 		if len(name) < len("2006-01-02.log") {
 			continue
 		}
-		datePart := name[:10] // 截取 "YYYY-MM-DD"
+		datePart := name[:10]
 		t, err := time.Parse("2006-01-02", datePart)
 		if err != nil {
 			continue
