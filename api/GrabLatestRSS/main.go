@@ -10,21 +10,23 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"sort"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
-	"golang.org/x/oauth2"
 	"github.com/google/go-github/v39/github"
 	"github.com/mmcdole/gofeed"
 	"github.com/tencentyun/cos-go-sdk-v5"
+	"golang.org/x/oauth2"
 )
 
 // ========================
-//      配置结构体
+//
+//	配置结构体
+//
 // ========================
 type Config struct {
 	SecretID         string
@@ -40,7 +42,9 @@ type Config struct {
 }
 
 // ========================
-//     全局变量/常量
+//
+//	全局变量/常量
+//
 // ========================
 var (
 	// 预编译时间格式
@@ -53,21 +57,23 @@ var (
 
 	// 名称映射表
 	nameMapping = map[string]string{
-		"obaby@mars":                         "obaby",
-		"青山小站 | 一个在帝都搬砖的新时代农民工": "青山小站",
-		"Homepage on Miao Yu | 于淼":          "于淼",
-		"Homepage on Yihui Xie | 谢益辉":      "谢益辉",
+		"obaby@mars": "obaby",
+		"青山小站 | 一个在帝都搬砖的新时代农民工":       "青山小站",
+		"Homepage on Miao Yu | 于淼":    "于淼",
+		"Homepage on Yihui Xie | 谢益辉": "谢益辉",
 	}
 
-	logChanMu     sync.Mutex     				 // 通道操作互斥锁
-    logChanClosed bool          				 // 通道关闭状态标志
-	logChan       = make(chan logMessage, 1000)  // 异步日志通道
-	errorChan     = make(chan error, 100)        // 错误收集通道
-	shutdownWG    sync.WaitGroup                 // 优雅关闭等待组
+	logChanMu     sync.Mutex                    // 通道操作互斥锁
+	logChanClosed bool                          // 通道关闭状态标志
+	logChan       = make(chan logMessage, 1000) // 异步日志通道
+	errorChan     = make(chan error, 100)       // 错误收集通道
+	shutdownWG    sync.WaitGroup                // 优雅关闭等待组
 )
 
 // ========================
-//      数据结构定义
+//
+//	数据结构定义
+//
 // ========================
 type logMessage struct {
 	level    string
@@ -99,7 +105,9 @@ type AvatarData struct {
 }
 
 // ========================
-//      初始化函数
+//
+//	初始化函数
+//
 // ========================
 func init() {
 	// 启动日志处理协程
@@ -107,7 +115,9 @@ func init() {
 }
 
 // ========================
-//      主程序入口
+//
+//	主程序入口
+//
 // ========================
 func main() {
 	config, err := initConfig()
@@ -119,37 +129,39 @@ func main() {
 	processor := NewRSSProcessor(config)
 	defer processor.Close()
 
-    // 设置总超时3分钟
-    ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
-    defer cancel()
+	// 设置总超时3分钟
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+	defer cancel()
 
 	if err := processor.Run(ctx); err != nil {
 		logAsync("ERROR", err.Error(), "error.log")
 	}
 
-    // 安全关闭日志通道
-    logChanMu.Lock()
-    logChanClosed = true
-    close(logChan)
-    logChanMu.Unlock()
+	// 安全关闭日志通道
+	logChanMu.Lock()
+	logChanClosed = true
+	close(logChan)
+	logChanMu.Unlock()
 
-    // 带超时的等待
-    done := make(chan struct{})
-    go func() {
-        shutdownWG.Wait()
-        close(done)
-    }()
+	// 带超时的等待
+	done := make(chan struct{})
+	go func() {
+		shutdownWG.Wait()
+		close(done)
+	}()
 
-    select {
-    case <-done:
-        fmt.Println("日志处理完成")
-    case <-time.After(30 * time.Second):
-        fmt.Println("警告：日志处理超时")
-    }
+	select {
+	case <-done:
+		fmt.Println("日志处理完成")
+	case <-time.After(30 * time.Second):
+		fmt.Println("警告：日志处理超时")
+	}
 }
 
 // ========================
-//     配置初始化
+//
+//	配置初始化
+//
 // ========================
 func initConfig() (*Config, error) {
 	config := &Config{
@@ -182,7 +194,9 @@ func initConfig() (*Config, error) {
 }
 
 // ========================
-//     RSS处理器实现
+//
+//	RSS处理器实现
+//
 // ========================
 func NewRSSProcessor(config *Config) *RSSProcessor {
 	transport := &http.Transport{
@@ -215,13 +229,13 @@ func (p *RSSProcessor) Close() {
 }
 
 func (p *RSSProcessor) Run(ctx context.Context) error {
-    // 所有网络操作添加 ctx 控制，只调用一次获取feeds
-    feeds, err := p.getFeeds(ctx)
+	// 所有网络操作添加 ctx 控制，只调用一次获取feeds
+	feeds, err := p.getFeeds(ctx)
 	if err != nil {
-        return err
-    }
+		return err
+	}
 
-    articles, errs := p.fetchAllRSS(ctx, feeds)
+	articles, errs := p.fetchAllRSS(ctx, feeds)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
@@ -252,10 +266,12 @@ func (p *RSSProcessor) Run(ctx context.Context) error {
 }
 
 // ========================
-//      核心业务方法
+//
+//	核心业务方法
+//
 // ========================
 func (p *RSSProcessor) loadAvatars(ctx context.Context) error {
-	content, err := p.fetchCOSFile(ctx, "data/avatar_data.json")
+	content, err := p.fetchCOSFile(ctx, "data/AvatarData.json")
 	if err != nil {
 		return err
 	}
@@ -275,7 +291,7 @@ func (p *RSSProcessor) loadAvatars(ctx context.Context) error {
 }
 
 func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
-	content, err := p.fetchCOSFile(ctx, "data/rss_feeds.txt")
+	content, err := p.fetchCOSFile(ctx, "data/MyFavoriteRSS.txt")
 	if err != nil {
 		return nil, err
 	}
@@ -291,42 +307,42 @@ func (p *RSSProcessor) getFeeds(ctx context.Context) ([]string, error) {
 }
 
 func (p *RSSProcessor) fetchAllRSS(ctx context.Context, feeds []string) ([]Article, []error) {
-    var (
-        articles []Article
-        errs     []error
-        mutex    sync.Mutex
-    )
+	var (
+		articles []Article
+		errs     []error
+		mutex    sync.Mutex
+	)
 
-    feedChan := make(chan string, len(feeds))
-    var wg sync.WaitGroup
+	feedChan := make(chan string, len(feeds))
+	var wg sync.WaitGroup
 
-    // 创建工作池
-    for i := 0; i < p.config.MaxConcurrency; i++ {
-        wg.Add(1)
-        go func() {
-            defer wg.Done()
-            for url := range feedChan {
-                article, err := p.processFeed(ctx, url)
-                
-                mutex.Lock()
-                if err != nil {
-                    errs = append(errs, err)
-                } else {
-                    articles = append(articles, *article)
-                }
-                mutex.Unlock()
-            }
-        }()
-    }
+	// 创建工作池
+	for i := 0; i < p.config.MaxConcurrency; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for url := range feedChan {
+				article, err := p.processFeed(ctx, url)
 
-    // 分发任务
-    for _, feed := range feeds {
-        feedChan <- feed
-    }
-    close(feedChan)
+				mutex.Lock()
+				if err != nil {
+					errs = append(errs, err)
+				} else {
+					articles = append(articles, *article)
+				}
+				mutex.Unlock()
+			}
+		}()
+	}
 
-    wg.Wait()
-    return articles, errs
+	// 分发任务
+	for _, feed := range feeds {
+		feedChan <- feed
+	}
+	close(feedChan)
+
+	wg.Wait()
+	return articles, errs
 }
 
 func (p *RSSProcessor) processFeed(ctx context.Context, feedURL string) (*Article, error) {
@@ -423,13 +439,13 @@ func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error 
 		t2, err2 := time.Parse("January 2, 2006", articles[j].Date)
 
 		// 处理解析错误 错误时间视为更早
-        if err1 != nil {
-            t1 = time.Time{}
-        }
-        if err2 != nil {
-            t2 = time.Time{}
-        }
-        return t1.After(t2)
+		if err1 != nil {
+			t1 = time.Time{}
+		}
+		if err2 != nil {
+			t2 = time.Time{}
+		}
+		return t1.After(t2)
 	})
 
 	jsonData, err := json.Marshal(articles)
@@ -439,7 +455,7 @@ func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error 
 
 	// 带重试的上传
 	_, err = withRetry(ctx, p.config.MaxRetries, p.config.RetryInterval, func() (interface{}, error) {
-		resp, err := p.cosClient.Object.Put(ctx, "data/rss_data.json", bytes.NewReader(jsonData), nil)
+		resp, err := p.cosClient.Object.Put(ctx, "data/rss.json", bytes.NewReader(jsonData), nil)
 		if err != nil {
 			return nil, fmt.Errorf("COS上传失败: %w", err)
 		}
@@ -451,13 +467,15 @@ func (p *RSSProcessor) saveToCOS(ctx context.Context, articles []Article) error 
 		return fmt.Errorf("最终上传失败: %w", err)
 	}
 
-	logAsync("INFO", fmt.Sprintf("成功上传 %d 篇文章 (%d bytes)", 
+	logAsync("INFO", fmt.Sprintf("成功上传 %d 篇文章 (%d bytes)",
 		len(articles), len(jsonData)), "success.log")
 	return nil
 }
 
 // ========================
-//      辅助工具函数
+//
+//	辅助工具函数
+//
 // ========================
 func (p *RSSProcessor) fetchCOSFile(ctx context.Context, path string) (string, error) {
 	resp, err := p.cosClient.Object.Get(ctx, path, nil)
@@ -504,22 +522,24 @@ func extractDomain(urlStr string) (string, error) {
 }
 
 // ========================
-//      日志系统
+//
+//	日志系统
+//
 // ========================
 func logAsync(level, message, fileName string) {
-    logChanMu.Lock()
-    defer logChanMu.Unlock()
-    
-    if logChanClosed {
-        return // 通道已关闭时不发送
-    }
-    
-    shutdownWG.Add(1)
-    logChan <- logMessage{
-        level:    level,
-        message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
-        fileName: fileName,
-    }
+	logChanMu.Lock()
+	defer logChanMu.Unlock()
+
+	if logChanClosed {
+		return // 通道已关闭时不发送
+	}
+
+	shutdownWG.Add(1)
+	logChan <- logMessage{
+		level:    level,
+		message:  fmt.Sprintf("[%s] %s", getBeijingTime().Format(time.RFC3339), message),
+		fileName: fileName,
+	}
 }
 
 func logWorker() {
@@ -545,10 +565,10 @@ func logWorker() {
 				return
 			}
 			batch[msg.fileName] = append(batch[msg.fileName], msg.message)
-            // 批量达到 50 条时立即刷新
-            if len(batch[msg.fileName]) >= 50 {
-                flush()
-            }
+			// 批量达到 50 条时立即刷新
+			if len(batch[msg.fileName]) >= 50 {
+				flush()
+			}
 		case <-ticker.C:
 			flush()
 		}
@@ -556,64 +576,66 @@ func logWorker() {
 }
 
 func logToGithub(messages []string, fileName string) {
-    config, err := initConfig()
-    if err != nil || config.GithubToken == "" {
-        return
-    }
+	config, err := initConfig()
+	if err != nil || config.GithubToken == "" {
+		return
+	}
 
-    ctx := context.Background()
-    client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{AccessToken: config.GithubToken})))
-    filePath := "_data/" + fileName
-    content := strings.Join(messages, "\n") + "\n"
+	ctx := context.Background()
+	client := github.NewClient(oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{AccessToken: config.GithubToken})))
+	filePath := "_data/" + fileName
+	content := strings.Join(messages, "\n") + "\n"
 
-    // 重试逻辑（最多3次）
-    maxRetries := 3
-    for retry := 0; retry < maxRetries; retry++ {
-        file, _, _, _ := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
+	// 重试逻辑（最多3次）
+	maxRetries := 3
+	for retry := 0; retry < maxRetries; retry++ {
+		file, _, _, _ := client.Repositories.GetContents(ctx, config.GithubName, config.GithubRepository, filePath, nil)
 
-        var opts github.RepositoryContentFileOptions
-        if file == nil {
-            opts = github.RepositoryContentFileOptions{
-                Message: github.String("创建日志文件: " + fileName),
-                Content: []byte(content),
-            }
-        } else {
-            currentContent, _ := file.GetContent()
-            opts = github.RepositoryContentFileOptions{
-                Message: github.String("更新日志: " + fileName),
-                Content: []byte(currentContent + "\n" + content),
-                SHA:     file.SHA,
-            }
-        }
+		var opts github.RepositoryContentFileOptions
+		if file == nil {
+			opts = github.RepositoryContentFileOptions{
+				Message: github.String("创建日志文件: " + fileName),
+				Content: []byte(content),
+			}
+		} else {
+			currentContent, _ := file.GetContent()
+			opts = github.RepositoryContentFileOptions{
+				Message: github.String("更新日志: " + fileName),
+				Content: []byte(currentContent + "\n" + content),
+				SHA:     file.SHA,
+			}
+		}
 
-        _, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &opts)
-        if err == nil {
-            return // 成功则退出
-        }
+		_, _, err = client.Repositories.UpdateFile(ctx, config.GithubName, config.GithubRepository, filePath, &opts)
+		if err == nil {
+			return // 成功则退出
+		}
 
-        // 处理 409 冲突错误
-        if githubErr, ok := err.(*github.ErrorResponse); ok && githubErr.Response.StatusCode == http.StatusConflict {
-            time.Sleep(500 * time.Millisecond) // 等待后重试
-            continue
-        }
+		// 处理 409 冲突错误
+		if githubErr, ok := err.(*github.ErrorResponse); ok && githubErr.Response.StatusCode == http.StatusConflict {
+			time.Sleep(500 * time.Millisecond) // 等待后重试
+			continue
+		}
 
 		if err != nil {
 			errorMsg := fmt.Sprintf("日志写入失败: %v", err)
 			fmt.Println(errorMsg) // 控制台输出
-			
+
 			// 尝试将错误写入本地文件
 			if f, err := os.OpenFile("fallback_error.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); err == nil {
 				defer f.Close()
 				f.WriteString(errorMsg + "\n")
 			}
 		}
-        return
-    }
-    fmt.Printf("经过 %d 次重试仍失败: %v\n", maxRetries, err)
+		return
+	}
+	fmt.Printf("经过 %d 次重试仍失败: %v\n", maxRetries, err)
 }
 
 // ========================
-//      环境变量助手
+//
+//	环境变量助手
+//
 // ========================
 func getEnv(key, defaultValue string) string {
 	if value, exists := os.LookupEnv(key); exists {
@@ -641,9 +663,11 @@ func getEnvDuration(key string, defaultValue time.Duration) time.Duration {
 }
 
 // ========================
-//      重试机制实现
+//
+//	重试机制实现
+//
 // ========================
-func withRetry[T any](ctx context.Context, maxRetries int, interval time.Duration, 
+func withRetry[T any](ctx context.Context, maxRetries int, interval time.Duration,
 	fn func() (T, error)) (T, error) {
 	var result T
 	var lastErr error
@@ -666,7 +690,9 @@ func withRetry[T any](ctx context.Context, maxRetries int, interval time.Duratio
 }
 
 // ========================
-//      时间处理函数
+//
+//	时间处理函数
+//
 // ========================
 func getBeijingTime() time.Time {
 	return time.Now().In(time.FixedZone("CST", 8*3600))
