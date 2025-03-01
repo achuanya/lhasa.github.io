@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
-      WORKDIR: ./api/lhasaRSS
+      WORKDIR: ./api/GrabLatestRSS
 
     steps:
     - name: Checkout code
