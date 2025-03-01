@@ -11,7 +11,7 @@ title: 订阅
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    fetch('https://cos.lhasa.icu/data/rss_data.json')
+    fetch('https://cos.lhasa.icu/data/rss.json')
       .then(response => response.json())
       .then(rss_data => {
         const container = document.querySelector('.post-list');
