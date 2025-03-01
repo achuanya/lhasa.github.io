@@ -1,12 +1,12 @@
 name: Build and Run Project
 
-# 触发条件：手动 cron + push
 on:
   push:
     branches: [ "main" ]
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
@@ -26,10 +26,10 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: "1.24"
+          go-version: "1.21" 
 
       - name: Install dependencies
-        run: go mod download
+        run: go mod tidy
 
       - name: Build
         run: go build -o lhasaRSS ./cmd/main.go
