@@ -1,4 +1,4 @@
-module github.com/achuanya/lhasa.github.io/api/lhasaRSS
+module lhasaRSS
 
 go 1.24.0
 
