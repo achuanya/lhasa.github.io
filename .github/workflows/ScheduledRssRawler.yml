@@ -1,0 +1,55 @@
+name: ScheduledRssRawler
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+      WORKDIR: ./api/lhasaRSS
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Verify go.sum Location
+      run: |
+        echo "Current directory: $(pwd)"
+        ls -la ${{ env.WORKDIR }}
+        [ -f ${{ env.WORKDIR }}/go.sum ] || (echo "go.sum not found"; exit 1)
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.22.5'
+        cache: true
+        cache-dependency-path: ${{ env.WORKDIR }}/go.sum
+
+    - name: Install dependencies
+      working-directory: ${{ env.WORKDIR }}
+      run: |
+        go mod tidy -v
+        go mod download
+
+    - name: Build
+      working-directory: ${{ env.WORKDIR }}
+      env:
+        CGO_ENABLED: 0
+      run: |
+        go build -v -ldflags="-s -w" -o rss-crawler
+
+    - name: Run Crawler
+      working-directory: ${{ env.WORKDIR }}
+      env:
+        TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
+        TENCENT_CLOUD_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
+        TOKEN: ${{ secrets.TOKEN }}
+        NAME: ${{ secrets.NAME }}
+        REPOSITORY: ${{ secrets.REPOSITORY }}
+        COSURL: ${{ secrets.COSURL }}
+      run: |
+        ./rss-crawler
