@@ -35,7 +35,7 @@ jobs:
 
       - name: Ensure logs folder
         run: |
-          cd api/lhasaRSS
+          cd api/lhasaRSS 
           mkdir -p logs
 
       - name: Build
