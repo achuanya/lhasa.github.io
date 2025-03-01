@@ -1,8 +1,5 @@
 name: RSS Scheduler
 
-# 可以根据需要触发该工作流：
-# 1) 每次 push 到 main 分支
-# 2) 每天定时执行（下例中是每天凌晨0点）
 on:
   push:
     branches: [ "main" ]
@@ -14,7 +11,6 @@ jobs:
   build-and-run:
     runs-on: ubuntu-latest
 
-    # 将需要的环境变量（Secrets）传递给作业
     env:
       TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
       TENCENT_CLOUD_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
@@ -33,15 +29,18 @@ jobs:
           go-version: "1.24"
 
       - name: Install dependencies
-        run: go mod download
+        run: |
+          cd api/lhasaRSS
+          go mod download
 
       - name: Build
-        run: go build -o myapp ./cmd/main.go
+        run: |
+          cd api/lhasaRSS
+          go build -o myapp ./cmd/main.go
 
       - name: Run the app
-        # 这里会实际执行项目；日志会打印到 Actions 控制台
-        # 同时也会生成 logs 文件夹及相应的日志文件
         run: |
+          cd api/lhasaRSS
           chmod +x myapp
           ./myapp
 
@@ -49,4 +48,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-logs
-          path: logs
+          path: api/lhasaRSS/logs
