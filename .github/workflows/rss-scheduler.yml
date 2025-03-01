@@ -5,10 +5,14 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: '0 */6 * * *'
+    workflow_dispatch:
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+      WORKDIR: ./api/lhasaRSS
 
     env:
       TENCENT_CLOUD_SECRET_ID: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
