@@ -152,3 +152,5 @@
 
 [2025-03-03T02:14:18+08:00] 重试 3/3: 非200状态码: 406
 [2025-03-03T02:14:19+08:00] 重试 3/3: 非200状态码: 406
+
+[2025-03-03T02:14:37+08:00] 重试 2/3: HTTP请求失败: Get "https://ihaihe.cn/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
