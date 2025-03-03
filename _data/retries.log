@@ -259,3 +259,5 @@
 [2025-03-03T20:22:14+08:00] 重试 2/3: 非200状态码: 406
 [2025-03-03T20:22:14+08:00] 重试 2/3: 非200状态码: 403
 [2025-03-03T20:22:14+08:00] 重试 2/3: HTTP请求失败: Get "https://blog.yanqingshan.com/feed": tls: failed to verify certificate: x509: certificate is valid for *.cdn.myqcloud.com, *.2144.cn, *.2144.com, *.4399.com, *.5054399.com, *.58cdn.com.cn, *.danmu.com, *.dianping.com, *.dpfile.com, *.ffnews.cn, *.file.myqcloud.com, *.flash.2144.com, *.flash.cn, *.image.myqcloud.com, *.img4399.com, *.meituan.net, *.mykeeta.net, *.sogoucdn.com, *.uniqlo.cn, *.video.myqcloud.com, *.vip.cdngot.com, *.vod-qcloud.com, *.vod.myqcloud.com, *.vod2.myqcloud.com, *.wanyabox.com, *.zhongcheng818.com, *.zservey.net, cdn.myqcloud.com, nitrome.com.4399.com, www.miniclip.com.4399pk.com, xpdl999.aiwan4399.com, not blog.yanqingshan.com
+
+[2025-03-03T20:22:15+08:00] 重试 2/3: 非200状态码: 406
