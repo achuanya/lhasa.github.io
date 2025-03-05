@@ -468,3 +468,7 @@
 [2025-03-05T20:21:49+08:00] 重试 2/3: HTTP请求失败: Get "https://www.laruence.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
 
 [2025-03-05T20:22:14+08:00] 重试 3/3: HTTP请求失败: Get "https://www.laruence.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
+[2025-03-05T20:22:26+08:00] 重试 1/3: 非200状态码: 406
+[2025-03-05T20:22:27+08:00] 重试 1/3: 非200状态码: 406
+[2025-03-05T20:22:27+08:00] 重试 1/3: 非200状态码: 403
