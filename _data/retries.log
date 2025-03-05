@@ -481,3 +481,5 @@
 [2025-03-05T20:22:46+08:00] 重试 3/3: 非200状态码: 406
 [2025-03-05T20:22:47+08:00] 重试 3/3: 非200状态码: 403
 [2025-03-05T20:22:47+08:00] 重试 3/3: 非200状态码: 406
+
+[2025-03-05T20:23:05+08:00] 重试 2/3: HTTP请求失败: Get "https://www.laruence.com/feed": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
