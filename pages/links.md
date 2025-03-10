@@ -11,7 +11,7 @@ title: 订阅
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    fetch('https://cos.lhasa.icu/data/rss.json')
+    fetch('https://cos.lhasa.icu/lhasaRSS/data.json')
       .then(response => response.json())
       .then(rss_data => {
         const container = document.querySelector('.post-list');
@@ -25,8 +25,8 @@ title: 订阅
               <h3 class="post-item-title">
                 <a class="post-item-link" href="${post.link}" title="${post.title}" target="_blank">${post.title}</a>
               </h3>
-              <time class="post-item-date timeago" datetime="${post.date}">${post.date}</time>
-              <address class="post-item-date links-name">${post.name}</address>
+              <time class="post-item-date timeago" datetime="${post.published}">${post.published}</time>
+              <address class="post-item-date links-name">${post.blog_name}</address>
             </section>
           `;
           
