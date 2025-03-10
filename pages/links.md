@@ -18,7 +18,6 @@ title: 订阅
         rss_data.forEach(post => {
           const article = document.createElement('article');
           article.classList.add('post-item');
-          
           article.innerHTML = `
             <i class="post-item-thumb" style="background-image:url(${post.avatar})"></i>
             <section class="post-item-summary">
