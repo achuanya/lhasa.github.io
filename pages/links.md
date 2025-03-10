@@ -13,11 +13,12 @@ title: 订阅
   document.addEventListener("DOMContentLoaded", function() {
     fetch('https://cos.lhasa.icu/lhasaRSS/data.json')
       .then(response => response.json())
-      .then(rss_data => {
+      .then(data => {
         const container = document.querySelector('.post-list');
-        rss_data.forEach(post => {
+        data.forEach(post => {
           const article = document.createElement('article');
           article.classList.add('post-item');
+
           article.innerHTML = `
             <i class="post-item-thumb" style="background-image:url(${post.avatar})"></i>
             <section class="post-item-summary">
