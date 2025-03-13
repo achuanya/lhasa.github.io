@@ -1,7 +1,0 @@
----
-layout: null
-permalink: /sitemap.txt
----
-{% for page in site.pages %}{{ site.home }}{{ page.url }}
-{% endfor %}{% for post in site.posts %}{{ site.home }}{{ post.url }}
-{% endfor %}
