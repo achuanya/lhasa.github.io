@@ -1,5 +1,7 @@
 ---
-layout: null
+layout: page
+permalink: /sitemap.xml
+title: sitemap
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -14,7 +16,7 @@ layout: null
     {% endif %}
     
     <url>
-      <loc>{{ site.url }}{{ page.url | replace:'index.html','' }}</loc>
+      <loc>{{ site.home }}{{ page.url | replace:'index.html','' }}</loc>
       <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
       <changefreq>weekly</changefreq>
       <priority>{{ page_priority }}</priority>
@@ -45,7 +47,7 @@ layout: null
     {% endif %}
     
     <url>
-      <loc>{{ site.url }}{{ post.url }}</loc>
+      <loc>{{ site.home }}{{ post.url }}</loc>
       <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
       <changefreq>{{ changefreq }}</changefreq>
       <priority>{{ priority }}</priority>

@@ -1,11 +1,12 @@
 ---
-layout: null
+layout: page
 permalink: /sitemap.txt
+title: sitemap
 ---
 {% for page in site.pages %}
-{{ site.url }}{{ page.url | replace:'index.html','' }}
+{{ site.home }}{{ page.url | replace:'index.html','' }}
 {% endfor %}
 
 {% for post in site.posts %}
-{{ site.url }}{{ post.url }}
+{{ site.home }}{{ post.url }}
 {% endfor %}

@@ -1,56 +1,29 @@
 {
-  "name": "haibao",
+  "name": "lhasa",
   "version": "1.0.0",
+  "type": "module",
   "main": "/src/main.js",
   "dependencies": {
-    "aplayer": "^1.10.1",
-    "coordtransform": "^2.1.2",
-    "cssnano": "^7.0.4",
-    "davidshimjs-qrcodejs": "0.0.2",
+    "axios": "^1.8.3",
     "disqus-php-api": "git+https://github.com/achuanya/disqus-php-api.git",
-    "flowchart.js": "^1.11.3",
-    "highlight.js": "^11.10.0",
-    "img-previewer": "^2.1.7",
-    "lozad": "^1.16.0",
-    "node-fetch": "^3.3.2",
-    "pjax": "^0.2.8",
-    "typocss": "^1.4.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-raphael": "^2.1.4",
-    "weixin-js-sdk": "^1.3.3"
+    "highlight.js": "^11.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.9",
-    "@babel/preset-env": "^7.25.0",
-    "autoprefixer": "^9.8.8",
-    "babel-loader": "^9.1.3",
-    "clean-webpack-plugin": "^4.0.0",
-    "css-loader": "^2.1.1",
-    "css-minimizer-webpack-plugin": "^7.0.0",
-    "extract-loader": "^3.1.0",
-    "file-loader": "^3.0.1",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^5.6.0",
-    "mini-css-extract-plugin": "^0.6.0",
-    "path": "^0.12.7",
-    "postcss": "^8.4.40",
-    "postcss-loader": "^8.1.1",
-    "sass": "^1.83.4",
-    "sass-loader": "^7.3.1",
-    "uglifyjs-webpack-plugin": "^2.1.3",
-    "url-loader": "^1.1.2",
-    "webpack": "^5.93.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-filter-warnings-plugin": "^1.2.1"
+    "@rollup/plugin-terser": "^0.4.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "sass": "^1.83.1",
+    "terser": "^5.37.0",
+    "vite": "^6.0.7",
+    "vite-plugin-font": "^4.0.0"
   },
   "scripts": {
-    "build": "webpack --mode production"
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "jekyll:dev": "bundle exec jekyll serve",
+    "jekyll:build": "bundle exec jekyll build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/achuanya/lhasa.github.io.git"
-  },
+  "repository": "git+https://github.com/achuanya/lhasa.github.io.git",
   "author": "achuanya",
   "license": "ISC",
   "bugs": {
@@ -60,6 +33,7 @@
     "> 1%",
     "last 2 versions"
   ],
-  "homepage": "https://github.com/achuanya/lhasa.github.io#readme",
-  "description": ""
+  "homepage": "https://github.com/achuanya/lhasa.github.io",
+  "description": "https://github.com/achuanya/lhasa.github.io",
+  "packageManager": "yarn@1.22.22"
 }
