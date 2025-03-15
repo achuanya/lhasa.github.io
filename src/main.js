@@ -296,7 +296,7 @@ function turn(pageNum, posts, category, disq) {
 // DOMContentLoaded 主体逻辑
 document.addEventListener('DOMContentLoaded', function () {
   /********
-   * 1. 初始化 Disqus
+   * 初始化 Disqus
    ********/
   const disq = new iDisqus('comment', {
     forum: site.forum,
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
   timeAgo();
 
   /********
-   * 2. 进度条 - 计算当年进度
+   * 进度条 - 计算当年进度
    ********/
   const curYear = new Date().getFullYear();
   const startYear = Date.parse('01 Jan ' + curYear + ' 00:00:00');
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.head.appendChild(style);
 
   /********
-   * 3. 针对文章页面处理图片
+   * 针对文章页面处理图片
    ********/
   if (page.layout === 'post') {
     const imageArr = document.querySelectorAll('.post-content img[data-src]:not([class="emoji"])');
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /********
-   * 4. archive.html 页面搜索功能
+   * archive.html 页面搜索功能
    ********/
   if (page.url === '/archive.html') {
     const archiveInput = document.querySelector('.page-search-input');
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /********
-   * 5. search.html 页面搜索功能
+   * search.html 页面搜索功能
    ********/
   if (page.url === '/search.html') {
     const keyword = getQuery('keyword');
@@ -504,7 +504,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /********
-   * 6. tags.html 页面标签搜索功能
+   * tags.html 页面标签搜索功能
    ********/
   if (page.url === '/tags.html') {
     const keyword = getQuery('keyword');
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /********
-   * 7. tech.html / life.html / cycling.html - 分页功能
+   * tech.html / life.html / cycling.html - 分页功能
    ********/
   if (page.url === '/life.html' ||
       page.url === '/cycling.html' ||
@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /**
- * 8. 数据统计
+ * 数据统计
  * - 百度统计 + GoogleAnalytics
  */
 if (site.home === location.origin && window.parent === window) {

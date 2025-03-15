@@ -26,9 +26,9 @@ layout: compress
                     {% if page.date %}
                     <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%Y 年 %m 月 %d 日 %R" }}</time>
                     {% elsif paginator
-                        or page.url == '/life.html'
                         or page.url == '/cycling.html'
                         or page.url == '/tech.html'
+                        or page.url == '/life.html'
                         or page.url == '/links.html'
                         or page.url == '/about.html'
                         or page.url == '/search.html'
@@ -37,9 +37,9 @@ layout: compress
                     %}
                         <div class="post-cats cf">
                             <a class="post-cat-tag{% if paginator %} active{% endif %}" href="/">全部</a>
-                            <a class="post-cat-tag{% if page.url == '/life.html' %} active{% endif %}" href="/life.html">生活</a>
                             <a class="post-cat-tag{% if page.url == '/cycling.html' %} active{% endif %}" href="/cycling.html">骑行</a>
                             <a class="post-cat-tag{% if page.url == '/tech.html' %} active{% endif %}" href="/tech.html">技术</a>
+                            <a class="post-cat-tag{% if page.url == '/life.html' %} active{% endif %}" href="/life.html">生活</a>
                             <a class="post-cat-tag{% if page.url == '/links.html' %} active{% endif %}" href="/links.html">订阅</a>
                             <a class="post-cat-tag{% if page.url == '/about.html' %} active{% endif %}" href="/about.html">关于</a>
                             <a class="post-cat-tag{% if page.url == '/guestbook.html' %} active{% endif %}" href="/guestbook.html">留言</a>
