@@ -1,7 +1,6 @@
 ---
 layout: page
 permalink: /sitemap.txt
-title: sitemap
 ---
 {% for page in site.pages %}
 {{ site.home }}{{ page.url | replace:'index.html','' }}
