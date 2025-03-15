@@ -45,10 +45,33 @@
       };
   </script>
   <script src="{{ site.DIST_PATH }}/main.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?{{ site.adsense }}" crossorigin="anonymous"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WKXRBCPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'GT-WKXRBCPN');
+  </script>
+
+  <!-- 百度统计 (hm.js) -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2f325d81a4b600b2b4be3c277d6fa88a";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+  <!-- Google AdSense (adsbygoogle.js) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6434734591919601" crossorigin="anonymous"></script>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({
-         google_ad_client: "{{ site.adsense }}",
+         google_ad_client: "client=ca-pub-6434734591919601",
          enable_page_level_ads: true
     });
 </script>

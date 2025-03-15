@@ -603,40 +603,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /**
- * 数据统计
- * - 百度统计 + GoogleAnalytics
- */
-if (site.home === location.origin && window.parent === window) {
-  setTimeout(function () {
-    // 百度统计
-    const s = document.getElementsByTagName("script")[0];
-    const hm = document.createElement('script');
-    hm.src = '//hm.baidu.com/hm.js?' + site.tongji;
-    s.parentNode.insertBefore(hm, s);
-
-    const bp = document.createElement('script');
-    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    s.parentNode.insertBefore(bp, s);
-
-    // Google Analytics
-    (function(i, d, o, g, r, a, m){
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function(){
-          (i[r].q = i[r].q || []).push(arguments);
-      }, i[r].l = 1* new Date();
-      a = d.createElement(o),
-      m = d.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m);
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', site.analytics, 'auto');
-    ga('send', 'pageview');
-  }, 1000);
-}
-
-/**
  * [updateZoom 根据窗口高度自适应zoom，解决在特殊屏幕下过大/过小的问题]
  * 仅在高度大于 966 时进行缩放。
  */
