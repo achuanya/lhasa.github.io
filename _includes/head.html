@@ -45,5 +45,11 @@
       };
   </script>
   <script src="{{ site.DIST_PATH }}/main.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6434734591919601" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?{{ site.adsense }}" crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+         google_ad_client: "{{ site.adsense }}",
+         enable_page_level_ads: true
+    });
+</script>
 </head>
