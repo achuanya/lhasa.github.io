@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8888:8888"
+      - "5173:5173"
+    volumes:
+      - ./_site:/app/_site
+      - ./_drafts:/app/_drafts
+      - ./_includes:/app/_includes
+      - ./_layouts:/app/_layouts
+      - ./_posts:/app/_posts
+      - ./pages:/app/pages
+
+      - ./index.html:/app/index.html
+      - ./src:/app/src
+      - ./assets:/app/assets
+
+      - ./_config.yml:/app/_config.yml
+      - ./vite.config.js:/app/vite.config.js
+
+      # 开发时保留node_modules
+      - /app/node_modules
+      
+    environment:
+      - NODE_ENV=development
+      - TZ=Asia/Shanghai
+      - VITE_HOST=0.0.0.0  # 允许外部访问
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

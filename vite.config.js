@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
-import terser from '@rollup/plugin-terser';
-import autoprefixer from 'autoprefixer';
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
+import terser from '@rollup/plugin-terser'
+import autoprefixer from 'autoprefixer'
+
 
 export default defineConfig({
   root: './src',
@@ -17,19 +18,13 @@ export default defineConfig({
       },
       output: {
         entryFileNames: '[name].min.js',
-        assetFileNames: assetInfo => {
-          if (assetInfo.names && assetInfo.names[0].endsWith('.css')) {
-            return '[name].min.css';
-          }
-          return '[name].[ext]';
-        }
+        assetFileNames: '[name].min.css'
       },
-      external: [],
+      external: []
     },
     minify: 'terser',
     terserOptions: {
       compress: {
-        evaluate: false,
         drop_console: false,
         drop_debugger: true
       },
@@ -44,13 +39,13 @@ export default defineConfig({
     },
     postcss: {
       plugins: [
-        autoprefixer(),
+        autoprefixer()
       ]
     }
   },
   resolve: {
     alias: {
-      'iDisqus.css': resolve(__dirname, './node_modules/disqus-php-api/dist/iDisqus.min.css'),
+      'iDisqus.css': resolve(__dirname, './node_modules/disqus-php-api/dist/iDisqus.min.css')
     }
   }
 })

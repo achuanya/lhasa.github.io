@@ -16,11 +16,19 @@ layout: compress
                     <a class="page-title-link" href="{% if page.title %}{{ page.url }}{% else %}{{ site.home }}{% endif %}">
                         {% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}
                     </a>
+                    {% if page.url == '/links.html' %}
+                    <div class="search-article">
+                        <h3 class="subscribe-subtitle">
+                            <a href="https://github.com/achuanya/lhasaRSS" class="post-item-title" title="lhasaRSS —— 高效稳定的RSS聚合解决方案" target="_blank">该订阅由 lhasaRSS 驱动</a>
+                        </h3>
+                    </div>
+                    {% endif %}
                     {% if page.url == '/archive.html' %}
                     <div class="search-article">
                         <input class="page-search-input" type="text" placeholder="搜索(Enter 全文搜索)"/>
                     </div>
                     {% endif %}
+
                 </h1>
                     <h2 class="page-subtitle">
                     {% if page.date %}

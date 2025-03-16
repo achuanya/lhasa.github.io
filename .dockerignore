@@ -1,0 +1,9 @@
+node_modules
+vendor/bundle
+log
+tmp
+.git
+.DS_Store
+npm-debug.log
+yarn-error.log
+_site

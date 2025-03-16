@@ -244,8 +244,14 @@ body {
     .search-article input {
       height: 32px;
     }
-    
-
+    // 订阅副标题
+    .subscribe-subtitle a {
+      padding: 0 0px;
+      border: 0px;
+      border-radius: 0;
+      font-size: 13px;
+      color: #333;
+    }
   }
 
   /* 文章日期 */
