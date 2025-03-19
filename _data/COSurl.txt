@@ -210,3 +210,8 @@ https://cos.lhasa.icu/ArticlePictures/20250312092723.jpg
 https://cos.lhasa.icu/ArticlePictures/202503120927231.jpg
 https://cos.lhasa.icu/ArticlePictures/202503120927232.jpg
 https://cos.lhasa.icu/ArticlePictures/20250312092722.jpg
+https://cos.lhasa.icu/dist/KaTeX/katex.min.css
+https://cos.lhasa.icu/dist/KaTeX/katex.min.js
+https://cos.lhasa.icu/dist/KaTeX/auto-render.min.js
+https://cos.lhasa.icu/ArticlePictures/20250319214114.webp
+https://cos.lhasa.icu/ArticlePictures/20250319225638.webp
