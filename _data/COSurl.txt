@@ -2,8 +2,6 @@ https://cos.lhasa.icu/dist/main.min.js
 https://cos.lhasa.icu/dist/main.min.css
 https://cos.lhasa.icu/dist/cycling.min.css
 https://cos.lhasa.icu/dist/cycling.min.js
-https://cos.lhasa.icu/dist/img-previewer.min.js
-https://cos.lhasa.icu/dist/img-previewer.min.css
 https://cos.lhasa.icu/font/highlight/highlight.min.js
 https://cos.lhasa.icu/font/highlight/a11y-light.min.css
 https://cos.lhasa.icu//StylePictures/avatar.jpg
