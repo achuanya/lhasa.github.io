@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-slim-bullseye AS base
+FROM haibaoer/lhasagithubio-app:latest AS base
 
 ENV LANG=C.UTF-8 \
     BUNDLE_JOBS=4 \
@@ -14,13 +14,11 @@ RUN sed -i 's@http://deb.debian.org@http://mirrors.aliyun.com@g' /etc/apt/source
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS node
-COPY install.sh /tmp/install.sh
-RUN bash /tmp/install.sh && \
-    . "$NVM_DIR/nvm.sh" && \
+
+RUN . "$NVM_DIR/nvm.sh" && \
     nvm install 20.19.0 && \
     npm config set prefix "$NVM_DIR/versions/node/v20.19.0" && \
-    npm install -g yarn && \
-    rm /tmp/install.sh
+    npm install -g yarn
 
 ENV PATH="/root/.nvm/versions/node/v20.19.0/bin:$PATH"
 

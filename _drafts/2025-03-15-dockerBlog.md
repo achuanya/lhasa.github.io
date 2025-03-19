@@ -43,3 +43,10 @@ wsl
 docker pull ruby:3.2.2-slim-bullseye
 
 docker tag ruby:3.2.2-slim-bullseye ruby:latest
+
+安装 Docker Compose：
+
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
