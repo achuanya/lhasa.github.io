@@ -213,3 +213,6 @@ https://cos.lhasa.icu/dist/KaTeX/katex.min.js
 https://cos.lhasa.icu/dist/KaTeX/auto-render.min.js
 https://cos.lhasa.icu/ArticlePictures/20250319214114.webp
 https://cos.lhasa.icu/ArticlePictures/20250319225638.webp
+https://cos.lhasa.icu/ArticlePictures/EasyFillRejectionNotice.webp
+https://cos.lhasa.icu/ArticlePictures/MyInformation.webp
+https://cos.lhasa.icu/ArticlePictures/EasyFill128.webp
