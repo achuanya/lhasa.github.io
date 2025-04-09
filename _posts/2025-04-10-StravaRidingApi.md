@@ -11,7 +11,7 @@ tags: [strava, OAuth, 骑行]
 
 ## 功能特性
 
-Strava Riding Api 只实现了 OAuth 2.0 授权流程的部分自动化，由于安全设计和技术限制，目前无法实现完全自动化：
+Strava Riding Api 只实现了 OAuth 2.0 授权流程的部分自动化，由于技术限制，目前无法实现完全自动化：
 
 已实现部分
 
