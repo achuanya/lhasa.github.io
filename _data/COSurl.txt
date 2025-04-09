@@ -218,3 +218,4 @@ https://cos.lhasa.icu/ArticlePictures/MyInformation.webp
 https://cos.lhasa.icu/ArticlePictures/EasyFill128.webp
 https://cos.lhasa.icu/StylePictures/Appreciation-code.webp
 https://cos.lhasa.icu/ArticlePictures/ChromeWebStore1.webp
+https://cos.lhasa.icu/ArticlePictures/strava_logo.webp
