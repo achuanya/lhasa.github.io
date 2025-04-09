@@ -36,12 +36,12 @@ function generateCalendar(activities, startDate, numWeeks) {
         dayContainer.appendChild(dateNumber);
 
         // 查找当前日期是否有活动数据
-        const activity = activities.find(activity => activity.activity_time === date.toISOString().split('T')[0]);
+        const activity = activities.find(activity => activity.start_date_local === date.toISOString().split('T')[0]);
         // console.log(processedActivities);
         if (activity) processedActivities.push(activity);
 
         // 根据骑行距离设置球的大小
-        const ballSize = activity ? Math.min(parseFloat(activity.riding_distance) / 4, 24) : 2;
+        const ballSize = activity ? Math.min(parseFloat(activity.distance) / 4, 24) : 2;
 
         const ball = document.createElement('div');
         ball.className = 'activity-indicator';
@@ -140,14 +140,14 @@ function generateBarChart() {
 
     // 累加每周的骑行距离
     processedActivities.forEach(activity => {
-        const activityDate = new Date(activity.activity_time);
+        const activityDate = new Date(activity.start_date_local);
         const weekStart = getWeekStartDate(activityDate); // 活动所在周的开始日期
         const weekEnd = new Date(weekStart);
         weekEnd.setUTCDate(weekStart.getUTCDate() + 6);
 
         const weekKey = `${weekStart.toISOString().split('T')[0]} - ${weekEnd.toISOString().split('T')[0]}`;
         if (weeklyData[weekKey] !== undefined) {
-            weeklyData[weekKey] += parseFloat(activity.riding_distance);
+            weeklyData[weekKey] += parseFloat(activity.distance);
         }
     });
 
@@ -213,7 +213,7 @@ function animateText(element, startValue, endValue, duration, isDistance = false
 
 // 计算总公里数
 function calculateTotalKilometers(activities) {
-    return activities.reduce((total, activity) => total + parseFloat(activity.riding_distance) || 0, 0);
+    return activities.reduce((total, activity) => total + parseFloat(activity.distance) || 0, 0);
 }
 
 // 显示总活动数和总公里数
@@ -241,7 +241,7 @@ function displayTotalActivities(activities) {
 
     // 筛选全年活动数据
     const filteredActivities = activities.filter(activity => {
-        const activityYear = new Date(activity.activity_time).getFullYear();
+        const activityYear = new Date(activity.start_date_local).getFullYear();
         return activityYear === currentYear;
     });
 
@@ -284,7 +284,7 @@ function getChinaTime() {
 
 // 手搓JSON
 async function loadActivityData() {
-    const response = await fetch('https://cos.lhasa.icu/data/cycling_data.json');
+    const response = await fetch('https://cos.lhasa.icu/data/strava_data.json');
     return response.json();
 }
 
