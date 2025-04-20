@@ -19,7 +19,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
-    "jekyll:dev": "bundle exec jekyll serve",
+    "jekyll:dev": "bundle exec jekyll serve --livereload --watch",
     "jekyll:build": "bundle exec jekyll build"
   },
   "description": "https://github.com/achuanya/lhasa.github.io",

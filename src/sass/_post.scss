@@ -275,7 +275,7 @@ body {
     &:hover{
       border-bottom: none;
     }
-    &:last-child{
+    &:nth-last-child(-n+3){
       float: right;
     }
   }
