@@ -3,7 +3,7 @@ layout: post
 title: 新手跑步第五次｜单人挑战不间断半马
 date: 2025-04-24 12:50:01 +0800
 category: life
-thumb: ARTICLEPICTURES_PATH/20250423003451.webp
+thumb: ARTICLEPICTURES_PATH//2025-04-23-day4-day6-running-log/20250423003451.webp
 tags: [跑步, 半马, 长跑, 不间断运动]
 ---
 
