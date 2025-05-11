@@ -5,3 +5,7 @@ desktop.ini
 .vscode/
 _data/
 CNAME
+Gemfile.lock
+.htaccess
+.jekyll-metadata
+.well-known/
