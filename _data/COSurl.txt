@@ -273,3 +273,14 @@ https://cos.lhasa.icu/ArticlePictures/2025-05-07-yilu-xiang-nan-qi-jian-jiang-na
 https://cos.lhasa.icu/ArticlePictures/2025-05-07-yilu-xiang-nan-qi-jian-jiang-nan/2a1b525ee02.webp
 https://cos.lhasa.icu/ArticlePictures/2025-05-07-yilu-xiang-nan-qi-jian-jiang-nan/2a1b525ee04.webp
 https://cos.lhasa.icu/ArticlePictures/2025-05-07-yilu-xiang-nan-qi-jian-jiang-nan/2a1b525ee01.webp
+https://cos.lhasa.icu/dist/prism/css/prism-coy.min.css
+https://cos.lhasa.icu/dist/prism/css/prism-line-numbers.min.css
+https://cos.lhasa.icu/dist/prism/css/prism-one-light.css
+https://cos.lhasa.icu/dist/prism/css/prism-toolbar.min.css
+https://cos.lhasa.icu/dist/prism/css/prism-vs.css
+https://cos.lhasa.icu/dist/prism/js/prism.min.js
+https://cos.lhasa.icu/dist/prism/js/prism-autoloader.min.js
+https://cos.lhasa.icu/dist/prism/js/prism-copy-to-clipboard.min.js
+https://cos.lhasa.icu/dist/prism/js/prism-line-numbers.min.js
+https://cos.lhasa.icu/dist/prism/js/prism-show-language.min.js
+https://cos.lhasa.icu/dist/prism/js/prism-toolbar.min.js
