@@ -3,7 +3,7 @@ layout: post
 title: 一路向南，骑见江南：一人、一车、一旅途
 date: 2025-05-11 16:28:01 +0800
 category: cycling
-thumb: ARTICLEPICTURES_PATH/2025-05-07-yilu-xiang-nan-qi-jian-jiang-nan/1746592742258.webp
+thumb: ARTICLEPICTURES_PATH/2025-05-07-yilu-xiang-nan-qi-jian-jiang-nan/a97fc5e54f3c99c32efbc19ce1dc3a0.webp
 tags: [骑行, 江南, 旅行, 爆胎]
 ---
 
