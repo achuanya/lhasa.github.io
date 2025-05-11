@@ -1,8 +1,13 @@
 ---
 layout: default
 ---
-<link rel="stylesheet" href="{{ site.FONT_PATH }}/highlight/a11y-light.min.css?v={{ site.time | date: '%s' }}">
-<article class="post-content">
+<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.30.0/prism.min.js"></script>
+{% if page.layout == 'post' or page.layout == 'page' %}
+<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.30.0/plugins/autoloader/prism-autoloader.min.js"></script>
+{% endif %}
+
+<article class="post-content line-numbers">
   {% if content contains site.ARTICLEPICTURES_PATH %}
     {% assign images = content | split:'<img src="' %}
     {% for image in images %}
@@ -20,12 +25,11 @@ layout: default
   {{ content }}
 </article>
 
-<script async src="{{ site.FONT_PATH }}/highlight/highlight.min.js?v={{ site.time | date: '%s' }}"></script>
 {% include info.html %}
 
-<script async>
+<script>
   window.addEventListener('load', function(){
-    hljs.highlightAll();
+    Prism.highlightAll(); // 添加 Prism.js 的初始化代码
   });
 </script>
 <div id="comment"></div>

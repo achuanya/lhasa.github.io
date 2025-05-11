@@ -10,6 +10,10 @@
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <link rel="stylesheet preload" href="{{ site.DIST_PATH }}/main.min.css" as="style" />
+  <link rel="stylesheet preload" href="https://cos.lhasa.icu/dist/prism/css/prism-one-light.css" as="style" />
+  {% if page.layout == 'post' or page.layout == 'page' %}
+  <link rel="stylesheet preload" href="https://cos.lhasa.icu/dist/prism/css/prism-line-numbers.min.css" as="style" />
+  {% endif %}
   <link rel="canonical" href="{{ page.url | replace: 'index.html','' | prepend: site.home }}" />
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }} Atom Feed" href="https://lhasa.icu/atom.xml" />
   <link rel="icon" href="{{ site.STYLEPICTURES_PATH }}/favicon.ico" />
@@ -45,6 +49,7 @@
       };
   </script>
   <script src="{{ site.DIST_PATH }}/main.min.js"></script>
+
   <!-- 百度统计 (hm.js) -->
   <script>
     var _hmt = _hmt || [];
