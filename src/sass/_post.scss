@@ -957,3 +957,44 @@ pre {
     margin: auto;
     padding: 30px;
 }
+
+// 懒加载相关样式
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+// 懒加载占位符样式
+.post-figure {
+  position: relative;
+  overflow: hidden;
+  
+  // 加载中的背景效果
+  .lazyloading {
+    background: #f6f7f8;
+    background-image: linear-gradient(
+      to right,
+      #f6f7f8 0%,
+      #edeef1 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%
+    );
+    background-size: 800px 100%;
+    animation: lazyloadingAnimation 1s linear infinite forwards;
+  }
+}
+
+// 加载动画
+@keyframes lazyloadingAnimation {
+  from {
+    background-position: -400px 0;
+  }
+  to {
+    background-position: 400px 0;
+  }
+}

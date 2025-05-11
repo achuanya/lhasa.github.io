@@ -1,5 +1,19 @@
 import iDisqus from 'disqus-php-api';
 import './sass/main.scss';
+import 'lazysizes';
+
+/**
+ * [lazysizes 配置]
+ */
+lazySizes.cfg = {
+  lazyClass: 'lazyload',
+  loadedClass: 'lazyloaded',
+  loadingClass: 'lazyloading',
+  preloadClass: 'lazypreload',
+  expFactor: 1.5,
+  hFac: 0.8,
+  throttleDelay: 125,
+};
 
 /**
  * [timeAgo 时间格式化函数]
@@ -368,9 +382,13 @@ document.addEventListener('DOMContentLoaded', function () {
       image.title[i] = item.title || item.parentElement.textContent.trim() || item.alt;
       item.title = image.title[i];
       item.classList.add('post-image');
+      // 确保有 lazyload 类
+      if (!item.classList.contains('lazyload')) {
+        item.classList.add('lazyload');
+      }
       item.setAttribute('data-index', i);
 
-      // figure 包裹
+      // figure 包裹 - 保持原有逻辑
       item.parentElement.outerHTML = item.parentElement.outerHTML
         .replace('<p>', `<figure class="post-figure" data-index=${i}>`)
         .replace('<p>', `<figure class="post-figure" data-index=${i}>`)
@@ -379,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // 若图片来源符合站点图床，再插入图片描述
       const imgdom = document.querySelector('.post-image[data-src="' + image.src[i] + '"]');
-      if (new RegExp(site.img, 'i').test(image.src[i])) {
+      if (imgdom && new RegExp(site.img, 'i').test(image.src[i])) {
         imgdom.insertAdjacentHTML(
           'afterend',
           `<figcaption class="post-figcaption">&#9650; ${image.title[i]}</figcaption>`

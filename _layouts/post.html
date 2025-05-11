@@ -9,9 +9,9 @@ layout: default
       {% if image contains site.ARTICLEPICTURES_PATH %}
         {% assign thumbSrc = image | split: '" ' | first %}
         {% assign imageSrc = thumbSrc | split: '?imageView' | first | remove: "_640v" | remove: "_640" %}
-        {% assign newImage = thumbSrc | append: '" data-src="' | append: imageSrc %}
+        {% assign newImage = placeholder | append: '" data-src="' | append: imageSrc | append: '" class="lazyload' %}
         {% if thumbSrc contains site.ARTICLEPICTURES_PATH and newImage contains site.ARTICLEPICTURES_PATH %}
-            {% assign content = content | replace: thumbSrc, newImage %}
+          {% assign content = content | replace: thumbSrc, newImage %}
         {% endif %}
       {% endif %}
     {% endfor %}
